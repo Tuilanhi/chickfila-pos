@@ -169,3 +169,23 @@ app.get('/entrees', (req, res) => {
   res.render('menu/entrees', { entreeItems });
 });
 
+// redirect to drinks menu page
+app.get('/drinks', (req, res) => {
+  res.render('menu/drinks', { drinkItems });
+});
+
+// redirect to salads menu page
+app.get('/salads', (req, res) => {
+  res.render('menu/salads', { saladItems });
+});
+
+// redirect to sides menu page
+app.get('/sides', (req, res) => {
+  res.render('menu/sides', { sideItems });
+});
+
+// redirect to treats menu page
+app.get('/treats', (req, res) => {
+  res.render('menu/treats', { treatItems });
+});
+
