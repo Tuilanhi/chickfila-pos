@@ -62,17 +62,18 @@ function isLoggedIn(req, res, next) {
   req.user ? next() : res.sendStatus(401);
 }
 
-async function storeAuth() {
-  db = new Database();
-  await db.connect();
-  const sql =
-    "INSERT INTO googleusers(email) SELECT ('" +
-    String(userProfile.emails[0].value) +
-    "') WHERE NOT EXISTS (SELECT 1 FROM googleusers WHERE email = '" +
-    String(userProfile.emails[0].value) +
-    "');";
-  await db.query(sql);
-  await db.disconnect();
+// Checks to see if the user's email is a manager
+function isManager() {
+  const result = userProfile.emails[0].value;
+
+  // Returns true if the user profile is a manager, and false otherwise
+  const manager = [
+    "vuthuynhi@tamu.edu",
+    "justin.a@tamu.edu",
+    "pablopineda@tamu.edu",
+    "raquel.oseguera@tamu.edu",
+  ];
+  return manager.includes(result);
 }
 
 app.listen(port, () => console.log("App listening on port " + port));
@@ -95,10 +96,16 @@ app.get(
   })
 );
 
-// After logging in successfully the dashboard page will pop up
+/* 
+/ After logging in successfully the dashboard page will pop up
+/ If the user is a manager, the manager page will pop up instead
+*/
 app.get("/dashboard", isLoggedIn, (req, res) => {
-  res.render("pages/dashboard", { user: userProfile });
-  storeAuth();
+  if (!isManager()) {
+    res.render("pages/dashboard", { user: userProfile });
+  } else {
+    res.render("pages/google-translate");
+  }
 });
 
 // If failed to login, redirect to error page
