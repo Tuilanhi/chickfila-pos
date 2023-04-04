@@ -3,7 +3,6 @@ const express = require("express");
 const app = express();
 const session = require("express-session");
 const passport = require("passport");
-const Database = require("./Database");
 const port = process.env.PORT || 3000;
 
 var userProfile;

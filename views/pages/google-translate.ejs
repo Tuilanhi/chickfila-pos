@@ -185,6 +185,27 @@
           font-size: 14px;
         }
       }
+
+      .signout {
+        margin-right: 10px;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        text-align: right;
+        color: #fff;
+        background-color: #e83535;
+        border-radius: 10px;
+        padding: 5px 10px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .signout:hover {
+        background-color: #fff;
+        color: #f44242;
+        text-decoration: none;
+      }
     </style>
     <div class="container">
       <h3>
@@ -245,6 +266,7 @@ The Unlimited Multi Translate API makes advantage of Google's neural machine tra
         >
       </h3>
     </div>
+    <a href="/logout" class="signout">Sign Out</a>
 
     <script>
       const countries = {
