@@ -127,7 +127,7 @@ const entreeItems = [
   { name: 'Chicken Nuggets', price: 7.99 }
 ];
 
-const drinksItems = [
+const drinkItems = [
   { name: 'Coca-Cola', price: 2.50 },
   { name: 'Sprite', price: 2.50 },
   {name: 'Milkshake', price: 4.39 },
@@ -139,7 +139,7 @@ const drinksItems = [
   { name: 'Lemonade', price: 2.50 }
 ];
 
-const saladsItems = [
+const saladItems = [
   { name: 'Cobb Salad', price: 8.49 },
   { name: 'Spicy Southwest Salad', price: 8.29 },
   { name: 'Market Salad', price: 8.19 },
@@ -148,7 +148,7 @@ const saladsItems = [
   { name: 'Grilled Chicken Cool Wrap', price: 7.99 }
 ];
 
-const sidesItems = [
+const sideItems = [
   { name: 'Waffle Potato Fries', price: 2.79 },
   { name: 'Mac & Cheese', price: 3.89 },
   { name: 'Side Salad', price: 3.19 },
@@ -157,11 +157,15 @@ const sidesItems = [
   { name: 'Chicken Noodle Soup', price: 3.89 }
 ];
 
-const treatsItems = [
+const treatItems = [
   { name: 'Chocolate Chunk Cookie', price: 1.39 },
   { name: 'Icedream Cone', price: 1.49 },
   { name: 'Chocolate Fudge Brownie', price: 1.89 }
 ];
 
 
+// redirect to entrees menu page
+app.get('/entrees', (req, res) => {
+  res.render('menu/entrees', { entreeItems });
+});
 
