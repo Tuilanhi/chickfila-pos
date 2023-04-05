@@ -1,52 +1,53 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Drinks</title>
-  <style>
-    body {
-      background-color: #fff;
-      font-family: Arial, sans-serif;
-    }
-    h1 {
-      color: #000;
-      font-size: 36px;
-      text-align: center;
-      margin-top: 30px;
-    }
-    table {
-      margin: 0 auto;
-      border-collapse: collapse;
-      border: 2px solid #000;
-      width: 50%;
-      margin-top: 50px;
-    }
-    th, td {
-      text-align: left;
-      padding: 8px;
-      border-bottom: 1px solid #000;
-    }
-    th {
-      background-color: #f44242;
-      color: #FFF;
-      font-size: 18px;
-    }
-    td {
-      font-size: 16px;
-    }
-    button {
-      background-color: #f44242;
-      border: none;
-      color: #FFF;
-      padding: 10px 20px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin: 4px 2px;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    .signout {
+  <head>
+    <title>Drinks</title>
+    <style>
+      body {
+        background-color: #fff;
+        font-family: Arial, sans-serif;
+      }
+      h1 {
+        color: #000;
+        font-size: 36px;
+        text-align: center;
+        margin-top: 30px;
+      }
+      table {
+        margin: 0 auto;
+        border-collapse: collapse;
+        border: 2px solid #000;
+        width: 50%;
+        margin-top: 50px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #000;
+      }
+      th {
+        background-color: #f44242;
+        color: #fff;
+        font-size: 18px;
+      }
+      td {
+        font-size: 16px;
+      }
+      button {
+        background-color: #f44242;
+        border: none;
+        color: #fff;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      .signout {
         margin-right: 10px;
         margin-bottom: 10px;
         position: absolute;
@@ -58,6 +59,7 @@
         border-radius: 10px;
         padding: 5px 10px;
         cursor: pointer;
+        text-decoration: none;
       }
 
       .signout:hover {
@@ -65,28 +67,28 @@
         color: #f44242;
         text-decoration: none;
       }
-  </style>
-</head>
-<body>
-  <h1>Drinks</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Item</th>
-        <th>Price</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for (let i = 0; i < drinkItems.length; i++) { %>
+    </style>
+  </head>
+  <body>
+    <h1>Drinks</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let i = 0; i < drinkItems.length; i++) { %>
         <tr>
           <td><%= drinkItems[i].name %></td>
           <td>$<%= drinkItems[i].price %></td>
           <td><button>Add to Cart</button></td>
         </tr>
-      <% } %>
-    </tbody>
-  </table>
-  <a href="/logout" class="signout">Sign Out</a>
-</body>
+        <% } %>
+      </tbody>
+    </table>
+    <a href="/logout" class="signout">Sign Out</a>
+  </body>
 </html>

@@ -103,7 +103,7 @@ app.get("/dashboard", isLoggedIn, (req, res) => {
   if (!isManager()) {
     res.render("pages/customerdashboard", { user: userProfile });
   } else {
-    res.render("pages/dashboard", { user: userProfile });
+    res.render("pages/index", { user: userProfile });
   }
 });
 
@@ -122,70 +122,68 @@ app.get("/logout", function (req, res, next) {
 
 /* Menu */
 const entreeItems = [
-  { name: 'Chicken Sandwich', price: 9.99 },
-  { name: 'Deluxe Chicken Sandwich', price: 8.99 },
-  { name: 'Chicken Nuggets', price: 7.99 }
+  { name: "Chicken Sandwich", price: 9.99 },
+  { name: "Deluxe Chicken Sandwich", price: 8.99 },
+  { name: "Chicken Nuggets", price: 7.99 },
 ];
 
 const drinkItems = [
-  { name: 'Coca-Cola', price: 2.50 },
-  { name: 'Sprite', price: 2.50 },
-  {name: 'Milkshake', price: 4.39 },
-  { name: 'Dr. Pepper', price: 2.50 },
-  { name: 'Frosted Lemonade', price: 3.39 },
-  { name: 'Frosted Coffee', price: 3.89 },
-  { name: 'Sweet Tea', price: 2.00 },
-  { name: 'Unsweet Tea', price: 2.00 },
-  { name: 'Lemonade', price: 2.50 }
+  { name: "Coca-Cola", price: 2.5 },
+  { name: "Sprite", price: 2.5 },
+  { name: "Milkshake", price: 4.39 },
+  { name: "Dr. Pepper", price: 2.5 },
+  { name: "Frosted Lemonade", price: 3.39 },
+  { name: "Frosted Coffee", price: 3.89 },
+  { name: "Sweet Tea", price: 2.0 },
+  { name: "Unsweet Tea", price: 2.0 },
+  { name: "Lemonade", price: 2.5 },
 ];
 
 const saladItems = [
-  { name: 'Cobb Salad', price: 8.49 },
-  { name: 'Spicy Southwest Salad', price: 8.29 },
-  { name: 'Market Salad', price: 8.19 },
-  { name: 'Grilled Market Salad', price: 8.19 },
-  { name: 'Spicy Southwest Salad with Grilled Chicken', price: 8.29 },
-  { name: 'Grilled Chicken Cool Wrap', price: 7.99 }
+  { name: "Cobb Salad", price: 8.49 },
+  { name: "Spicy Southwest Salad", price: 8.29 },
+  { name: "Market Salad", price: 8.19 },
+  { name: "Grilled Market Salad", price: 8.19 },
+  { name: "Spicy Southwest Salad with Grilled Chicken", price: 8.29 },
+  { name: "Grilled Chicken Cool Wrap", price: 7.99 },
 ];
 
 const sideItems = [
-  { name: 'Waffle Potato Fries', price: 2.79 },
-  { name: 'Mac & Cheese', price: 3.89 },
-  { name: 'Side Salad', price: 3.19 },
-  { name: 'Fruit Cup', price: 3.19 },
-  { name: 'Greek Yogurt Parfait', price: 3.09 },
-  { name: 'Chicken Noodle Soup', price: 3.89 }
+  { name: "Waffle Potato Fries", price: 2.79 },
+  { name: "Mac & Cheese", price: 3.89 },
+  { name: "Side Salad", price: 3.19 },
+  { name: "Fruit Cup", price: 3.19 },
+  { name: "Greek Yogurt Parfait", price: 3.09 },
+  { name: "Chicken Noodle Soup", price: 3.89 },
 ];
 
 const treatItems = [
-  { name: 'Chocolate Chunk Cookie', price: 1.39 },
-  { name: 'Icedream Cone', price: 1.49 },
-  { name: 'Chocolate Fudge Brownie', price: 1.89 }
+  { name: "Chocolate Chunk Cookie", price: 1.39 },
+  { name: "Icedream Cone", price: 1.49 },
+  { name: "Chocolate Fudge Brownie", price: 1.89 },
 ];
 
-
 // redirect to entrees menu page
-app.get('/entrees', (req, res) => {
-  res.render('menu/entrees', { entreeItems });
+app.get("/entrees", (req, res) => {
+  res.render("menu/entrees", { entreeItems });
 });
 
 // redirect to drinks menu page
-app.get('/drinks', (req, res) => {
-  res.render('menu/drinks', { drinkItems });
+app.get("/drinks", (req, res) => {
+  res.render("menu/drinks", { drinkItems });
 });
 
 // redirect to salads menu page
-app.get('/salads', (req, res) => {
-  res.render('menu/salads', { saladItems });
+app.get("/salads", (req, res) => {
+  res.render("menu/salads", { saladItems });
 });
 
 // redirect to sides menu page
-app.get('/sides', (req, res) => {
-  res.render('menu/sides', { sideItems });
+app.get("/sides", (req, res) => {
+  res.render("menu/sides", { sideItems });
 });
 
 // redirect to treats menu page
-app.get('/treats', (req, res) => {
-  res.render('menu/treats', { treatItems });
+app.get("/treats", (req, res) => {
+  res.render("menu/treats", { treatItems });
 });
-
