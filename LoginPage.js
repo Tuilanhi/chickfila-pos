@@ -75,6 +75,14 @@ function isManager() {
   return manager.includes(result);
 }
 
+function isServer() {
+  const result = userProfile.emails[0].value;
+
+  const server = ["vuthuynhi05@gmail.com", "justin.abraham@saseconnect.org"];
+
+  return server.includes(result);
+}
+
 app.listen(port, () => console.log("App listening on port " + port));
 
 app.use(passport.initialize());
@@ -100,10 +108,15 @@ app.get(
 / If the user is a manager, the manager page will pop up instead
 */
 app.get("/dashboard", isLoggedIn, (req, res) => {
-  if (!isManager()) {
-    res.render("pages/dashboard", { user: userProfile });
+  if (isManager()) {
+    userRole = userRoles[0].role;
+    res.render("pages/dashboard", { user: userProfile, userRole });
+  } else if (isServer()) {
+    userRole = userRoles[1].role;
+    res.render("pages/customerdashboard", { user: userProfile, userRoles });
   } else {
-    res.render("pages/google-translate");
+    userRole = userRoles[2].role;
+    res.render("pages/customerdashboard", { user: userProfile, userRoles });
   }
 });
 
@@ -118,4 +131,79 @@ app.get("/logout", function (req, res, next) {
     }
     res.redirect("/");
   });
+});
+
+/* Roles */
+const userRoles = [
+  { role: "Manager" },
+  { role: "Server" },
+  { role: "Customer" },
+];
+
+/* Menu */
+const entreeItems = [
+  { name: "Chicken Sandwich", price: 9.99 },
+  { name: "Deluxe Chicken Sandwich", price: 8.99 },
+  { name: "Chicken Nuggets", price: 7.99 },
+];
+
+const drinkItems = [
+  { name: "Coca-Cola", price: 2.5 },
+  { name: "Sprite", price: 2.5 },
+  { name: "Milkshake", price: 4.39 },
+  { name: "Dr. Pepper", price: 2.5 },
+  { name: "Frosted Lemonade", price: 3.39 },
+  { name: "Frosted Coffee", price: 3.89 },
+  { name: "Sweet Tea", price: 2.0 },
+  { name: "Unsweet Tea", price: 2.0 },
+  { name: "Lemonade", price: 2.5 },
+];
+
+const saladItems = [
+  { name: "Cobb Salad", price: 8.49 },
+  { name: "Spicy Southwest Salad", price: 8.29 },
+  { name: "Market Salad", price: 8.19 },
+  { name: "Grilled Market Salad", price: 8.19 },
+  { name: "Spicy Southwest Salad with Grilled Chicken", price: 8.29 },
+  { name: "Grilled Chicken Cool Wrap", price: 7.99 },
+];
+
+const sideItems = [
+  { name: "Waffle Potato Fries", price: 2.79 },
+  { name: "Mac & Cheese", price: 3.89 },
+  { name: "Side Salad", price: 3.19 },
+  { name: "Fruit Cup", price: 3.19 },
+  { name: "Greek Yogurt Parfait", price: 3.09 },
+  { name: "Chicken Noodle Soup", price: 3.89 },
+];
+
+const treatItems = [
+  { name: "Chocolate Chunk Cookie", price: 1.39 },
+  { name: "Icedream Cone", price: 1.49 },
+  { name: "Chocolate Fudge Brownie", price: 1.89 },
+];
+
+// redirect to entrees menu page
+app.get("/entrees", (req, res) => {
+  res.render("menu/entrees", { entreeItems });
+});
+
+// redirect to drinks menu page
+app.get("/drinks", (req, res) => {
+  res.render("menu/drinks", { drinkItems });
+});
+
+// redirect to salads menu page
+app.get("/salads", (req, res) => {
+  res.render("menu/salads", { saladItems });
+});
+
+// redirect to sides menu page
+app.get("/sides", (req, res) => {
+  res.render("menu/sides", { sideItems });
+});
+
+// redirect to treats menu page
+app.get("/treats", (req, res) => {
+  res.render("menu/treats", { treatItems });
 });

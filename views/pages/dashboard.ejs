@@ -15,15 +15,25 @@
     <!-- load fontawesome -->
     <style>
       body {
-        padding-top: 70px;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+      }
+
+      .profile-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        bottom: 5px;
+        left: 5px;
+        position: absolute;
+      }
+
+      .profile {
+        margin-right: 10px;
       }
 
       .signout {
-        margin-right: 10px;
-        margin-bottom: 10px;
-        position: absolute;
-        bottom: 5px;
-        right: 5px;
         text-align: right;
         color: #fff;
         background-color: #e83535;
@@ -41,24 +51,12 @@
     </style>
   </head>
   <body>
-    <div class="container">
-      <div class="jumbotron">
-        <h1 class="text-primary text-center">
-          <span class="fa fa-user"></span> Profile Information
-        </h1>
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="well">
-              <p>
-                <strong>Id</strong>: <%= user.id %><br />
-                <strong>Email</strong>: <%= user.emails[0].value %><br />
-                <strong>Name</strong>: <%= user.displayName %>
-              </p>
-            </div>
-          </div>
-        </div>
+    <div class="profile-container">
+      <div class="profile">
+        <strong>Name</strong>: <%= user.displayName %> <br />
+        <strong>Role</strong>: <%= userRole %> <br />
       </div>
+      <a href="/logout" class="signout">Sign Out</a>
     </div>
-    <a href="/logout" class="signout">Sign Out</a>
   </body>
 </html>
