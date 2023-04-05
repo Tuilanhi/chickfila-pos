@@ -4,6 +4,7 @@ const app = express();
 const session = require("express-session");
 const passport = require("passport");
 const port = process.env.PORT || 3000;
+require("dotenv").config();
 
 var userProfile;
 
@@ -11,15 +12,11 @@ var userProfile;
 
 var GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 
-GOOGLE_CLIENT_ID =
-  "538303767249-5reikd8onop6liqq9mgjdeguilma7l8a.apps.googleusercontent.com";
-GOOGLE_CLIENT_SECRET = "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";
-
 passport.use(
   new GoogleStrategy(
     {
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
+      clientID: process.env.GOOGLE_CLIENT_ID || process,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || process,
       callbackURL: "http://localhost:3000/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, done) {
