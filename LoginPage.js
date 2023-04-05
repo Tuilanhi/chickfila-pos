@@ -75,6 +75,14 @@ function isManager() {
   return manager.includes(result);
 }
 
+function isServer() {
+  const result = userProfile.emails[0].value;
+
+  const server = ["vuthuynhi05@gmail.com", "justin.abraham@saseconnect.org"];
+
+  return server.includes(result);
+}
+
 app.listen(port, () => console.log("App listening on port " + port));
 
 app.use(passport.initialize());
@@ -100,10 +108,14 @@ app.get(
 / If the user is a manager, the manager page will pop up instead
 */
 app.get("/dashboard", isLoggedIn, (req, res) => {
-  if (!isManager()) {
-    res.render("pages/customerdashboard", { user: userProfile });
+  if (isManager()) {
+    userRole = userRoles[0].role;
+    console.log(userRoles[0].role);
+    res.render("pages/dashboard", { user: userProfile, userRole });
+  } else if (isServer()) {
+    res.render("pages/customerdashboard", { user: userProfile, userRoles });
   } else {
-    res.render("pages/index", { user: userProfile });
+    res.render("pages/customerdashboard", { user: userProfile, userRoles });
   }
 });
 
@@ -119,6 +131,13 @@ app.get("/logout", function (req, res, next) {
     res.redirect("/");
   });
 });
+
+/* Roles */
+const userRoles = [
+  { role: "Manager" },
+  { role: "Server" },
+  { role: "Customer" },
+];
 
 /* Menu */
 const entreeItems = [
