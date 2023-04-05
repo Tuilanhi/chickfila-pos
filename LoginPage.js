@@ -110,11 +110,12 @@ app.get(
 app.get("/dashboard", isLoggedIn, (req, res) => {
   if (isManager()) {
     userRole = userRoles[0].role;
-    console.log(userRoles[0].role);
     res.render("pages/dashboard", { user: userProfile, userRole });
   } else if (isServer()) {
+    userRole = userRoles[1].role;
     res.render("pages/customerdashboard", { user: userProfile, userRoles });
   } else {
+    userRole = userRoles[2].role;
     res.render("pages/customerdashboard", { user: userProfile, userRoles });
   }
 });
