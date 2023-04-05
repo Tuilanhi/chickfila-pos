@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Customer View</title>
     <link
       rel="stylesheet"
@@ -13,7 +13,6 @@
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <style>
-      
       body {
         margin: 0;
         padding: 0;
@@ -25,7 +24,7 @@
         flex-direction: column;
       }
       h1 {
-        color: #C41230;
+        color: #c41230;
         text-align: center;
         padding-bottom: 5vh;
       }
@@ -47,18 +46,30 @@
         color: #f44242;
         text-decoration: none;
       }
-      .signout {
-        margin-right: 10px;
-        margin-bottom: 10px;
-        position: absolute;
+
+      .profile-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
         bottom: 5px;
-        right: 5px;
+        left: 5px;
+        position: absolute;
+      }
+
+      .profile {
+        font-size: 15px;
+        margin-right: 10px;
+      }
+
+      .signout {
+        font-size: 15px;
         text-align: right;
         color: #fff;
         background-color: #e83535;
         border-radius: 10px;
         padding: 5px 10px;
         cursor: pointer;
+        text-decoration: none;
       }
 
       .signout:hover {
@@ -66,18 +77,24 @@
         color: #f44242;
         text-decoration: none;
       }
-   
     </style>
   </head>
   <body>
     <h1>Menu</h1>
     <div>
-      <a href="/entrees" class = "menu-button">Entrees</a>
-      <a href="/drinks" class = "menu-button">Drinks</a>
-      <a href="/salads" class = "menu-button">Salads</a>
-      <a href="/sides" class = "menu-button">Sides</a>
-      <a href="/treats" class = "menu-button">Treats</a>
+      <a href="/entrees" class="menu-button">Entrees</a>
+      <a href="/drinks" class="menu-button">Drinks</a>
+      <a href="/salads" class="menu-button">Salads</a>
+      <a href="/sides" class="menu-button">Sides</a>
+      <a href="/treats" class="menu-button">Treats</a>
     </div>
-    <a href="/logout" class="signout">Sign Out</a>
+
+    <div class="profile-container">
+      <div class="profile">
+        <strong>Name</strong>: <%= user.displayName %> <br />
+        <strong>Role</strong>: <%= userRole %> <br />
+      </div>
+      <a href="/logout" class="signout">Sign Out</a>
+    </div>
   </body>
 </html>

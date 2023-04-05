@@ -47,12 +47,24 @@
         cursor: pointer;
         border-radius: 5px;
       }
-      .signout {
-        margin-right: 10px;
-        margin-bottom: 10px;
-        position: absolute;
+
+      .profile-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
         bottom: 5px;
         left: 5px;
+        position: relative;
+        margin-top: 15px;
+      }
+
+      .profile {
+        font-size: 15px;
+        margin-right: 10px;
+      }
+
+      .signout {
+        font-size: 15px;
         text-align: right;
         color: #fff;
         background-color: #e83535;
@@ -89,6 +101,12 @@
         <% } %>
       </tbody>
     </table>
-    <a href="/logout" class="signout">Sign Out</a>
+    <div class="profile-container">
+      <div class="profile">
+        <strong>Name</strong>: <%= user.displayName %> <br />
+        <strong>Role</strong>: <%= userRole %> <br />
+      </div>
+      <a href="/logout" class="signout">Sign Out</a>
+    </div>
   </body>
 </html>

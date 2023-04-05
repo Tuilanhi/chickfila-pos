@@ -142,68 +142,83 @@ const userRoles = [
 
 /* Menu */
 const entreeItems = [
-  { name: "Chicken Sandwich", price: 9.99 },
-  { name: "Deluxe Chicken Sandwich", price: 8.99 },
-  { name: "Chicken Nuggets", price: 7.99 },
+  { name: "Chicken Sandwich", price: 4.49 },
+  { name: "Deluxe Chicken Sandwich", price: 5.19 },
+  { name: "Spicy Chicken Sandwich", price: 4.89 },
+  { name: "Spicy Deluxe Chicken Sandwich", price: 5.59 },
+  { name: "Chicken Nuggets (8 pieces)", price: 4.55 },
+  { name: "Chicken Nuggets (12 pieces)", price: 6.29 },
+  { name: "Grilled Nuggets (8 pieces)", price: 5.35 },
+  { name: "Grilled Nuggets (12 pieces)", price: 7.69 },
+  { name: "Grilled Chicken Sandwich", price: 6.15 },
+  { name: "Grilled Chicken Club Sandwich", price: 7.79 },
+  { name: "Grilled Chicken Cool Wrap", price: 7.45 },
 ];
 
 const drinkItems = [
-  { name: "Coca-Cola", price: 2.5 },
-  { name: "Sprite", price: 2.5 },
-  { name: "Milkshake", price: 4.39 },
-  { name: "Dr. Pepper", price: 2.5 },
-  { name: "Frosted Lemonade", price: 3.39 },
-  { name: "Frosted Coffee", price: 3.89 },
-  { name: "Sweet Tea", price: 2.0 },
-  { name: "Unsweet Tea", price: 2.0 },
-  { name: "Lemonade", price: 2.5 },
+  { name: "Diet Lemonade (medium)", price: 2.39 },
+  { name: "Diet Lemonade (large)", price: 2.89 },
+  { name: "Regular Lemonade (medium)", price: 2.39 },
+  { name: "Regular Lemonade (large)", price: 2.89 },
+  { name: "Chick-fil-A Sunjoy (medium)", price: 2.39 },
+  { name: "Chick-fil-A Sunjoy (large)", price: 2.89 },
+  { name: "Soft Drink (medium)", price: 1.99 },
+  { name: "Soft Drink (large)", price: 2.45 },
+  { name: "Sweet Tea (medium)", price: 2.09 },
+  { name: "Sweet Tea (large)", price: 2.39 },
+  { name: "Unsweet Tea (medium)", price: 2.09 },
+  { name: "Unsweet Tea (large)", price: 2.39 },
+  { name: "Bottled Water", price: 1.95 },
+  { name: "Cold Brew Iced Coffee", price: 3.09 },
 ];
 
 const saladItems = [
-  { name: "Cobb Salad", price: 8.49 },
-  { name: "Spicy Southwest Salad", price: 8.29 },
-  { name: "Market Salad", price: 8.19 },
-  { name: "Grilled Market Salad", price: 8.19 },
-  { name: "Spicy Southwest Salad with Grilled Chicken", price: 8.29 },
-  { name: "Grilled Chicken Cool Wrap", price: 7.99 },
+  { name: "Market Salad", price: 9.45 },
+  { name: "Spicy Southwest Salad", price: 9.45 },
+  { name: "Cobb Salad", price: 9.25 },
 ];
 
 const sideItems = [
-  { name: "Waffle Potato Fries", price: 2.79 },
-  { name: "Mac & Cheese", price: 3.89 },
-  { name: "Side Salad", price: 3.19 },
-  { name: "Fruit Cup", price: 3.19 },
-  { name: "Greek Yogurt Parfait", price: 3.09 },
-  { name: "Chicken Noodle Soup", price: 3.89 },
+  { name: "Side Salad", price: 3.79 },
+  { name: "Fruit Cup", price: 3.79 },
+  { name: "Waffle Potato Fries (small)", price: 1.89 },
+  { name: "Waffle Potato Fries (medium)", price: 2.29 },
+  { name: "Waffle Potato Fries (large)", price: 2.69 },
 ];
 
 const treatItems = [
-  { name: "Chocolate Chunk Cookie", price: 1.39 },
-  { name: "Icedream Cone", price: 1.49 },
-  { name: "Chocolate Fudge Brownie", price: 1.89 },
+  { name: "Cookies & Cream Milkshake", price: 4.19 },
+  { name: "Chocolate Milkshake", price: 4.19 },
+  { name: "Strawberry Milkshake", price: 4.19 },
+  { name: "Vanilla Milkshake", price: 4.19 },
+  { name: "Frosted Lemonade", price: 4.09 },
+  { name: "Frosted Coffee", price: 4.09 },
+  { name: "Icecream Cone", price: 1.65 },
+  { name: "Chocolate Chunk Cookie", price: 1.49 },
+  { name: "Chocolate Fudge Brownie", price: 2.09 },
 ];
 
 // redirect to entrees menu page
 app.get("/entrees", (req, res) => {
-  res.render("menu/entrees", { entreeItems });
+  res.render("menu/entrees", { user: userProfile, entreeItems });
 });
 
 // redirect to drinks menu page
 app.get("/drinks", (req, res) => {
-  res.render("menu/drinks", { drinkItems });
+  res.render("menu/drinks", { user: userProfile, drinkItems });
 });
 
 // redirect to salads menu page
 app.get("/salads", (req, res) => {
-  res.render("menu/salads", { saladItems });
+  res.render("menu/salads", { user: userProfile, saladItems });
 });
 
 // redirect to sides menu page
 app.get("/sides", (req, res) => {
-  res.render("menu/sides", { sideItems });
+  res.render("menu/sides", { user: userProfile, sideItems });
 });
 
 // redirect to treats menu page
 app.get("/treats", (req, res) => {
-  res.render("menu/treats", { treatItems });
+  res.render("menu/treats", { user: userProfile, treatItems });
 });
