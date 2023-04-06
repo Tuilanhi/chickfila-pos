@@ -6,6 +6,9 @@ const passport = require("passport");
 const port = process.env.PORT || 3000;
 require("dotenv").config();
 
+const bodyParser = require("body-parser");
+const request = require("request");
+
 var userProfile;
 
 /*  Google AUTH  */
@@ -50,7 +53,10 @@ app.use(
 
 // Default login page
 app.get("/", function (req, res) {
-  res.render("pages/auth");
+  res.render("pages/auth", {
+    weather: null,
+    error: null,
+  });
 });
 
 // Check if user is logged in
@@ -107,7 +113,10 @@ app.get(
 app.get("/dashboard", isLoggedIn, (req, res) => {
   if (isManager()) {
     userRole = userRoles[0].role;
-    res.render("pages/dashboard", { user: userProfile, userRole });
+    res.render("pages/dashboard", {
+      user: userProfile,
+      userRole,
+    });
   } else if (isServer()) {
     userRole = userRoles[1].role;
     res.render("pages/customerdashboard", { user: userProfile, userRoles });
@@ -218,4 +227,71 @@ app.get("/sides", (req, res) => {
 // redirect to treats menu page
 app.get("/treats", (req, res) => {
   res.render("menu/treats", { user: userProfile, treatItems });
+});
+
+/* Weather API */
+
+const apiKey = `${process.env.WEATHER_API_KEY}`;
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// On a post request, the app shall data from OpenWeatherMap using the given arguments
+app.post("/", function (req, res) {
+  // Get city name passed in the form
+  let city = req.body.city;
+
+  // Use that city name to fetch data
+  // Use the API_KEY in the '.env' file
+  let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+
+  // Request for data using the URL
+  request(url, function (err, response, body) {
+    // On return, check the json data fetched
+    if (err) {
+      res.render("pages/auth", {
+        weather: null,
+        error: "Error, please try again",
+      });
+    } else {
+      let weather = JSON.parse(body);
+
+      if (weather.main == undefined) {
+        res.render("pages/auth", {
+          weather: null,
+          error: "Error, please try again",
+        });
+      } else {
+        // we shall use the data got to set up our output
+        let place = `${weather.name}, ${weather.sys.country}`,
+          /* We shall calculate the current timezone using the data fetched*/
+          weatherTimezone = `${new Date(
+            weather.dt * 1000 - weather.timezone * 1000
+          )}`;
+        let weatherTemp = `${weather.main.temp}`,
+          /* We shall fetch the weather icon and its size using the icon data*/
+          weatherIcon = `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`,
+          main = `${weather.weather[0].main}`,
+          weatherFahrenheit;
+        weatherFahrenheit = (weatherTemp * 9) / 5 + 32;
+
+        // We shall also round off the value of the degrees fahrenheit calculated into two decimal places
+        function roundToTwo(num) {
+          return +(Math.round(num + "e+2") + "e-2");
+        }
+        weatherFahrenheit = roundToTwo(weatherFahrenheit);
+
+        // We shall now render the data to our page before displaying it out
+        res.render("pages/auth", {
+          weather: weather,
+          place: place,
+          temp: weatherTemp,
+          icon: weatherIcon,
+          timezone: weatherTimezone,
+          fahrenheit: weatherFahrenheit,
+          main: main,
+          error: null,
+        });
+      }
+    }
+  });
 });
