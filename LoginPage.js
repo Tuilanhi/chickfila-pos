@@ -116,13 +116,25 @@ app.get("/dashboard", isLoggedIn, (req, res) => {
     res.render("pages/dashboard", {
       user: userProfile,
       userRole,
+      weather: null,
+      error: null,
     });
   } else if (isServer()) {
     userRole = userRoles[1].role;
-    res.render("pages/customerdashboard", { user: userProfile, userRoles });
+    res.render("pages/customerdashboard", {
+      user: userProfile,
+      userRole,
+      weather: null,
+      error: null,
+    });
   } else {
     userRole = userRoles[2].role;
-    res.render("pages/customerdashboard", { user: userProfile, userRoles });
+    res.render("pages/customerdashboard", {
+      user: userProfile,
+      userRole,
+      weather: null,
+      error: null,
+    });
   }
 });
 
@@ -139,14 +151,14 @@ app.get("/logout", function (req, res, next) {
   });
 });
 
-/* Roles */
+/* Roles Section */
 const userRoles = [
   { role: "Manager" },
   { role: "Server" },
   { role: "Customer" },
 ];
 
-/* Menu */
+/* Menu Section */
 const entreeItems = [
   { name: "Chicken Sandwich", price: 4.49 },
   { name: "Deluxe Chicken Sandwich", price: 5.19 },
@@ -206,37 +218,62 @@ const treatItems = [
 
 // redirect to entrees menu page
 app.get("/entrees", (req, res) => {
-  res.render("menu/entrees", { user: userProfile, entreeItems });
+  res.render("menu/entrees", {
+    user: userProfile,
+    entreeItems,
+    weather: null,
+    error: null,
+  });
 });
 
 // redirect to drinks menu page
 app.get("/drinks", (req, res) => {
-  res.render("menu/drinks", { user: userProfile, drinkItems });
+  res.render("menu/drinks", {
+    user: userProfile,
+    drinkItems,
+    weather: null,
+    error: null,
+  });
 });
 
 // redirect to salads menu page
 app.get("/salads", (req, res) => {
-  res.render("menu/salads", { user: userProfile, saladItems });
+  res.render("menu/salads", {
+    user: userProfile,
+    saladItems,
+    weather: null,
+    error: null,
+  });
 });
 
 // redirect to sides menu page
 app.get("/sides", (req, res) => {
-  res.render("menu/sides", { user: userProfile, sideItems });
+  res.render("menu/sides", {
+    user: userProfile,
+    sideItems,
+    weather: null,
+    error: null,
+  });
 });
 
 // redirect to treats menu page
 app.get("/treats", (req, res) => {
-  res.render("menu/treats", { user: userProfile, treatItems });
+  res.render("menu/treats", {
+    user: userProfile,
+    treatItems,
+    weather: null,
+    error: null,
+  });
 });
 
-/* Weather API */
+/* Weather API Section*/
 
 const apiKey = `${process.env.WEATHER_API_KEY}`;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// On a post request, the app shall data from OpenWeatherMap using the given arguments
-app.post("/", function (req, res) {
+// This function takes in a page to render and output the weather upon request using openWeatherAPI
+function renderWeather(req, res, page) {
   // Get city name passed in the form
   let city = req.body.city;
 
@@ -248,7 +285,7 @@ app.post("/", function (req, res) {
   request(url, function (err, response, body) {
     // On return, check the json data fetched
     if (err) {
-      res.render("pages/auth", {
+      res.render(page, {
         weather: null,
         error: "Error, please try again",
       });
@@ -256,7 +293,7 @@ app.post("/", function (req, res) {
       let weather = JSON.parse(body);
 
       if (weather.main == undefined) {
-        res.render("pages/auth", {
+        res.render(page, {
           weather: null,
           error: "Error, please try again",
         });
@@ -280,8 +317,18 @@ app.post("/", function (req, res) {
         }
         weatherFahrenheit = roundToTwo(weatherFahrenheit);
 
+        userRole = "";
+        if (isManager()) {
+          userRole = userRoles[0].role;
+        } else if (isServer()) {
+          userRole = userRoles[1].role;
+        } else {
+          userRole = userRoles[2].role;
+        }
         // We shall now render the data to our page before displaying it out
-        res.render("pages/auth", {
+        res.render(page, {
+          user: userProfile,
+          userRole,
           weather: weather,
           place: place,
           temp: weatherTemp,
@@ -290,8 +337,53 @@ app.post("/", function (req, res) {
           fahrenheit: weatherFahrenheit,
           main: main,
           error: null,
+          treatItems,
+          entreeItems,
+          drinkItems,
+          sideItems,
+          saladItems,
         });
       }
     }
   });
+}
+
+// On a post request, the app shall data from OpenWeatherMap using the given arguments
+// render Login page to display weather
+app.post("/", function (req, res) {
+  renderWeather(req, res, "pages/auth");
+});
+
+// render customer's dashboard to display weather
+app.post("/dashboard", function (req, res) {
+  if (isManager()) {
+    renderWeather(req, res, "pages/dashboard");
+  } else {
+    renderWeather(req, res, "pages/customerdashboard");
+  }
+});
+
+// render entrees page to display weather
+app.post("/entrees", function (req, res) {
+  renderWeather(req, res, "menu/entrees");
+});
+
+// render drinks page to display weather
+app.post("/drinks", function (req, res) {
+  renderWeather(req, res, "menu/drinks");
+});
+
+// render salads page to display weather
+app.post("/salads", function (req, res) {
+  renderWeather(req, res, "menu/salads");
+});
+
+// render sides page to display weather
+app.post("/sides", function (req, res) {
+  renderWeather(req, res, "menu/sides");
+});
+
+// render treats page to display weather
+app.post("/treats", function (req, res) {
+  renderWeather(req, res, "menu/treats");
 });
