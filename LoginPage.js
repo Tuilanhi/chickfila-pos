@@ -53,10 +53,7 @@ app.use(
 
 // Default login page
 app.get("/", function (req, res) {
-  res.render("pages/auth", {
-    weather: null,
-    error: null,
-  });
+  res.render("pages/auth");
 });
 
 // Check if user is logged in
@@ -286,6 +283,7 @@ function renderWeather(req, res, page) {
     // On return, check the json data fetched
     if (err) {
       res.render(page, {
+        user: userProfile,
         weather: null,
         error: "Error, please try again",
       });
@@ -294,6 +292,7 @@ function renderWeather(req, res, page) {
 
       if (weather.main == undefined) {
         res.render(page, {
+          user: userProfile,
           weather: null,
           error: "Error, please try again",
         });
@@ -349,11 +348,6 @@ function renderWeather(req, res, page) {
 }
 
 // On a post request, the app shall data from OpenWeatherMap using the given arguments
-// render Login page to display weather
-app.post("/", function (req, res) {
-  renderWeather(req, res, "pages/auth");
-});
-
 // render customer's dashboard to display weather
 app.post("/dashboard", function (req, res) {
   if (isManager()) {
