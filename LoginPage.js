@@ -284,6 +284,11 @@ function renderWeather(req, res, page) {
     if (err) {
       res.render(page, {
         user: userProfile,
+        treatItems,
+        entreeItems,
+        drinkItems,
+        sideItems,
+        saladItems,
         weather: null,
         error: "Error, please try again",
       });
@@ -293,6 +298,11 @@ function renderWeather(req, res, page) {
       if (weather.main == undefined) {
         res.render(page, {
           user: userProfile,
+          treatItems,
+          entreeItems,
+          drinkItems,
+          sideItems,
+          saladItems,
           weather: null,
           error: "Error, please try again",
         });
