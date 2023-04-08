@@ -358,6 +358,7 @@ function renderWeather(req, res, page) {
 }
 
 // On a post request, the app shall data from OpenWeatherMap using the given arguments
+
 // render customer's dashboard to display weather
 app.post("/dashboard", function (req, res) {
   if (isManager()) {
