@@ -1,3 +1,4 @@
+const { del } = require("request");
 const Database = require("./Database");
 
 class testDatabase {
@@ -6,20 +7,26 @@ class testDatabase {
   }
 
   async getFirstFiveItems(command) {
-    await this.db.connect();
-
     const sql = command;
     const items = await this.db.query(sql);
 
-    await this.db.disconnect();
-
     return items;
   }
+
 }
 
 async function main() {
   const menu = new testDatabase();
-  const items = await menu.getFirstFiveItems("SELECT * FROM menu LIMIT 5;");
+  menu.db.connect();
+  
+  const items = await menu.getFirstFiveItems("SELECT * FROM ingredients;");
+
+  const del_sql = "DELETE FROM ingredients WHERE ingredient IN('Salt');";
+  const ins_sql = "INSERT INTO ingredients (ingredient, quantity, unit, type) VALUES ('Salt', 200, 'gallons', 'food');";
+  menu.db.delete(del_sql);
+
+  
+  await menu.db.disconnect();
   console.log(items);
 }
 
