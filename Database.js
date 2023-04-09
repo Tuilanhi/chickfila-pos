@@ -30,6 +30,22 @@ class Database {
     }
   }
 
+    async insert(sql, params) {
+    try {
+      await this.client.query(sql, params);
+    } catch (err) {
+      console.error("Error executing insert", err.stack);
+    }
+  }
+
+  async delete(sql, params) {
+    try {
+      await this.client.query(sql, params);
+    } catch (err) {
+      console.error("Error executing delete", err.stack);
+    }
+  }
+
   async disconnect() {
     try {
       await this.client.end();
