@@ -1,18 +1,19 @@
-/*  EXPRESS */
+/* Modules */
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const express = require("express");
 const app = express();
 const session = require("express-session");
 const passport = require("passport");
 const port = process.env.PORT || 3000;
-require("dotenv").config();
-
 const bodyParser = require("body-parser");
 const request = require("request");
+require("dotenv").config();
 
 var userProfile;
+var userRole = "";
 
 /*  Google AUTH  */
-
 var GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 
 passport.use(
@@ -65,6 +66,8 @@ function isLoggedIn(req, res, next) {
 function isManager() {
   const result = userProfile.emails[0].value;
 
+  userRole = userRoles[0].role;
+
   // Returns true if the user profile is a manager, and false otherwise
   const manager = [
     "vuthuynhi@tamu.edu",
@@ -77,6 +80,8 @@ function isManager() {
 
 function isServer() {
   const result = userProfile.emails[0].value;
+
+  userRole = userRoles[1].role;
 
   const server = ["vuthuynhi05@gmail.com", "justin.abraham@saseconnect.org"];
 
@@ -103,13 +108,19 @@ app.get(
   })
 );
 
+/* Roles Section */
+const userRoles = [
+  { role: "Manager" },
+  { role: "Server" },
+  { role: "Customer" },
+];
+
 /* 
 / After logging in successfully the dashboard page will pop up
 / If the user is a manager, the manager page will pop up instead
 */
 app.get("/dashboard", isLoggedIn, (req, res) => {
   if (isManager()) {
-    userRole = userRoles[0].role;
     res.render("pages/dashboard", {
       user: userProfile,
       userRole,
@@ -117,7 +128,6 @@ app.get("/dashboard", isLoggedIn, (req, res) => {
       error: null,
     });
   } else if (isServer()) {
-    userRole = userRoles[1].role;
     res.render("pages/customerdashboard", {
       user: userProfile,
       userRole,
@@ -147,13 +157,6 @@ app.get("/logout", function (req, res, next) {
     res.redirect("/");
   });
 });
-
-/* Roles Section */
-const userRoles = [
-  { role: "Manager" },
-  { role: "Server" },
-  { role: "Customer" },
-];
 
 /* Menu Section */
 const entreeItems = [
@@ -217,6 +220,7 @@ const treatItems = [
 app.get("/entrees", (req, res) => {
   res.render("menu/entrees", {
     user: userProfile,
+    userRole,
     entreeItems,
     weather: null,
     error: null,
@@ -227,6 +231,7 @@ app.get("/entrees", (req, res) => {
 app.get("/drinks", (req, res) => {
   res.render("menu/drinks", {
     user: userProfile,
+    userRole,
     drinkItems,
     weather: null,
     error: null,
@@ -237,6 +242,7 @@ app.get("/drinks", (req, res) => {
 app.get("/salads", (req, res) => {
   res.render("menu/salads", {
     user: userProfile,
+    userRole,
     saladItems,
     weather: null,
     error: null,
@@ -247,6 +253,7 @@ app.get("/salads", (req, res) => {
 app.get("/sides", (req, res) => {
   res.render("menu/sides", {
     user: userProfile,
+    userRole,
     sideItems,
     weather: null,
     error: null,
@@ -257,6 +264,7 @@ app.get("/sides", (req, res) => {
 app.get("/treats", (req, res) => {
   res.render("menu/treats", {
     user: userProfile,
+    userRole,
     treatItems,
     weather: null,
     error: null,
@@ -278,26 +286,13 @@ function renderWeather(req, res, page) {
   // Use the API_KEY in the '.env' file
   let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
 
-  // Request for data using the URL
-  request(url, function (err, response, body) {
-    // On return, check the json data fetched
-    if (err) {
-      res.render(page, {
-        user: userProfile,
-        treatItems,
-        entreeItems,
-        drinkItems,
-        sideItems,
-        saladItems,
-        weather: null,
-        error: "Error, please try again",
-      });
-    } else {
-      let weather = JSON.parse(body);
-
+  fetch(url)
+    .then((res) => res.json())
+    .then((weather) => {
       if (weather.main == undefined) {
         res.render(page, {
           user: userProfile,
+          userRole,
           treatItems,
           entreeItems,
           drinkItems,
@@ -307,26 +302,22 @@ function renderWeather(req, res, page) {
           error: "Error, please try again",
         });
       } else {
-        // we shall use the data got to set up our output
         let place = `${weather.name}, ${weather.sys.country}`,
-          /* We shall calculate the current timezone using the data fetched*/
           weatherTimezone = `${new Date(
             weather.dt * 1000 - weather.timezone * 1000
           )}`;
         let weatherTemp = `${weather.main.temp}`,
-          /* We shall fetch the weather icon and its size using the icon data*/
           weatherIcon = `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`,
           main = `${weather.weather[0].main}`,
           weatherFahrenheit;
         weatherFahrenheit = (weatherTemp * 9) / 5 + 32;
 
-        // We shall also round off the value of the degrees fahrenheit calculated into two decimal places
         function roundToTwo(num) {
           return +(Math.round(num + "e+2") + "e-2");
         }
         weatherFahrenheit = roundToTwo(weatherFahrenheit);
 
-        userRole = "";
+        var userRole = "";
         if (isManager()) {
           userRole = userRoles[0].role;
         } else if (isServer()) {
@@ -334,7 +325,7 @@ function renderWeather(req, res, page) {
         } else {
           userRole = userRoles[2].role;
         }
-        // We shall now render the data to our page before displaying it out
+
         res.render(page, {
           user: userProfile,
           userRole,
@@ -353,8 +344,20 @@ function renderWeather(req, res, page) {
           saladItems,
         });
       }
-    }
-  });
+    })
+    .catch((err) => {
+      res.render(page, {
+        user: userProfile,
+        userRole,
+        treatItems,
+        entreeItems,
+        drinkItems,
+        sideItems,
+        saladItems,
+        weather: null,
+        error: "Error, please try again",
+      });
+    });
 }
 
 // On a post request, the app shall data from OpenWeatherMap using the given arguments
