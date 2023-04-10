@@ -7,7 +7,6 @@ const session = require("express-session");
 const passport = require("passport");
 const port = process.env.PORT || 3000;
 const bodyParser = require("body-parser");
-const request = require("request");
 require("dotenv").config();
 
 var userProfile;
@@ -317,7 +316,6 @@ function renderWeather(req, res, page) {
         }
         weatherFahrenheit = roundToTwo(weatherFahrenheit);
 
-        var userRole = "";
         if (isManager()) {
           userRole = userRoles[0].role;
         } else if (isServer()) {
