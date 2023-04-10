@@ -1,4 +1,4 @@
-/* Modules */
+/* MODULES */
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const express = require("express");
@@ -12,100 +12,7 @@ require("dotenv").config();
 var userProfile;
 var userRole = "";
 
-/*  Google AUTH  */
-var GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
-
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/callback",
-    },
-    function (accessToken, refreshToken, profile, done) {
-      userProfile = profile;
-      return done(null, userProfile);
-    }
-  )
-);
-
-passport.serializeUser(function (user, cb) {
-  cb(null, user);
-});
-
-passport.deserializeUser(function (obj, cb) {
-  cb(null, obj);
-});
-
-/* Middleware */
-
-app.set("view engine", "ejs");
-
-app.use(express.static("views"));
-
-app.use(
-  session({
-    resave: false,
-    saveUninitialized: true,
-    secret: "SECRET",
-  })
-);
-
-// Default login page
-app.get("/", function (req, res) {
-  res.render("pages/auth");
-});
-
-// Check if user is logged in
-function isLoggedIn(req, res, next) {
-  req.user ? next() : res.sendStatus(401);
-}
-
-// Checks to see if the user's email is a manager
-function isManager() {
-  const result = userProfile.emails[0].value;
-
-  userRole = userRoles[0].role;
-
-  // Returns true if the user profile is a manager, and false otherwise
-  const manager = [
-    "vuthuynhi@tamu.edu",
-    "justin.a@tamu.edu",
-    "pablopineda@tamu.edu",
-    "raquel.oseguera@tamu.edu",
-  ];
-  return manager.includes(result);
-}
-
-function isServer() {
-  const result = userProfile.emails[0].value;
-
-  userRole = userRoles[1].role;
-
-  const server = ["vuthuynhi05@gmail.com", "justin.abraham@saseconnect.org"];
-
-  return server.includes(result);
-}
-
-app.listen(port, () => console.log("App listening on port " + port));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Authenticate user's google credentials
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
-
-// returns callback after authenticating user's google credentials
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    successRedirect: "/dashboard",
-    failureRedirect: "/error",
-  })
-);
+/* STATIC HASHMAPS */
 
 /* Roles Section */
 const userRoles = [
@@ -113,49 +20,6 @@ const userRoles = [
   { role: "Server" },
   { role: "Customer" },
 ];
-
-/* 
-/ After logging in successfully the dashboard page will pop up
-/ If the user is a manager, the manager page will pop up instead
-*/
-app.get("/dashboard", isLoggedIn, (req, res) => {
-  if (isManager()) {
-    res.render("pages/dashboard", {
-      user: userProfile,
-      userRole,
-      weather: null,
-      error: null,
-    });
-  } else if (isServer()) {
-    res.render("pages/customerdashboard", {
-      user: userProfile,
-      userRole,
-      weather: null,
-      error: null,
-    });
-  } else {
-    userRole = userRoles[2].role;
-    res.render("pages/customerdashboard", {
-      user: userProfile,
-      userRole,
-      weather: null,
-      error: null,
-    });
-  }
-});
-
-// If failed to login, redirect to error page
-app.get("/error", (req, res) => res.send("error logging in"));
-
-// After user had logged out, redirect to login page
-app.get("/logout", function (req, res, next) {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/");
-  });
-});
 
 /* Menu Section */
 const entreeItems = [
@@ -215,10 +79,148 @@ const treatItems = [
   { name: "Chocolate Fudge Brownie", price: 2.09 },
 ];
 
+/*  Google AUTH  */
+var GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:3000/auth/google/callback",
+    },
+    function (accessToken, refreshToken, profile, done) {
+      userProfile = profile;
+      return done(null, userProfile);
+    }
+  )
+);
+
+passport.serializeUser(function (user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function (obj, cb) {
+  cb(null, obj);
+});
+
+/* MIDDLEWARE */
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.set("view engine", "ejs");
+
+app.use(express.static("views"));
+
+app.use(
+  session({
+    resave: false,
+    saveUninitialized: true,
+    secret: "SECRET",
+  })
+);
+
+app.listen(port, () => console.log("App listening on port " + port));
+
+/* Login Page Default*/
+app.get("/", function (req, res) {
+  res.render("pages/auth");
+});
+
+// Check if user is logged in
+function isLoggedIn(req, res, next) {
+  req.user ? next() : res.sendStatus(401);
+}
+
+// Checks to see if the user profile is a manager
+function isManager() {
+  const result = userProfile.emails[0].value;
+
+  userRole = userRoles[0].role;
+
+  // Returns true if the user profile is a manager, and false otherwise
+  const manager = [
+    "vuthuynhi@tamu.edu",
+    "justin.a@tamu.edu",
+    "pablopineda@tamu.edu",
+    "raquel.oseguera@tamu.edu",
+  ];
+  return manager.includes(result);
+}
+
+// Checks to see if the user profile is a server
+function isServer() {
+  const result = userProfile.emails[0].value;
+
+  userRole = userRoles[1].role;
+
+  const server = ["vuthuynhi05@gmail.com", "justin.abraham@saseconnect.org"];
+
+  return server.includes(result);
+}
+
+// Authenticate user's google credentials for customers
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+// returns callback after authenticating user's google credentials
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    successRedirect: "/dashboard",
+    failureRedirect: "/error",
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+/* GOOGLE USERS SECTION */
+app.get("/dashboard", isLoggedIn, (req, res) => {
+  if (isManager()) {
+    res.render("manager-server/dashboard", {
+      userProfile,
+      userRole,
+      weather: null,
+      error: null,
+    });
+  } else if (isServer()) {
+    res.render("customer/customerdashboard", {
+      userProfile,
+      userRole,
+      weather: null,
+      error: null,
+    });
+  } else {
+    userRole = userRoles[2].role;
+    res.render("customer/customerdashboard", {
+      userProfile,
+      userRole,
+      weather: null,
+      error: null,
+    });
+  }
+});
+
+// If failed to login, redirect to error page
+app.get("/error", (req, res) => res.send("error logging in"));
+
+// After user had logged out, redirect to login page
+app.get("/logout", function (req, res, next) {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+});
+
 // redirect to entrees menu page
 app.get("/entrees", (req, res) => {
-  res.render("menu/entrees", {
-    user: userProfile,
+  res.render("customer/entrees", {
+    userProfile,
     userRole,
     entreeItems,
     weather: null,
@@ -228,8 +230,8 @@ app.get("/entrees", (req, res) => {
 
 // redirect to drinks menu page
 app.get("/drinks", (req, res) => {
-  res.render("menu/drinks", {
-    user: userProfile,
+  res.render("customer/drinks", {
+    userProfile,
     userRole,
     drinkItems,
     weather: null,
@@ -239,8 +241,8 @@ app.get("/drinks", (req, res) => {
 
 // redirect to salads menu page
 app.get("/salads", (req, res) => {
-  res.render("menu/salads", {
-    user: userProfile,
+  res.render("customer/salads", {
+    userProfile,
     userRole,
     saladItems,
     weather: null,
@@ -250,8 +252,8 @@ app.get("/salads", (req, res) => {
 
 // redirect to sides menu page
 app.get("/sides", (req, res) => {
-  res.render("menu/sides", {
-    user: userProfile,
+  res.render("customer/sides", {
+    userProfile,
     userRole,
     sideItems,
     weather: null,
@@ -261,8 +263,8 @@ app.get("/sides", (req, res) => {
 
 // redirect to treats menu page
 app.get("/treats", (req, res) => {
-  res.render("menu/treats", {
-    user: userProfile,
+  res.render("customer/treats", {
+    userProfile,
     userRole,
     treatItems,
     weather: null,
@@ -290,7 +292,7 @@ function renderWeather(req, res, page) {
     .then((weather) => {
       if (weather.main == undefined) {
         res.render(page, {
-          user: userProfile,
+          userProfile,
           userRole,
           treatItems,
           entreeItems,
@@ -325,7 +327,7 @@ function renderWeather(req, res, page) {
         }
 
         res.render(page, {
-          user: userProfile,
+          userProfile,
           userRole,
           weather: weather,
           place: place,
@@ -345,7 +347,88 @@ function renderWeather(req, res, page) {
     })
     .catch((err) => {
       res.render(page, {
-        user: userProfile,
+        userProfile,
+        userRole,
+        treatItems,
+        entreeItems,
+        drinkItems,
+        sideItems,
+        saladItems,
+        weather: null,
+        error: "Error, please try again",
+      });
+    });
+}
+
+function guestRenderWeather(req, res, page, customerName) {
+  // Get city name passed in the form
+  let city = req.body.city;
+
+  // Use that city name to fetch data
+  // Use the API_KEY in the '.env' file
+  let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+
+  fetch(url)
+    .then((res) => res.json())
+    .then((weather) => {
+      if (weather.main == undefined) {
+        res.render(page, {
+          customerName,
+          userRole,
+          treatItems,
+          entreeItems,
+          drinkItems,
+          sideItems,
+          saladItems,
+          weather: null,
+          error: "Error, please try again",
+        });
+      } else {
+        let place = `${weather.name}, ${weather.sys.country}`,
+          weatherTimezone = `${new Date(
+            weather.dt * 1000 - weather.timezone * 1000
+          )}`;
+        let weatherTemp = `${weather.main.temp}`,
+          weatherIcon = `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`,
+          main = `${weather.weather[0].main}`,
+          weatherFahrenheit;
+        weatherFahrenheit = (weatherTemp * 9) / 5 + 32;
+
+        function roundToTwo(num) {
+          return +(Math.round(num + "e+2") + "e-2");
+        }
+        weatherFahrenheit = roundToTwo(weatherFahrenheit);
+
+        if (isManager()) {
+          userRole = userRoles[0].role;
+        } else if (isServer()) {
+          userRole = userRoles[1].role;
+        } else {
+          userRole = userRoles[2].role;
+        }
+
+        res.render(page, {
+          customerName,
+          userRole,
+          weather: weather,
+          place: place,
+          temp: weatherTemp,
+          icon: weatherIcon,
+          timezone: weatherTimezone,
+          fahrenheit: weatherFahrenheit,
+          main: main,
+          error: null,
+          treatItems,
+          entreeItems,
+          drinkItems,
+          sideItems,
+          saladItems,
+        });
+      }
+    })
+    .catch((err) => {
+      res.render(page, {
+        customerName,
         userRole,
         treatItems,
         entreeItems,
@@ -363,33 +446,42 @@ function renderWeather(req, res, page) {
 // render customer's dashboard to display weather
 app.post("/dashboard", function (req, res) {
   if (isManager()) {
-    renderWeather(req, res, "pages/dashboard");
+    renderWeather(req, res, "manager/dashboard");
   } else {
-    renderWeather(req, res, "pages/customerdashboard");
+    renderWeather(req, res, "customer/customerdashboard");
   }
 });
 
 // render entrees page to display weather
 app.post("/entrees", function (req, res) {
-  renderWeather(req, res, "menu/entrees");
+  renderWeather(req, res, "customer/entrees");
 });
 
 // render drinks page to display weather
 app.post("/drinks", function (req, res) {
-  renderWeather(req, res, "menu/drinks");
+  renderWeather(req, res, "customer/drinks");
 });
 
 // render salads page to display weather
 app.post("/salads", function (req, res) {
-  renderWeather(req, res, "menu/salads");
+  renderWeather(req, res, "customer/salads");
 });
 
 // render sides page to display weather
 app.post("/sides", function (req, res) {
-  renderWeather(req, res, "menu/sides");
+  renderWeather(req, res, "customer/sides");
 });
 
 // render treats page to display weather
 app.post("/treats", function (req, res) {
-  renderWeather(req, res, "menu/treats");
+  renderWeather(req, res, "customer/treats");
+});
+
+/* GUEST CHECKOUT SECTION */
+
+var customerName;
+
+// Redirect to login page after signout
+app.get("/guest", function (req, res) {
+  res.render("guest/customerdashboard");
 });
