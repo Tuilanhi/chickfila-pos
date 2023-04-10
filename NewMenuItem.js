@@ -29,7 +29,6 @@ class NewMenuItem {
     }
 
     try {
-      this.db.connect();
       console.log('Opened database successfully');
 
       // Inserting new Item into Bridge in database
@@ -61,7 +60,6 @@ class NewMenuItem {
       console.error('Error while adding new item:', e);
       throw e;
     }
-    await this.db.disconnect();
   }
 }
 
