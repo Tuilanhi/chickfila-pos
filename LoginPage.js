@@ -665,3 +665,30 @@ app.post("/excessReport", async (req, res) => {
     endDate,
   });
 });
+
+//Cart
+
+const currentCart = [
+  {
+    name: "Chicken Sandwich",
+    price: 5.99
+  },
+  {
+    name: "Waffle Fries",
+    price: 2.49
+  },
+  {
+    name: "Lemonade",
+    price: 1.99
+  }
+];
+
+//render the cart
+app.get("/cart", (req, res) => {
+  res.render("pages/cart", {
+    user: userProfile,
+    currentCart,
+    weather: null,
+    error: null,
+  });
+});
