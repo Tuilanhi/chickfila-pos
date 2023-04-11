@@ -1,4 +1,5 @@
 /* MODULES */
+import { render } from "ejs";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const express = require("express");
@@ -360,87 +361,6 @@ function renderWeather(req, res, page) {
     });
 }
 
-function guestRenderWeather(req, res, page, customerName) {
-  // Get city name passed in the form
-  let city = req.body.city;
-
-  // Use that city name to fetch data
-  // Use the API_KEY in the '.env' file
-  let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
-
-  fetch(url)
-    .then((res) => res.json())
-    .then((weather) => {
-      if (weather.main == undefined) {
-        res.render(page, {
-          customerName,
-          userRole,
-          treatItems,
-          entreeItems,
-          drinkItems,
-          sideItems,
-          saladItems,
-          weather: null,
-          error: "Error, please try again",
-        });
-      } else {
-        let place = `${weather.name}, ${weather.sys.country}`,
-          weatherTimezone = `${new Date(
-            weather.dt * 1000 - weather.timezone * 1000
-          )}`;
-        let weatherTemp = `${weather.main.temp}`,
-          weatherIcon = `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`,
-          main = `${weather.weather[0].main}`,
-          weatherFahrenheit;
-        weatherFahrenheit = (weatherTemp * 9) / 5 + 32;
-
-        function roundToTwo(num) {
-          return +(Math.round(num + "e+2") + "e-2");
-        }
-        weatherFahrenheit = roundToTwo(weatherFahrenheit);
-
-        if (isManager()) {
-          userRole = userRoles[0].role;
-        } else if (isServer()) {
-          userRole = userRoles[1].role;
-        } else {
-          userRole = userRoles[2].role;
-        }
-
-        res.render(page, {
-          customerName,
-          userRole,
-          weather: weather,
-          place: place,
-          temp: weatherTemp,
-          icon: weatherIcon,
-          timezone: weatherTimezone,
-          fahrenheit: weatherFahrenheit,
-          main: main,
-          error: null,
-          treatItems,
-          entreeItems,
-          drinkItems,
-          sideItems,
-          saladItems,
-        });
-      }
-    })
-    .catch((err) => {
-      res.render(page, {
-        customerName,
-        userRole,
-        treatItems,
-        entreeItems,
-        drinkItems,
-        sideItems,
-        saladItems,
-        weather: null,
-        error: "Error, please try again",
-      });
-    });
-}
-
 // On a post request, the app shall data from OpenWeatherMap using the given arguments
 
 // render customer's dashboard to display weather
@@ -478,10 +398,166 @@ app.post("/treats", function (req, res) {
 });
 
 /* GUEST CHECKOUT SECTION */
+// Render the weather api for guest checkout
+function guestRenderWeather(req, res, page) {
+  // Get city name passed in the form
+  let city = req.body.city;
 
-var customerName;
+  // Use that city name to fetch data
+  // Use the API_KEY in the '.env' file
+  let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+
+  fetch(url)
+    .then((res) => res.json())
+    .then((weather) => {
+      if (weather.main == undefined) {
+        res.render(page, {
+          userRole,
+          treatItems,
+          entreeItems,
+          drinkItems,
+          sideItems,
+          saladItems,
+          weather: null,
+          error: "Error, please try again",
+        });
+      } else {
+        let place = `${weather.name}, ${weather.sys.country}`,
+          weatherTimezone = `${new Date(
+            weather.dt * 1000 - weather.timezone * 1000
+          )}`;
+        let weatherTemp = `${weather.main.temp}`,
+          weatherIcon = `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`,
+          main = `${weather.weather[0].main}`,
+          weatherFahrenheit;
+        weatherFahrenheit = (weatherTemp * 9) / 5 + 32;
+
+        function roundToTwo(num) {
+          return +(Math.round(num + "e+2") + "e-2");
+        }
+        weatherFahrenheit = roundToTwo(weatherFahrenheit);
+
+        userRole = userRoles[2].role;
+
+        res.render(page, {
+          userRole,
+          weather: weather,
+          place: place,
+          temp: weatherTemp,
+          icon: weatherIcon,
+          timezone: weatherTimezone,
+          fahrenheit: weatherFahrenheit,
+          main: main,
+          error: null,
+          treatItems,
+          entreeItems,
+          drinkItems,
+          sideItems,
+          saladItems,
+        });
+      }
+    })
+    .catch((err) => {
+      res.render(page, {
+        userRole,
+        treatItems,
+        entreeItems,
+        drinkItems,
+        sideItems,
+        saladItems,
+        weather: null,
+        error: "Error, please try again",
+      });
+    });
+}
 
 // Redirect to login page after signout
 app.get("/guest", function (req, res) {
-  res.render("guest/customerdashboard");
+  userRole = userRoles[2].role;
+  res.render("guest/customerdashboard", {
+    userRole,
+    drinkItems,
+    weather: null,
+    error: null,
+  });
+});
+
+// redirect to entrees menu page
+app.get("/guestEntrees", (req, res) => {
+  res.render("guest/guestentrees", {
+    userRole,
+    entreeItems,
+    weather: null,
+    error: null,
+  });
+});
+
+// redirect to drinks menu page
+app.get("/guestDrinks", (req, res) => {
+  res.render("guest/guestdrinks", {
+    userRole,
+    drinkItems,
+    weather: null,
+    error: null,
+  });
+});
+
+// redirect to salads menu page
+app.get("/guestSalads", (req, res) => {
+  res.render("guest/guestsalads", {
+    userRole,
+    saladItems,
+    weather: null,
+    error: null,
+  });
+});
+
+// redirect to sides menu page
+app.get("/guestSides", (req, res) => {
+  res.render("guest/guestsides", {
+    userRole,
+    sideItems,
+    weather: null,
+    error: null,
+  });
+});
+
+// redirect to treats menu page
+app.get("/guestTreats", (req, res) => {
+  res.render("guest/guesttreats", {
+    userRole,
+    treatItems,
+    weather: null,
+    error: null,
+  });
+});
+
+// render customer's dashboard to display weather
+app.post("/guest", function (req, res) {
+  guestRenderWeather(req, res, "guest/customerdashboard");
+});
+
+// render entrees page to display weather
+app.post("/guestEntrees", function (req, res) {
+  guestRenderWeather(req, res, "guest/guestentrees");
+});
+
+// render drinks page to display weather
+app.post("/guestDrinks", function (req, res) {
+  guestRenderWeather(req, res, "guest/guestdrinks");
+});
+
+// render salads page to display weather
+app.post("/guestSalads", function (req, res) {
+  guestRenderWeather(req, res, "guest/guestsalads");
+});
+
+// render sides page to display weather
+app.post("/guestSides", function (req, res) {
+  guestRenderWeather(req, res, "guest/guestsides");
+});
+
+// render treats page to display weather
+app.post("/guestTreats", function (req, res) {
+  guestRenderWeather(req, res, "guest/guesttreats");
 });
