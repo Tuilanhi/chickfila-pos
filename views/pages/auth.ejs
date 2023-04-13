@@ -28,9 +28,19 @@
       }
 
       .logo {
-        margin-bottom: 35px;
-        height: 20%;
-        width: 20%;
+        position: absolute;
+        top: 2%;
+        height: 50px;
+        left: 49%;
+      }
+
+      .parentContainer {
+        position: absolute;
+        text-align: center;
+      }
+
+      .background-image {
+        width: 65%;
       }
 
       .button-container {
@@ -64,8 +74,8 @@
         color: #fff;
         border: none;
         border-radius: 10px;
-        padding: 10px 20px;
-        font-size: 16px;
+        padding: 20px 200px;
+        font-size: 25px;
         cursor: pointer;
         justify-content: center;
         margin-top: 20px;
@@ -127,14 +137,15 @@
 
     <!---Google OAuth and Login Section--->
     <img src="/Chick-fil-A-Logo.png" class="logo" />
-    <h1 class="store-name">Chick-fil-A</h1>
-        <div class="employee">
-          <a href="/auth/google" class="manager">Manager</a>
-          <a href="/auth/google" class="server">server</a>
-        </div>
-        <div class="button-container">
-          <a href="/customer" class="signin">Start Checkout</a>
-        </div>
+    <div class="parentContainer">
+      <img src="/Chick-fil-A-login.jpg" class="background-image" />
+      <div class="employee">
+        <a href="/auth/google" class="manager">Manager</a>
+        <a href="/auth/google" class="server">Server</a>
+      </div>
+      <div class="button-container">
+        <a href="/customer" class="signin">Touch to begin your order</a>
+      </div>
     </div>
   </body>
 </html>
