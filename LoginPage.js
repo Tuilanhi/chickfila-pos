@@ -181,14 +181,14 @@ app.use(passport.session());
 /* GOOGLE USERS SECTION */
 app.get("/dashboard", isLoggedIn, (req, res) => {
   if (isManager()) {
-    res.render("manager-server/dashboard", {
+    res.render("manager/dashboard", {
       userProfile,
       userRole,
       weather: null,
       error: null,
     });
   } else if (isServer()) {
-    res.render("customer/customerdashboard", {
+    res.render("server/customerdashboard", {
       userProfile,
       userRole,
       weather: null,
@@ -196,7 +196,7 @@ app.get("/dashboard", isLoggedIn, (req, res) => {
     });
   } else {
     userRole = userRoles[2].role;
-    res.render("customer/customerdashboard", {
+    res.render("server/customerdashboard", {
       userProfile,
       userRole,
       weather: null,
@@ -219,8 +219,8 @@ app.get("/logout", function (req, res, next) {
 });
 
 // redirect to entrees menu page
-app.get("/entrees", (req, res) => {
-  res.render("customer/entrees", {
+app.get("/serverEntrees", (req, res) => {
+  res.render("server/entrees", {
     userProfile,
     userRole,
     entreeItems,
@@ -230,8 +230,8 @@ app.get("/entrees", (req, res) => {
 });
 
 // redirect to drinks menu page
-app.get("/drinks", (req, res) => {
-  res.render("customer/drinks", {
+app.get("/serverDrinks", (req, res) => {
+  res.render("server/drinks", {
     userProfile,
     userRole,
     drinkItems,
@@ -241,8 +241,8 @@ app.get("/drinks", (req, res) => {
 });
 
 // redirect to salads menu page
-app.get("/salads", (req, res) => {
-  res.render("customer/salads", {
+app.get("/serverSalads", (req, res) => {
+  res.render("server/salads", {
     userProfile,
     userRole,
     saladItems,
@@ -252,8 +252,8 @@ app.get("/salads", (req, res) => {
 });
 
 // redirect to sides menu page
-app.get("/sides", (req, res) => {
-  res.render("customer/sides", {
+app.get("/serverSides", (req, res) => {
+  res.render("server/sides", {
     userProfile,
     userRole,
     sideItems,
@@ -263,8 +263,8 @@ app.get("/sides", (req, res) => {
 });
 
 // redirect to treats menu page
-app.get("/treats", (req, res) => {
-  res.render("customer/treats", {
+app.get("/serverTreats", (req, res) => {
+  res.render("server/treats", {
     userProfile,
     userRole,
     treatItems,
@@ -368,33 +368,33 @@ app.post("/dashboard", function (req, res) {
   if (isManager()) {
     renderWeather(req, res, "manager/dashboard");
   } else {
-    renderWeather(req, res, "customer/customerdashboard");
+    renderWeather(req, res, "server/customerdashboard");
   }
 });
 
 // render entrees page to display weather
-app.post("/entrees", function (req, res) {
-  renderWeather(req, res, "customer/entrees");
+app.post("/serverEntrees", function (req, res) {
+  renderWeather(req, res, "server/entrees");
 });
 
 // render drinks page to display weather
-app.post("/drinks", function (req, res) {
-  renderWeather(req, res, "customer/drinks");
+app.post("/serverDrinks", function (req, res) {
+  renderWeather(req, res, "server/drinks");
 });
 
 // render salads page to display weather
-app.post("/salads", function (req, res) {
-  renderWeather(req, res, "customer/salads");
+app.post("/serverSalads", function (req, res) {
+  renderWeather(req, res, "server/salads");
 });
 
 // render sides page to display weather
-app.post("/sides", function (req, res) {
-  renderWeather(req, res, "customer/sides");
+app.post("/serverSides", function (req, res) {
+  renderWeather(req, res, "server/sides");
 });
 
 // render treats page to display weather
-app.post("/treats", function (req, res) {
-  renderWeather(req, res, "customer/treats");
+app.post("/serverTreats", function (req, res) {
+  renderWeather(req, res, "server/treats");
 });
 
 /* GUEST CHECKOUT SECTION */
@@ -472,7 +472,7 @@ function guestRenderWeather(req, res, page) {
 }
 
 // Redirect to login page after signout
-app.get("/guest", function (req, res) {
+app.get("/customer", function (req, res) {
   userRole = userRoles[2].role;
   res.render("guest/customerdashboard", {
     userRole,
@@ -483,8 +483,8 @@ app.get("/guest", function (req, res) {
 });
 
 // redirect to entrees menu page
-app.get("/guestEntrees", (req, res) => {
-  res.render("guest/guestentrees", {
+app.get("/entrees", (req, res) => {
+  res.render("guest/entrees", {
     userRole,
     entreeItems,
     weather: null,
@@ -493,8 +493,8 @@ app.get("/guestEntrees", (req, res) => {
 });
 
 // redirect to drinks menu page
-app.get("/guestDrinks", (req, res) => {
-  res.render("guest/guestdrinks", {
+app.get("/drinks", (req, res) => {
+  res.render("guest/drinks", {
     userRole,
     drinkItems,
     weather: null,
@@ -503,8 +503,8 @@ app.get("/guestDrinks", (req, res) => {
 });
 
 // redirect to salads menu page
-app.get("/guestSalads", (req, res) => {
-  res.render("guest/guestsalads", {
+app.get("/salads", (req, res) => {
+  res.render("guest/salads", {
     userRole,
     saladItems,
     weather: null,
@@ -513,8 +513,8 @@ app.get("/guestSalads", (req, res) => {
 });
 
 // redirect to sides menu page
-app.get("/guestSides", (req, res) => {
-  res.render("guest/guestsides", {
+app.get("/sides", (req, res) => {
+  res.render("guest/sides", {
     userRole,
     sideItems,
     weather: null,
@@ -523,8 +523,8 @@ app.get("/guestSides", (req, res) => {
 });
 
 // redirect to treats menu page
-app.get("/guestTreats", (req, res) => {
-  res.render("guest/guesttreats", {
+app.get("/treats", (req, res) => {
+  res.render("guest/treats", {
     userRole,
     treatItems,
     weather: null,
@@ -533,31 +533,31 @@ app.get("/guestTreats", (req, res) => {
 });
 
 // render customer's dashboard to display weather
-app.post("/guest", function (req, res) {
+app.post("/customer", function (req, res) {
   guestRenderWeather(req, res, "guest/customerdashboard");
 });
 
 // render entrees page to display weather
-app.post("/guestEntrees", function (req, res) {
-  guestRenderWeather(req, res, "guest/guestentrees");
+app.post("/entrees", function (req, res) {
+  guestRenderWeather(req, res, "guest/entrees");
 });
 
 // render drinks page to display weather
-app.post("/guestDrinks", function (req, res) {
-  guestRenderWeather(req, res, "guest/guestdrinks");
+app.post("/drinks", function (req, res) {
+  guestRenderWeather(req, res, "guest/drinks");
 });
 
 // render salads page to display weather
-app.post("/guestSalads", function (req, res) {
-  guestRenderWeather(req, res, "guest/guestsalads");
+app.post("/salads", function (req, res) {
+  guestRenderWeather(req, res, "guest/salads");
 });
 
 // render sides page to display weather
-app.post("/guestSides", function (req, res) {
-  guestRenderWeather(req, res, "guest/guestsides");
+app.post("/sides", function (req, res) {
+  guestRenderWeather(req, res, "guest/sides");
 });
 
 // render treats page to display weather
-app.post("/guestTreats", function (req, res) {
-  guestRenderWeather(req, res, "guest/guesttreats");
+app.post("/treats", function (req, res) {
+  guestRenderWeather(req, res, "guest/treats");
 });
