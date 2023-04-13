@@ -194,14 +194,6 @@ app.get("/dashboard", isLoggedIn, (req, res) => {
       weather: null,
       error: null,
     });
-  } else {
-    userRole = userRoles[2].role;
-    res.render("server/customerdashboard", {
-      userProfile,
-      userRole,
-      weather: null,
-      error: null,
-    });
   }
 });
 
@@ -323,8 +315,6 @@ function renderWeather(req, res, page) {
           userRole = userRoles[0].role;
         } else if (isServer()) {
           userRole = userRoles[1].role;
-        } else {
-          userRole = userRoles[2].role;
         }
 
         res.render(page, {
