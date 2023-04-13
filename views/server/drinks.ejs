@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Drinks</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="shortcut icon"
+      href="https://www.freepnglogos.com/uploads/chick-fil-a-png-logo/chiefs-dominate-against-war-eagles-png-logo-7.png"
+      type="image/x-icon"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+      }
+
+      .logo {
+        position: relative;
+        top: 2%;
+        left: 50%;
+        transform: translate(-50%);
+        height: 40px;
+      }
+
+      h1 {
+        color: #000;
+        font-size: 36px;
+        text-align: center;
+        margin-top: 45px;
+      }
+      table {
+        margin: 0 auto;
+        border-collapse: collapse;
+        border: 2px solid #000;
+        width: 50%;
+        margin-top: 35px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #000;
+      }
+      th {
+        background-color: #f44242;
+        color: #fff;
+        font-size: 18px;
+      }
+      td {
+        font-size: 16px;
+      }
+      tr:hover {
+        background-color: #fff4f4;
+      }
+
+      .atc {
+        background-color: #f44242;
+        border: none;
+        color: #fff;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      .profile-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        bottom: 5px;
+        left: 5px;
+        position: fixed;
+        margin-top: 15px;
+      }
+
+      .profile {
+        font-size: 15px;
+        margin-right: 10px;
+      }
+
+      .signout {
+        font-size: 15px;
+        text-align: right;
+        color: #fff;
+        background-color: #e83535;
+        border-radius: 10px;
+        padding: 5px 10px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .signout:hover {
+        background-color: #fff;
+        color: #f44242;
+        text-decoration: none;
+      }
+
+      /*Google Translate API*/
+
+      #google_translate_element {
+        position: absolute;
+        top: 2%;
+        right: 3%;
+        color: transparent;
+      }
+
+      #google_translate_element a {
+        display: none;
+      }
+
+      .goog-te-gadget {
+        color: transparent !important;
+      }
+
+      .goog-te-gadget img {
+        display: none !important;
+      }
+
+      body > .skiptranslate {
+        display: none;
+      }
+
+      /*Weather API*/
+
+      fieldset {
+        display: block;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+        -webkit-padding-before: 0em;
+        -webkit-padding-start: 0em;
+        -webkit-padding-end: 0em;
+        -webkit-padding-after: 0em;
+        border: 0px;
+        border-image-source: initial;
+        border-image-slice: initial;
+        border-image-width: initial;
+        border-image-outset: initial;
+        border-image-repeat: initial;
+        min-width: -webkit-min-content;
+      }
+
+      form {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        top: 1.3%;
+        right: 15%;
+      }
+
+      .display-weather {
+        background-color: #fff;
+        padding: 5px 10px 10px 10px;
+      }
+
+      input[type="text"] {
+        display: inline-block;
+        width: 100%;
+        margin-right: 10px;
+        border-radius: 3px;
+      }
+
+      input[type="submit"] {
+        display: inline-block;
+        width: 100%;
+      }
+
+      .ghost-input,
+      p {
+        display: block;
+        font-size: 15px;
+        border: 0px;
+        outline: none;
+        width: 100%;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        background: #fff;
+        margin: 10px 0px;
+        color: red;
+      }
+
+      .ghost-input:focus {
+        border-bottom: 1px solid #ddd;
+      }
+
+      .ghost-button {
+        background-color: transparent;
+        border: 1px solid #ddd;
+        font-size: 13px;
+        margin: 10px 0px;
+        border-radius: 3px;
+      }
+
+      .ghost-button:hover {
+        border: 1px solid #515151;
+      }
+
+      .grid {
+        width: 100%;
+      }
+
+      .dropdown {
+        position: absolute;
+        top: 2%;
+        right: 13%;
+      }
+
+      .dropbtn {
+        background-color: red;
+        color: white;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        margin-right: 5px;
+        border-radius: 3px;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        z-index: 1;
+        right: 10%;
+        margin-top: 10px;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+    </style>
+
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,zh-CN,cs,da,fr,es,vi",
+          },
+          "google_translate_element"
+        );
+      }
+    </script>
+
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
+  </head>
+  <body>
+    <a href="/dashboard" class="signout">Back</a>
+    <!--Weather API Section--->
+    <div class="container">
+      <fieldset>
+        <form action="/serverDrinks" method="post">
+          <input
+            name="city"
+            type="text"
+            class="ghost-input"
+            placeholder="Enter a City"
+            required
+          />
+          <input type="submit" class="ghost-button" value="Get Weather" />
+        </form>
+      </fieldset>
+      <%if( weather !==null){ %>
+      <div class="dropdown">
+        <button class="dropbtn">&#9662;</button>
+        <div class="dropdown-content">
+          <div class="display-weather">
+            <div class="grid">
+              <p><%= place %></p>
+              <p class="text-muted small"><%= timezone %></p>
+            </div>
+            <div class="card-deck">
+              <div class="card card-accent-dark mb-3">
+                <div class="card-body text-dark">
+                  <img src="<%= icon %>" alt="Weather-Icon" />
+                  <h5 class="card-title">Temperature</h5>
+                  <p class="card-text">
+                    In Degrees: <%= temp %>°C/ <%= fahrenheit %>°F
+                  </p>
+                  <h5 class="card-title">Main</h5>
+                  <p class="card-text"><%= main %></p>
+                </div>
+              </div>
+            </div>
+            <% } %> <% if(error !==null){ %>
+            <p><%= error %></p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!---Google Translate Section --->
+    <div id="google_translate_element"></div>
+
+    <!---Drinks Secion --->
+    <img src="../Chick-fil-A-Logo.png" class="logo" />
+    <h1>Drinks</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let i = 0; i < drinkItems.length; i++) { %>
+        <tr>
+          <td><%= drinkItems[i].name %></td>
+          <td>$<%= drinkItems[i].price %></td>
+          <td><button class="atc">Add to Cart</button></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+    <div class="profile-container">
+      <div class="profile">
+        <strong>Name</strong>: <%= userProfile.displayName %> <br />
+        <strong>Role</strong>: <%= userRole %> <br />
+      </div>
+      <a href="/logout" class="signout">Sign Out</a>
+    </div>
+  </body>
+</html>
