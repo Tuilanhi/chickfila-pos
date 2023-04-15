@@ -551,3 +551,18 @@ app.post("/sides", function (req, res) {
 app.post("/treats", function (req, res) {
   guestRenderWeather(req, res, "guest/treats");
 });
+
+/*MANAGER PAGE SECTION*/
+app.get("/salesReport", (req, res) => {
+  res.render("manager/salesReport", {
+    userProfile,
+    userRole,
+    weather: null,
+    error: null,
+  });
+});
+
+// render customer's dashboard to display weather
+app.post("/salesReport", function (req, res) {
+  renderWeather(req, res, "manager/salesReport");
+});
