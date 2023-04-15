@@ -41,6 +41,7 @@
         position: fixed;
         top: 2%;
         height: 40px;
+        left: 48%;
       }
 
       .profile-container {
@@ -206,6 +207,54 @@
       .dropdown:hover .dropdown-content {
         display: block;
       }
+
+      .navbar {
+        position: fixed;
+        top: 1.5%;
+        left: 1%;
+      }
+
+      .navbtn {
+        background-color: red;
+        color: white;
+        font-size: 20px;
+        padding: 0px 15px;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+      }
+
+      /* Style the dropdown content (hidden by default) */
+      .navbar-content {
+        display: none;
+        position: absolute;
+        z-index: 1;
+        top: 100%;
+        left: 0;
+      }
+
+      /* Show the dropdown content on hover */
+      .navbar:hover .navbar-content {
+        display: block;
+      }
+
+      /* Style the links inside the dropdown */
+      .navbar-content a {
+        color: black;
+        background-color: #f1f1f1;
+        padding: 8px 15px;
+        text-decoration: none;
+        display: block;
+        margin-top: 10px;
+        border-radius: 10px;
+      }
+
+      /* Change the background color on hover */
+      .navbar-content a:hover {
+        background-color: red;
+        color: #fff;
+        border-radius: 10px;
+      }
     </style>
 
     <script type="text/javascript">
@@ -219,7 +268,6 @@
         );
       }
     </script>
-
     <script
       type="text/javascript"
       src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
@@ -272,6 +320,21 @@
 
     <!---Google Translate Section --->
     <div id="google_translate_element"></div>
+
+    <!---DROP DOWN MENU--->
+    <div class="navbar">
+      <button class="navbtn">&#9776;</button>
+      <div class="navbar-content" id="myDropdown">
+        <a href="/">Inventory</a>
+        <a href="/salesReport">Sales Report</a>
+        <a href="/">X Report</a>
+        <a href="/">Z Report</a>
+        <a href="/">Excess Report</a>
+        <a href="/">Restock Report</a>
+        <a href="/">Menu Board</a>
+        <a href="/">Customer View</a>
+      </div>
+    </div>
 
     <img src="../Chick-fil-A-Logo.png" class="logo" />
     <div class="profile-container">
