@@ -42,6 +42,7 @@
         flex-direction: column;
         width: auto;
         margin: 0 auto;
+        font-size: 15px;
       }
 
       .parentContainer {
@@ -83,7 +84,6 @@
         border-radius: 10px;
         padding: 5px 10px;
         margin-bottom: 10px;
-        font-size: 15px;
         cursor: pointer;
         justify-content: center;
       }
@@ -106,6 +106,17 @@
         background-color: #fff;
         color: #f44242;
         text-decoration: none;
+      }
+
+      /*Text Enlarge Button*/
+
+      #enlarge-button {
+        margin-top: 100px;
+        color: blue;
+        left: 45%;
+        padding: 10px 10px;
+        display: flex;
+        position: relative;
       }
 
       /*Google Translate API*/
@@ -153,6 +164,9 @@
   </head>
 
   <body>
+    <!---Enlarge Text Button--->
+    <button id="enlarge-button">Enlarge Text</button>
+
     <!---Google Translate API Section--->
     <div id="google_translate_element"></div>
 
@@ -168,5 +182,23 @@
         <a href="/customer" class="signin">Press to begin your order</a>
       </div>
     </div>
+
+    <script>
+      const enlargeButton = document.getElementById("enlarge-button");
+
+      enlargeButton.addEventListener("click", () => {
+        console.log("Button is clicked!");
+        const elementsToEnlarge = document.querySelectorAll("body *");
+
+        elementsToEnlarge.forEach((element) => {
+          const currentFontSize = parseFloat(
+            window.getComputedStyle(element).fontSize
+          );
+          const newFontSize = currentFontSize + 2;
+
+          element.style.fontSize = `${newFontSize}px`;
+        });
+      });
+    </script>
   </body>
 </html>
