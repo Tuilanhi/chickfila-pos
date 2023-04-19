@@ -553,6 +553,15 @@ app.post("/treats", function (req, res) {
 });
 
 /*MANAGER PAGE SECTION*/
+app.get("/inventory", (req, res) => {
+  res.render("manager/inventory", {
+    userProfile,
+    userRole,
+    weather: null,
+    error: null,
+  });
+});
+
 app.get("/salesReport", (req, res) => {
   res.render("manager/salesReport", {
     userProfile,
