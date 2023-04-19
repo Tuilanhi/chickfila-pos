@@ -1,4 +1,4 @@
-const Database = require("./Database");
+import { Database } from "./Database.js";
 
 class testDatabase {
   constructor() {
