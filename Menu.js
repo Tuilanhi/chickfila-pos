@@ -1,16 +1,22 @@
 const Database = require("./Database");
 
 class Menu {
-    constructor(Item, price, category) {
-      this.setItem(Item, price, category);
-    }
-  
-    constructor(Item) {
-      this.removeItem(Item);
+    constructor(Item, price=0, category=0) {
+      this.db = new Database();
+      this.Item = Item;
+      this.price = price;
+      this.category = category;
+      if(price == 0 & category == 0){
+        this.removeItem(Item);
+      }
+      else {
+        this.setItem(Item, price, category);
+      }
     }
   
     async setItem(Item, price, category) {
       try {
+        this.db.connect();
         // if item name doesn't exist add new Item
         // get names of existing items
         const sqlStatement = `SELECT COUNT(*) FROM menu WHERE item ='${Item}'`;
@@ -34,6 +40,7 @@ class Menu {
       } catch (e) {
         console.error(e);
       } 
+      await this.db.disconnect();
     }
   
     async removeItem(Item) {
@@ -52,3 +59,9 @@ class Menu {
     }
   }
   
+
+  const Item = 'Chicken Feet';
+  const Price = 8.99;
+  const Category = 'Entrees'
+
+  const ChickenFeet = new Menu(Item, Price, Category);
