@@ -1,4 +1,3 @@
-
 const Database = require("./Database");
 
 /**
@@ -11,10 +10,18 @@ class RestockReport {
     console.log('Opened database');
   }
 
+  /**
+   * It connects to the database and returns a client object.
+   *
+   * @return A client object to the database.
+   */
+
+
   async restock() {
     let result = null;
     try {
       //Inserting new Item into Bridge in database
+      this.db.connect();
       console.log('Opened database successfully');
       const minimum = 150;
       const sqlStatement = `SELECT * FROM ingredients WHERE quantity <= ${minimum};`;
@@ -27,6 +34,7 @@ class RestockReport {
       console.error(e);
       process.exit(0);
     }
+    await this.db.disconnect();
     return result;
   }
 }
