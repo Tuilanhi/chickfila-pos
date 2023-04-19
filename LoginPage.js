@@ -1,6 +1,6 @@
 /* MODULES */
-import { render } from "ejs";
 import { createRequire } from "module";
+import fetch from "node-fetch";
 const require = createRequire(import.meta.url);
 const express = require("express");
 const app = express();
