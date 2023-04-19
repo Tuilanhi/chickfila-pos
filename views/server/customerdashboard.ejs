@@ -40,6 +40,7 @@
         align-items: center;
         background-color: #f2f2f2;
         flex-direction: column;
+        font-size: 15px;
       }
 
       .logo {
@@ -49,13 +50,13 @@
       }
 
       h1 {
-        color: #c41230;
+        color: red;
         text-align: center;
         padding-bottom: 5vh;
       }
       .menu-button {
-        background-color: #e83535;
-        color: #fff;
+        background-color: red;
+        color: white;
         border: none;
         border-radius: 10px;
         padding: 10px 20px;
@@ -67,8 +68,8 @@
         width: 100%;
       }
       .menu-button:hover {
-        background-color: #fff;
-        color: #f44242;
+        background-color: white;
+        color: red;
         text-decoration: none;
       }
 
@@ -90,8 +91,8 @@
       .signout {
         font-size: 15px;
         text-align: right;
-        color: #fff;
-        background-color: #e83535;
+        color: white;
+        background-color: red;
         border-radius: 10px;
         padding: 5px 10px;
         cursor: pointer;
@@ -99,8 +100,8 @@
       }
 
       .signout:hover {
-        background-color: #fff;
-        color: #f44242;
+        background-color: red;
+        color: white;
         text-decoration: none;
       }
 
@@ -235,6 +236,29 @@
       .dropdown:hover .dropdown-content {
         display: block;
       }
+
+      /*Text Enlarge Button*/
+      #font-changing {
+        position: absolute;
+        top: 2%;
+        left: 1%;
+      }
+      #enlarge-button,
+      #reset-button {
+        color: white;
+        background-color: red;
+        border-radius: 10px;
+        padding: 5px 10px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      #enlarge-button:hover,
+      #reset-button:hover {
+        background-color: white;
+        color: red;
+        text-decoration: none;
+      }
     </style>
 
     <script type="text/javascript">
@@ -253,6 +277,32 @@
       type="text/javascript"
       src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
     ></script>
+
+    <script type="text/javascript">
+      function enlargeText() {
+        const elementsToEnlarge = document.querySelectorAll("body *");
+
+        elementsToEnlarge.forEach((element) => {
+          const currentFontSize = parseFloat(
+            window.getComputedStyle(element).fontSize
+          );
+          const newFontSize = currentFontSize + 1;
+
+          element.style.fontSize = `${newFontSize}px`;
+        });
+      }
+
+      const enlargeButton = document.getElementById("enlarge-button");
+      enlargeButton.onclick = enlargeText;
+
+      function resetText() {
+        const elementsToReset = document.querySelectorAll("body *");
+
+        elementsToReset.forEach((element) => {
+          element.style.fontSize = null;
+        });
+      }
+    </script>
   </head>
   <body>
     <!--Weather API Section--->
@@ -302,8 +352,14 @@
     <!---Google Translate Section --->
     <div id="google_translate_element"></div>
 
+    <!---Enlarge Text Button--->
+    <div id="font-changing">
+      <a id="reset-button" onClick="resetText()">Reset Text</a>
+      <a id="enlarge-button" onClick="enlargeText()">Enlarge Text</a>
+    </div>
+
     <!---Menu Section--->
-    <img src="../Chick-fil-A-Logo.png" class="logo" />
+    <img src="../images/Chick-fil-A-Logo.png" class="logo" />
     <h1>Menu</h1>
     <div>
       <a href="/serverEntrees" class="menu-button">Entrees</a>

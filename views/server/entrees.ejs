@@ -29,8 +29,8 @@
       }
 
       .logo {
-        position: relative;
-        top: 0%;
+        position: absolute;
+        top: 2%;
         left: 50%;
         transform: translate(-50%);
         height: 40px;
@@ -40,7 +40,7 @@
         color: #000;
         font-size: 36px;
         text-align: center;
-        margin-top: 30px;
+        margin-top: 80px;
       }
       table {
         margin: 0 auto;
@@ -56,8 +56,8 @@
         border-bottom: 1px solid #000;
       }
       th {
-        background-color: #f44242;
-        color: #fff;
+        background-color: red;
+        color: white;
         font-size: 18px;
       }
       td {
@@ -67,9 +67,9 @@
         background-color: #fff4f4;
       }
       .atc {
-        background-color: #f44242;
+        background-color: red;
         border: none;
-        color: #fff;
+        color: white;
         padding: 10px 20px;
         text-align: center;
         text-decoration: none;
@@ -95,11 +95,16 @@
         margin-right: 10px;
       }
 
+      /*BACK BUTTON*/
+      .backbtn {
+        position: absolute;
+        top: 2%;
+        left: 0.5%;
+      }
+
       .signout {
-        font-size: 15px;
-        text-align: right;
-        color: #fff;
-        background-color: #e83535;
+        color: white;
+        background-color: red;
         border-radius: 10px;
         padding: 5px 10px;
         cursor: pointer;
@@ -107,8 +112,8 @@
       }
 
       .signout:hover {
-        background-color: #fff;
-        color: #f44242;
+        background-color: white;
+        color: red;
         text-decoration: none;
       }
 
@@ -243,6 +248,29 @@
       .dropdown:hover .dropdown-content {
         display: block;
       }
+
+      /*Text Enlarge Button*/
+      #font-changing {
+        position: absolute;
+        top: 2%;
+        left: 5%;
+      }
+      #enlarge-button,
+      #reset-button {
+        color: white;
+        background-color: red;
+        border-radius: 10px;
+        padding: 5px 10px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      #enlarge-button:hover,
+      #reset-button:hover {
+        background-color: white;
+        color: red;
+        text-decoration: none;
+      }
     </style>
 
     <script type="text/javascript">
@@ -261,9 +289,37 @@
       type="text/javascript"
       src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
     ></script>
+
+    <script type="text/javascript">
+      function enlargeText() {
+        const elementsToEnlarge = document.querySelectorAll("body *");
+
+        elementsToEnlarge.forEach((element) => {
+          const currentFontSize = parseFloat(
+            window.getComputedStyle(element).fontSize
+          );
+          const newFontSize = currentFontSize + 1;
+
+          element.style.fontSize = `${newFontSize}px`;
+        });
+      }
+
+      const enlargeButton = document.getElementById("enlarge-button");
+      enlargeButton.onclick = enlargeText;
+
+      function resetText() {
+        const elementsToReset = document.querySelectorAll("body *");
+
+        elementsToReset.forEach((element) => {
+          element.style.fontSize = null;
+        });
+      }
+    </script>
   </head>
   <body>
-    <a href="/dashboard" class="signout">Back</a>
+    <div class="backbtn">
+      <a href="/customer" class="signout">Back</a>
+    </div>
     <!--Weather API Section--->
     <div class="container">
       <fieldset>
@@ -311,8 +367,14 @@
     <!---Google Translate Section --->
     <div id="google_translate_element"></div>
 
+    <!---Enlarge Text Button--->
+    <div id="font-changing">
+      <a id="reset-button" onClick="resetText()">Reset Text</a>
+      <a id="enlarge-button" onClick="enlargeText()">Enlarge Text</a>
+    </div>
+
     <!---Entrees Section--->
-    <img src="../Chick-fil-A-Logo.png" class="logo" />
+    <img src="../images/Chick-fil-A-Logo.png" class="logo" />
     <h1>Entrees</h1>
     <table>
       <thead>
