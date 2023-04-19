@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+  <body>
+    <style>
+      body {
+        font-size: 16px;
+      }
+
+      a#enlarge-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      a#enlarge-link:hover {
+        background-color: #0062cc;
+      }
+    </style>
+
+    <script type="text/javascript">
+      function enlargeText() {
+        const elementsToEnlarge = document.querySelectorAll("body *");
+
+        elementsToEnlarge.forEach((element) => {
+          const currentFontSize = parseFloat(
+            window.getComputedStyle(element).fontSize
+          );
+          const newFontSize = currentFontSize + 2;
+
+          element.style.fontSize = `${newFontSize}px`;
+        });
+      }
+
+      const enlargeButton = document.getElementById("enlarge-button");
+      enlargeButton.onclick = enlargeText;
+
+      function resetText() {
+        const elementsToReset = document.querySelectorAll("body *");
+
+        elementsToReset.forEach((element) => {
+          element.style.fontSize = null;
+        });
+      }
+    </script>
+    <button id="enlarge-button" onClick="enlargeText()">Enlarge Text</button>
+    <button id="reset-button" onClick="resetText()">Reset Text</button>
+    <p>This is some sample text that can be enlarged</p>
+  </body>
+</html>
