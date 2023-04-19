@@ -60,9 +60,3 @@ class Menu {
     }
   }
   
-
-  // const Item = 'Chicken Feet';
-  // const Price = 8.99;
-  // const Category = 'Entrees'
-
-  // const ChickenFeet = new Menu(Item);
