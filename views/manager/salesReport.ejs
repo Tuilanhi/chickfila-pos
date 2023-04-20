@@ -206,6 +206,39 @@
       .dropdown:hover .dropdown-content {
         display: block;
       }
+
+      /*Table Section*/
+      .table-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        margin-top: 100px;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 800px;
+        margin: 0 auto;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+
+      .date-range {
+        display: inline-block;
+        margin-bottom: 10px;
+      }
     </style>
 
     <script type="text/javascript">
@@ -221,6 +254,22 @@
 
       function myFunction() {
         document.getElementById("myDropdown").classList.toggle("show");
+      }
+
+      function generateReport() {
+        const startDate = document.getElementById("start-date").value;
+        const endDate = document.getElementById("end-date").value;
+        // Perform calculations and update table based on date range
+        const rows = document.querySelectorAll("#sales-table tbody tr");
+
+        rows.forEach((row) => {
+          const dateStr = row.cells[1].textContent;
+          if (dateStr >= startDate && dateStr <= endDate) {
+            row.style.display = "";
+          } else {
+            row.style.display = "none";
+          }
+        });
       }
     </script>
 
@@ -277,7 +326,45 @@
     <!---Google Translate Section --->
     <div id="google_translate_element"></div>
 
-    <img src=".../images/Chick-fil-A-Logo.png" class="logo" />
+    <!---Table Section--->
+    <div class="table-container">
+      <h1>Sales Report</h1>
+      <div class="date-range">
+        <label for="start-date">Start Date:</label>
+        <input type="date" id="start-date" />
+        <label for="end-date">End Date:</label>
+        <input type="date" id="end-date" />
+        <button onclick="generateReport()">Generate Report</button>
+      </div>
+      <table id="sales-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Item 1</td>
+            <td>2023-04-12</td>
+          </tr>
+          <tr>
+            <td>Item 2</td>
+            <td>2023-04-15</td>
+          </tr>
+          <tr>
+            <td>Item 3</td>
+            <td>2023-04-18</td>
+          </tr>
+          <tr>
+            <td>Item 4</td>
+            <td>2023-04-22</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <img src="../images/Chick-fil-A-Logo.png" class="logo" />
     <div class="profile-container">
       <div class="profile">
         <strong>Name</strong>: <%= userProfile.displayName %> <br />
