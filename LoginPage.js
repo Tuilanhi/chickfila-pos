@@ -211,7 +211,8 @@ app.get("/logout", function (req, res, next) {
   });
 });
 
-app.get("/menuboard", function (req, res, next) {
+// Redirect to Menu Board page
+app.get("/menuboard", function (req, res) {
   res.render("pages/menuboard");
 });
 

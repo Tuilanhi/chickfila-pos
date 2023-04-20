@@ -39,7 +39,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #f2f2f2;
+        background-color: #fff;
         flex-direction: column;
         font-size: 15px;
       }
@@ -89,8 +89,29 @@
         margin-right: 10px;
       }
 
-      /*Google Translate API*/
+      /*BACK BUTTON*/
+      .backbtn {
+        position: fixed;
+        top: 2%;
+        left: 0.5%;
+      }
 
+      .signout {
+        color: white;
+        background-color: red;
+        border-radius: 10px;
+        padding: 5px 10px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .signout:hover {
+        background-color: white;
+        color: red;
+        text-decoration: none;
+      }
+
+      /*Google Translate API*/
       #google_translate_element {
         position: fixed;
         top: 2%;
@@ -225,7 +246,7 @@
       #font-changing {
         position: fixed;
         top: 2%;
-        left: 1%;
+        left: 5%;
       }
       #enlarge-button,
       #reset-button {
@@ -289,6 +310,9 @@
     </script>
   </head>
   <body>
+    <div class="backbtn">
+      <a href="/" class="signout">Back</a>
+    </div>
     <!--Weather API Section--->
     <div class="container">
       <fieldset>
