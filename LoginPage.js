@@ -211,6 +211,10 @@ app.get("/logout", function (req, res, next) {
   });
 });
 
+app.get("/menuboard", function (req, res, next) {
+  res.render("pages/menuboard");
+});
+
 // redirect to entrees menu page
 app.get("/serverEntrees", (req, res) => {
   res.render("server/entrees", {

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Menu Board</title>
+
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+        padding: 0;
+        font-size: 15px;
+      }
+
+      .logo {
+        position: absolute;
+        top: 2%;
+        height: 50px;
+        right: 0;
+      }
+
+      .menu {
+        background-color: #fff;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      h1 {
+        top: 10%;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .category {
+        margin-bottom: 30px;
+      }
+
+      h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      li img {
+        width: 100px;
+        height: 100px;
+        margin-right: 10px;
+      }
+
+      .item {
+        flex-grow: 1;
+      }
+
+      .price {
+        font-weight: bold;
+        margin-left: 10px;
+      }
+
+      /*BACK BUTTON*/
+      .backbtn {
+        position: absolute;
+        top: 2%;
+        left: 0.5%;
+      }
+
+      .signout {
+        color: white;
+        background-color: red;
+        border-radius: 10px;
+        padding: 5px 10px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .signout:hover {
+        background-color: white;
+        color: red;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="backbtn">
+        <a href="/" class="signout">Back</a>
+      </div>
+    <img src="../images/Chick-fil-A-Logo.png" class="logo" />
+    <div class="menu">
+      <h1>Our Menu</h1>
+      <div class="category">
+        <h2>Entrees</h2>
+        <ul>
+          <li>
+            <img src="../images/chicken_sandwich.png" atl="Chicken Sandwich" />
+            <span class="item">Chicken Sandwich</span
+            ><span class="price">$4.49</span>
+          </li>
+          <li>
+            <img
+              src="../images/deluxe_chicken_sandwich.png"
+              atl="Deluxe Chicken Sandwich"
+            />
+            <span class="item">Deluxe Chicken Sandwich</span
+            ><span class="price">$5.19</span>
+          </li>
+          <li>
+            <img
+              src="../images/spicy_chicken_sandwich.png"
+              atl="Spicy Chicken Sandwich"
+            />
+            <span class="item">Spicy Chicken Sandwich</span
+            ><span class="price">$4.89</span>
+          </li>
+          <li>
+            <img
+              src="../images/spicy_deluxe_chicken_sandwich.png"
+              atl="Spicy Deluxe Chicken Sandwich"
+            />
+            <span class="item">Spicy Deluxe Chicken Sandwich</span
+            ><span class="price">$5.59</span>
+          </li>
+          <li>
+            <img
+              src="../images/chicken_nuggets_8.png"
+              atl="Chicken Nuggets 8 Pieces"
+            />
+            <span class="item">Chicken Nuggets 8 Pieces</span
+            ><span class="price">$4.55</span>
+          </li>
+          <li>
+            <img
+              src="../images/Chicken_Nuggets_12.png"
+              atl="Chicken Nuggets 12 Pieces"
+            />
+            <span class="item">Chicken Nuggets 12 Pieces</span
+            ><span class="price">$6.29</span>
+          </li>
+          <li>
+            <img
+              src="../images/grilled_nuggets_8.png"
+              atl="Grilled Nuggets 8 Pieces"
+            />
+            <span class="item">Grilled Nuggets 8 Pieces</span
+            ><span class="price">$5.35</span>
+          </li>
+          <li>
+            <img
+              src="../images/grilled_nuggets_12.png"
+              atl="Grilled Nuggets 12 Pieces"
+            />
+            <span class="item">Grilled Nuggets 12 Pieces</span
+            ><span class="price">$7.69</span>
+          </li>
+          <li>
+            <img
+              src="../images/grilled_chicken_sandwich.png"
+              atl="Grilled Chicken Sandwich"
+            />
+            <span class="item">Grilled Chicken Sandwich</span
+            ><span class="price">$6.15</span>
+          </li>
+          <li>
+            <img
+              src="../images/grilled_chicken_club_sandwich.png"
+              atl="Grilled Chicken Club Sandwich"
+            />
+            <span class="item">Grilled Chicken Club Sandwich</span
+            ><span class="price">$7.79</span>
+          </li>
+          <li>
+            <img
+              src="../images/grilled_cool_wrap.png"
+              atl="Grilled Chicken Cool Wrap"
+            />
+            <span class="item">Grilled Chicken Cool Wrap</span
+            ><span class="price">$7.45</span>
+          </li>
+        </ul>
+      </div>
+      <div class="category">
+        <h2>Drinks</h2>
+        <ul>
+          <li>
+            <img
+              src="../images/diet_lemonade.png"
+              atl="Grilled Chicken Cool Wrap"
+            />
+            <span class="item">Diet Lemonade (Medium)</span
+            ><span class="price">$2.39</span>
+          </li>
+          <li>
+            <img
+              src="../images/diet_lemonade.png"
+              atl="Grilled Chicken Cool Wrap"
+            />
+            <span class="item">Diet Lemonade (Large)</span
+            ><span class="price">$2.89</span>
+          </li>
+          <li>
+            <img
+              src="../images/diet_lemonade.png"
+              atl="Grilled Chicken Cool Wrap"
+            />
+            <span class="item">Regular Lemonade (Medium)</span
+            ><span class="price">$2.39</span>
+          </li>
+          <li>
+            <img
+              src="../images/diet_lemonade.png"
+              atl="Regular Lemonade (Large)"
+            />
+            <span class="item">Regular Lemonade (Large)</span
+            ><span class="price">$2.89</span>
+          </li>
+          <li>
+            <img src="../images/sunjoy.png" atl="Chick-fil-A Sunjoy (Medium)" />
+            <span class="item">Chick-fil-A Sunjoy (Medium)</span
+            ><span class="price">$2.39</span>
+          </li>
+          <li>
+            <img src="../images/sunjoy.png" atl="Chick-fil-A Sunjoy (Large)" />
+            <span class="item">Chick-fil-A Sunjoy (Large)</span
+            ><span class="price">$2.89</span>
+          </li>
+          <li>
+            <img src="../images/softdrink.png" atl="Soft Drink (Medium)" />
+            <span class="item">Soft Drink (Medium)</span
+            ><span class="price">$1.99</span>
+          </li>
+          <li>
+            <img src="../images/softdrink.png" atl="Soft Drink (Large)" />
+            <span class="item">Soft Drink (Large)</span
+            ><span class="price">$2.45</span>
+          </li>
+          <li>
+            <img src="../images/sweet_tea.png" atl="Sweet Tea (Medium)" />
+            <span class="item">Sweet Tea (Medium)</span
+            ><span class="price">$2.09</span>
+          </li>
+          <li>
+            <img src="../images/sweet_tea.png" atl="Sweet Tea (Large)" />
+            <span class="item">Sweet Tea (Large)</span
+            ><span class="price">$2.39</span>
+          </li>
+          <li>
+            <img src="../images/sweet_tea.png" atl="Unsweet Tea (Medium)" />
+            <span class="item">Unsweet Tea (Medium)</span
+            ><span class="price">$2.09</span>
+          </li>
+          <li>
+            <img src="../images/sweet_tea.png" atl="Unsweet Tea (Large)" />
+            <span class="item">Unsweet Tea (Large)</span
+            ><span class="price">$2.39</span>
+          </li>
+          <li>
+            <img src="../images/water.png" atl="Bottled Water" />
+            <span class="item">Bottled Water</span
+            ><span class="price">$1.95</span>
+          </li>
+          <li>
+            <img src="../images/iced_coffee.png" atl="Cold Brew Iced Coffee" />
+            <span class="item">Cold Brew Iced Coffee</span
+            ><span class="price">$3.09</span>
+          </li>
+        </ul>
+      </div>
+      <div class="category">
+        <h2>Salads</h2>
+        <ul>
+          <li>
+            <img src="../images/market_salads.png" atl="Market Salad" />
+            <span class="item">Market Salad</span
+            ><span class="price">$9.45</span>
+          </li>
+          <li>
+            <img src="../images/spicy_southwest_salad.png" atl="Spicy Southwest Salad" />
+            <span class="item">Spicy Southwest Salad</span
+            ><span class="price">$9.45</span>
+          </li>
+          <li>
+            <img src="../images/cobb_salad.png" atl="Cobb Salad" />
+            <span class="item">Cobb Salad</span
+            ><span class="price">$9.25</span>
+          </li>
+        </ul>
+      </div>
+      <div class="category">
+        <h2>Sides</h2>
+        <ul>
+          <li>
+            <img src="../images/side_salad.png" atl="Side Salad" />
+            <span class="item">Side Salad</span
+            ><span class="price">$3.79</span>
+          </li>
+          <li>
+            <img src="../images/fruitcup.png" atl="Fruit Cup" />
+            <span class="item">Fruit Cup</span
+            ><span class="price">$3.79</span>
+          </li>
+          <li>
+            <img src="../images/waffle_fries.png" atl="Waffle Potato Fries (Small)" />
+            <span class="item">Waffle Potato Fries (Small)</span
+            ><span class="price">$1.89</span>
+          </li>
+          <li>
+            <img src="../images/waffle_fries.png" atl="Waffle Potato Fries (Medium)" />
+            <span class="item">Waffle Potato Fries (Medium)</span
+            ><span class="price">$2.29</span>
+          </li>
+          <li>
+            <img src="../images/waffle_fries.png" atl="Waffle Potato Fries (Large)" />
+            <span class="item">Waffle Potato Fries (Large)</span
+            ><span class="price">$2.69</span>
+          </li>
+        </ul>
+      </div>
+      <div class="category">
+        <h2>Treats</h2>
+        <ul>
+            <li>
+                <img src="../images/cookie_cream_milkshake.png" atl="Cookies & Cream Milkshake" />
+                <span class="item">Cookies & Cream Milkshake</span
+                ><span class="price">$4.19</span>
+              </li>
+              <li>
+                <img src="../images/chocolate_milkshake.png" atl="Chocolate Milkshake" />
+                <span class="item">Chocolate Milkshake</span
+                ><span class="price">$4.19</span>
+              </li>
+              <li>
+                <img src="../images/strawberry_milkshake.png" atl="Strawberry Milkshake" />
+                <span class="item">Strawberry Milkshake</span
+                ><span class="price">$4.19</span>
+              </li>
+              <li>
+                <img src="../images/vanilla_milkshake.png" atl="Vanilla Milkshake" />
+                <span class="item">Vanilla Milkshake</span
+                ><span class="price">$4.19</span>
+              </li>
+              <li>
+                <img src="../images/frosted_lemonade.png" atl="Frosted Lemonade" />
+                <span class="item">Frosted Lemonade</span
+                ><span class="price">$4.09</span>
+              </li>
+              <li>
+                <img src="../images/frosted_coffee.png" atl="Frosted Coffee" />
+                <span class="item">Frosted Coffee</span
+                ><span class="price">$4.09</span>
+              </li>
+              <li>
+                <img src="../images/icecream_cone.png" atl="Icecream Cone" />
+                <span class="item">Icecream Cone</span
+                ><span class="price">$1.65</span>
+              </li>
+              <li>
+                <img src="../images/chocolate_cookie.png" atl="Chocolate Chunk Cookie" />
+                <span class="item">Chocolate Chunk Cookie</span
+                ><span class="price">$1.49</span>
+              </li>
+              <li>
+                <img src="../images/chocolate_brownie.png" atl="Chocolate Fudge Brownie" />
+                <span class="item">Chocolate Fudge Brownie</span
+                ><span class="price">$2.09</span>
+              </li>
+        </ul>
+    </div>
+  </body>
+</html>

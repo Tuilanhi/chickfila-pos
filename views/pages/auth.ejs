@@ -32,6 +32,7 @@
     />
     <style>
       body {
+        font-family: Arial, Helvetica, sans-serif;
         margin: 0;
         padding: 0;
         height: 100vh;
@@ -77,15 +78,17 @@
       }
 
       .manager,
-      .server {
+      .server,
+      .menuboard {
         display: inline-block;
         background-color: red;
         color: #fff;
         border-radius: 10px;
-        padding: 5px 10px;
+        padding: 5px 5px;
         margin-bottom: 10px;
         cursor: pointer;
         justify-content: center;
+        width: 100px;
       }
 
       .signin {
@@ -212,6 +215,7 @@
       <div class="employee">
         <a href="/auth/google" class="manager">Manager</a>
         <a href="/auth/google" class="server">Server</a>
+        <a href="/menuboard" class="menuboard">Menu Board</a>
       </div>
       <div class="button-container">
         <a href="/customer" class="signin">Press to begin your order</a>
