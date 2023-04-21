@@ -577,7 +577,59 @@ app.get("/salesReport", (req, res) => {
   });
 });
 
-// render customer's dashboard to display weather
+app.get("/XReport", (req, res) => {
+  res.render("manager/XReport", {
+    userProfile,
+    userRole,
+    weather: null,
+    error: null,
+  });
+});
+
+app.get("/ZReport", (req, res) => {
+  res.render("manager/ZReport", {
+    userProfile,
+    userRole,
+    weather: null,
+    error: null,
+  });
+});
+
+app.get("/restockReport", (req, res) => {
+  res.render("manager/restockReport", {
+    userProfile,
+    userRole,
+    weather: null,
+    error: null,
+  });
+});
+
+app.get("/excessReport", (req, res) => {
+  res.render("manager/excessReport", {
+    userProfile,
+    userRole,
+    weather: null,
+    error: null,
+  });
+});
+
+// render sales's dashboard to display weather
 app.post("/salesReport", function (req, res) {
   renderWeather(req, res, "manager/salesReport");
+});
+
+app.post("/ZReport", function (req, res) {
+  renderWeather(req, res, "manager/ZReport");
+});
+
+app.post("/XReport", function (req, res) {
+  renderWeather(req, res, "manager/XReport");
+});
+
+app.post("/restockReport", function (req, res) {
+  renderWeather(req, res, "manager/restockReport");
+});
+
+app.post("/excessReport", function (req, res) {
+  renderWeather(req, res, "manager/excessReport");
 });

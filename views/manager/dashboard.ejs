@@ -32,9 +32,11 @@
 
     <style>
       body {
+        font-family: Arial, Helvetica, sans-serif;
         margin: 0;
         padding: 0;
         height: 100vh;
+        font-size: 15px;
       }
 
       .logo {
@@ -62,8 +64,8 @@
       .signout {
         font-size: 15px;
         text-align: right;
-        color: #fff;
-        background-color: #e83535;
+        color: white;
+        background-color: red;
         border-radius: 10px;
         padding: 5px 10px;
         cursor: pointer;
@@ -71,8 +73,8 @@
       }
 
       .signout:hover {
-        background-color: #fff;
-        color: #f44242;
+        background-color: white;
+        color: red;
         text-decoration: none;
       }
 
@@ -381,12 +383,11 @@
     <div class="navbar">
       <button class="navbtn">&#9776;</button>
       <div class="navbar-content" id="myDropdown">
-        <a href="/inventory">Inventory</a>
         <a href="/salesReport">Sales Report</a>
-        <a href="/">X Report</a>
-        <a href="/">Z Report</a>
-        <a href="/">Excess Report</a>
-        <a href="/">Restock Report</a>
+        <a href="/XReport">X Report</a>
+        <a href="/ZReport">Z Report</a>
+        <a href="/excessReport">Excess Report</a>
+        <a href="/restockReport">Restock Report</a>
         <a href="/customer">Customer View</a>
       </div>
     </div>
