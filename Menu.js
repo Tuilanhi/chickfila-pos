@@ -1,4 +1,4 @@
-const Database = require("./Database");
+import { Database } from "./Database.js";
 
 class Menu {
     constructor(Item, price=0, category=0) {
