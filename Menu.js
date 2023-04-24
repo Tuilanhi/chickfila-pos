@@ -26,13 +26,13 @@ class Menu {
         console.log(result[0]['count']);
         const count = result[0]['count'];
         // add item if it doesn't exists
-        if (count === 0) {
+        if (count === '0') {
           sqlStatement = `INSERT INTO menu (item, price, category) VALUES ('${Item}', ${price}, '${category}')`;
           let result_1 = await this.db.insert(sqlStatement);
         } else {
           // update item price if it exists
           console.log("WENT INTO ELSE STATEMENT");
-          sqlStatement = `DELETE FROM menu WHERE id IN('${Item}')`;
+          sqlStatement = `DELETE FROM menu WHERE item IN('${Item}')`;
           let result_1 = await this.db.delete(sqlStatement);
           sqlStatement = `INSERT INTO menu (item, price, category) VALUES ('${Item}', ${price}, '${category}')`;
           result_1 = await this.db.insert(sqlStatement);
@@ -65,4 +65,4 @@ class Menu {
   const Price = 8.99;
   const Category = 'Entrees'
 
-  const ChickenFeet = new Menu(Item, Price, Category);
+  const ChickenFeet = new Menu(Item);
