@@ -1,3 +1,5 @@
+import {createRequire } from "module";
+const require = createRequire(import.meta.url);
 const Database = require("./Database");
 
 /**
@@ -40,3 +42,4 @@ class RestockReport {
 }
 
 const report = new RestockReport();
+module.exports = Database;
