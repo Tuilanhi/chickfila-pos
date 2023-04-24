@@ -6,7 +6,7 @@ class Bridge {
     constructor(order) {
         this.db = new Database();
         this.parseCart(order);
-        console.log('Opened database');
+        console.log('Opened database');""
     }
   
     static connection() {
