@@ -65,4 +65,4 @@ class Menu {
   const Price = 8.99;
   const Category = 'Entrees'
 
-  const ChickenFeet = new Menu(Item, Price, Category);
+  const ChickenFeet = new Menu(Item);
