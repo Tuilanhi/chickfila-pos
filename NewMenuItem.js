@@ -1,4 +1,6 @@
-const Database = require("./Database");
+import {createRequire } from "module";
+import {Database} from "./Database.js";
+const require = createRequire(import.meta.url);
 
 /**
  * It takes in an array of strings and calls the addNewItem method
@@ -70,3 +72,4 @@ const Ingr =
   'Bun-pieces-food,Chicken Strip-pieces-food,Chicken Strip-pieces-food,Lettuce-pieces-food,Tomatoes-pieces-food,Cheese-pieces-food,Pickles-pieces-food,Pickles-pieces-food';
 
 const chickenStripSammy = new NewMenuItem(newItem, Ingr);
+export {NewMenuItem};

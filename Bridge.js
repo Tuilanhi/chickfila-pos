@@ -1,77 +1,69 @@
 import {createRequire } from "module";
+import {Database} from "./Database.js";
 const require = createRequire(import.meta.url);
-const Database = require("./Database");
 
 class Bridge {
     constructor(order) {
         this.db = new Database();
+        console.log('Opened database');
+        this.order = order;
         this.parseCart(order);
-        console.log('Opened database');""
+    
     }
   
-    static connection() {
-      // Building the connection with your credentials
-      let conn = null;
-      const teamNumber = "team_1";
-      const dbName = "csce315331_" + teamNumber;
-      const dbConnectionString = "jdbc:postgresql://csce-315-db.engr.tamu.edu/" + dbName;
-      const user = "csce315331_team_1_master";
-      const pswd = "TEAM_1";
-  
-      // Connecting to the database
-      try {
-        conn = new java.sql.DriverManager.getConnection(dbConnectionString, user, pswd);
-      } catch (e) {
-        console.error(e);
-        process.exit(0);
-      }
-  
-      console.log("Opened database successfully");
-  
-      return conn;
-    }
+   
+
   
      async parseCart(order) {
-      this.connection();
-      // console.log(order[0]);
+        let result = null;
       try {
         // if item name doesn't exist add new Item
-        const stmt = this.connection().createStatement();
+        //const stmt = this.db.connect().createStatement();
+        this.db.connect();
+        console.log('Opened database successfully');
         // get names of existing items
-        for (let i = 0; i < order.length; i++) {
-          // console.log(order[i]);
-          const sqlStatement = "select ingredients FROM bridge WHERE item ='" + order[i] + "'";
-          const result = stmt.executeQuery(sqlStatement);
-          result.next();
-          const a = result.getArray("ingredients");
-          const ing = a.getArray();
-          // console.log(ing[0]);
-          const ingredients = Array.from(ing);
-          // console.log(ingredients);
+        let i = 0;
+        while (i < order.length) {
+            console.log(order.length);
+            console.log(order[i]);
+          const sqlStatement = `SELECT ingredients FROM bridge WHERE item = '${order[i]}'`;
+          result = await this.db.query(sqlStatement);
+          //result.next();
+         // const a = result.getArray("ingredients");
+          //const ing = a.getArray();
+          //console.log(ing[0]);
+          const ingredients = Array.from(result);
+          console.log(ingredients);
           for (let j = 0; j < ingredients.length; j++) {
-            this.decrementInventory(ingredients[j], stmt);
+            this.decrementInventory(ingredients[j], this.db);
           }
+          i++;
         }
       } catch (e) {
         console.error(e);
         process.exit(0);
       }
-  
-      // close connection
+     // close connection
       // closing the connection
       try {
-        this.connection().close();
+        this.db.disconnect();
         console.log("Connection Closed.");
       } catch (e) {
         console.log("Connection NOT Closed.");
       }
+      
     }
   
     decrementInventory(ingredient, stmt) {
-      console.log(ingredient);
-      const sqlStatement = "update ingredients set quantity = quantity - 1 where ingredient = '" + ingredient + "'";
-      stmt.executeUpdate(sqlStatement);
+      const sqlStatement = `update ingredients set quantity = quantity - 1 where ingredient = '${ingredient}'`;
+      this.db.query(sqlStatement);
     }
 
+    
+
   }
-  
+
+  const order = ["Chicken Sandwich","Fruit Cup"];
+  const run = new Bridge(order);
+  export {Bridge};
+
