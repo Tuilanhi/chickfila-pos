@@ -1,6 +1,7 @@
 import {createRequire } from "module";
+import {Database} from "./Database.js";
 const require = createRequire(import.meta.url);
-const Database = require("./Database");
+//const Database = require("./Database");
 
 /**
  * It takes in an Array of Strings and calls the parseCart method.
@@ -42,4 +43,4 @@ class RestockReport {
 }
 
 const report = new RestockReport();
-module.exports = Database;
+export {RestockReport};
