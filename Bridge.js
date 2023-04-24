@@ -5,10 +5,9 @@ const require = createRequire(import.meta.url);
 class Bridge {
     constructor(order) {
         this.db = new Database();
-        console.log('Opened database');
         this.order = order;
         this.parseCart(order);
-    
+        console.log('Opened database');
     }
   
    
