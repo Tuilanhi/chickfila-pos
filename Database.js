@@ -1,4 +1,7 @@
-const { Client } = require("pg");
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+import pkg from "pg";
+const { Client } = pkg;
 require("dotenv").config();
 
 class Database {
@@ -30,7 +33,7 @@ class Database {
     }
   }
 
-    async insert(sql, params) {
+  async insert(sql, params) {
     try {
       await this.client.query(sql, params);
     } catch (err) {
@@ -56,4 +59,4 @@ class Database {
   }
 }
 
-module.exports = Database;
+export { Database };
