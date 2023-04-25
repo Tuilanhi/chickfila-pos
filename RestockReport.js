@@ -6,7 +6,6 @@ import { Database } from "./Database.js";
 class RestockReport {
   constructor() {
     this.db = new Database();
-    console.log("Opened database");
   }
 
   /**
@@ -20,16 +19,9 @@ class RestockReport {
     try {
       //Inserting new Item into Bridge in database
       this.db.connect();
-      console.log("Opened database successfully");
       const minimum = 150;
       const sqlStatement = `SELECT * FROM ingredients WHERE quantity <= ${minimum};`;
       result = await this.db.query(sqlStatement);
-
-      for (let i = 0; i < result.length; i++) {
-        console.log(
-          `${result[i].ingredient} ${result[i].quantity} ${result[i].unit} ${result[i].type}`
-        );
-      }
     } catch (e) {
       console.error(e);
       process.exit(0);
