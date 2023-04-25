@@ -1,4 +1,5 @@
 import { Database } from "./Database.js";
+import { RestockReport } from "./RestockReport.js";
 
 class testDatabase {
   constructor() {
@@ -21,6 +22,9 @@ async function main() {
   const menu = new testDatabase();
   const items = await menu.getFirstFiveItems("SELECT * FROM menu LIMIT 5;");
   console.log(items);
+
+  const result = new RestockReport();
+  const rows = result.restock();
 }
 
 main();

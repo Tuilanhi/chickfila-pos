@@ -2,12 +2,14 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
+import { RestockReport } from "./RestockReport.js";
+
 import fetch from "node-fetch";
 const express = require("express");
 const app = express();
 const session = require("express-session");
 const passport = require("passport");
-const port = process.env.PORT || 3000;
+const port = 3000;
 const bodyParser = require("body-parser");
 require("dotenv").config();
 
@@ -596,12 +598,23 @@ app.get("/ZReport", (req, res) => {
 });
 
 app.get("/restockReport", (req, res) => {
-  res.render("manager/restockReport", {
-    userProfile,
-    userRole,
-    weather: null,
-    error: null,
-  });
+  const restockReport = new RestockReport();
+
+  restockReport
+    .restock()
+    .then((results) => {
+      res.render("manager/restockReport", {
+        results,
+        userProfile,
+        userRole,
+        weather: null,
+        error: null,
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Error fetching restock report");
+    });
 });
 
 app.get("/excessReport", (req, res) => {
