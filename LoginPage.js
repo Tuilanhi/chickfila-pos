@@ -561,6 +561,73 @@ app.post("/treats", function (req, res) {
 });
 
 /*MANAGER PAGE SECTION*/
+function managerRenderWeather(req, res, page, results) {
+  // Get city name passed in the form
+  let city = req.body.city;
+
+  // Use that city name to fetch data
+  // Use the API_KEY in the '.env' file
+  let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+
+  fetch(url)
+    .then((res) => res.json())
+    .then((weather) => {
+      if (weather.main == undefined) {
+        res.render(page, {
+          userProfile,
+          userRole,
+          weather: null,
+          error: "Error, please try again",
+          results,
+        });
+      } else {
+        let place = `${weather.name}, ${weather.sys.country}`,
+          weatherTimezone = `${new Date(
+            weather.dt * 1000 - weather.timezone * 1000
+          )}`;
+        let weatherTemp = `${weather.main.temp}`,
+          weatherIcon = `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`,
+          main = `${weather.weather[0].main}`,
+          weatherFahrenheit;
+        weatherFahrenheit = (weatherTemp * 9) / 5 + 32;
+
+        function roundToTwo(num) {
+          return +(Math.round(num + "e+2") + "e-2");
+        }
+        weatherFahrenheit = roundToTwo(weatherFahrenheit);
+
+        if (isManager()) {
+          userRole = userRoles[0].role;
+        } else if (isServer()) {
+          userRole = userRoles[1].role;
+        }
+
+        res.render(page, {
+          results,
+          userProfile,
+          userRole,
+          weather: weather,
+          place: place,
+          temp: weatherTemp,
+          icon: weatherIcon,
+          timezone: weatherTimezone,
+          fahrenheit: weatherFahrenheit,
+          main: main,
+          error: null,
+        });
+      }
+    })
+    .catch((err) => {
+      res.render(page, {
+        userProfile,
+        userRole,
+        weather: null,
+        error: "Error, please try again",
+        results,
+      });
+    });
+}
+
 app.get("/inventory", (req, res) => {
   res.render("manager/inventory", {
     userProfile,
@@ -640,7 +707,17 @@ app.post("/XReport", function (req, res) {
 });
 
 app.post("/restockReport", function (req, res) {
-  renderWeather(req, res, "manager/restockReport");
+  const restockReport = new RestockReport();
+
+  restockReport
+    .restock()
+    .then((results) => {
+      managerRenderWeather(req, res, "manager/restockReport", results);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Error fetching restock report");
+    });
 });
 
 app.post("/excessReport", function (req, res) {
