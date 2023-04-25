@@ -409,30 +409,14 @@
           </tr>
         </thead>
         <tbody>
+          <% for (let i = 0; i < results.length; i++) { %>
           <tr>
-            <td>Buns</td>
-            <td>98</td>
-            <td>Bags</td>
-            <td>Entrees</td>
+            <td><%= results[i].ingredient %></td>
+            <td><%= results[i].quantity %></td>
+            <td><%= results[i].unit %></td>
+            <td><%= results[i].type %></td>
           </tr>
-          <tr>
-            <td>Patties</td>
-            <td>45</td>
-            <td>Pieces</td>
-            <td>Entrees</td>
-          </tr>
-          <tr>
-            <td>Lettuce</td>
-            <td>20</td>
-            <td>Pieces</td>
-            <td>Entrees</td>
-          </tr>
-          <tr>
-            <td>Chicken Feet</td>
-            <td>38</td>
-            <td>Pieces</td>
-            <td>Entrees</td>
-          </tr>
+          <% } %>
         </tbody>
       </table>
     </div>

@@ -25,11 +25,11 @@ class RestockReport {
       const sqlStatement = `SELECT * FROM ingredients WHERE quantity <= ${minimum};`;
       result = await this.db.query(sqlStatement);
 
-      result.forEach((row) => {
+      for (let i = 0; i < result.length; i++) {
         console.log(
-          `${row.ingredient} ${row.quantity} ${row.unit} ${row.type}`
+          `${result[i].ingredient} ${result[i].quantity} ${result[i].unit} ${result[i].type}`
         );
-      });
+      }
     } catch (e) {
       console.error(e);
       process.exit(0);
