@@ -1,4 +1,4 @@
-const Database = require("./Database");
+import { Database } from "./Database.js";
 
 /**
  * It takes in an Array of Strings and calls the parseCart method.
@@ -6,8 +6,7 @@ const Database = require("./Database");
 class RestockReport {
   constructor() {
     this.db = new Database();
-    this.restock();
-    console.log('Opened database');
+    console.log("Opened database");
   }
 
   /**
@@ -16,19 +15,20 @@ class RestockReport {
    * @return A client object to the database.
    */
 
-
   async restock() {
     let result = null;
     try {
       //Inserting new Item into Bridge in database
       this.db.connect();
-      console.log('Opened database successfully');
+      console.log("Opened database successfully");
       const minimum = 150;
       const sqlStatement = `SELECT * FROM ingredients WHERE quantity <= ${minimum};`;
       result = await this.db.query(sqlStatement);
 
       result.forEach((row) => {
-        console.log(`${row.ingredient} ${row.quantity} ${row.unit} ${row.type}`);
+        console.log(
+          `${row.ingredient} ${row.quantity} ${row.unit} ${row.type}`
+        );
       });
     } catch (e) {
       console.error(e);
@@ -39,4 +39,4 @@ class RestockReport {
   }
 }
 
-const report = new RestockReport();
+export { RestockReport };
