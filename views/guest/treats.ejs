@@ -48,7 +48,7 @@
         margin: 0 auto;
         border-collapse: collapse;
         border: 2px solid #000;
-        width: 50%;
+        width: 70%;
         margin-top: 50px;
       }
       th,
@@ -94,6 +94,12 @@
 
       .profile {
         font-size: 15px;
+        margin-right: 10px;
+      }
+
+      tbody img {
+        width: 150px;
+        height: 150px;
         margin-right: 10px;
       }
 
@@ -381,6 +387,7 @@
     <table>
       <thead>
         <tr>
+          <th></th>
           <th>Item</th>
           <th>Price</th>
           <th></th>
@@ -389,6 +396,9 @@
       <tbody>
         <% for (let i = 0; i < treatItems.length; i++) { %>
         <tr>
+          <td>
+            <img src="<%= treatItems[i].image_url %>" />
+          </td>
           <td><%= treatItems[i].name %></td>
           <td>$<%= treatItems[i].price %></td>
           <td><button class="atc">Add to Cart</button></td>
