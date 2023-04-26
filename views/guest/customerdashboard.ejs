@@ -51,27 +51,47 @@
       }
 
       h1 {
-        color: red;
+        color: black;
         text-align: center;
         padding-bottom: 5vh;
+        margin-top: 40px;
       }
+
       .menu-button {
-        background-color: red;
-        color: white;
-        border: none;
-        border-radius: 10px;
-        padding: 10px 20px;
-        margin-bottom: 10px;
-        font-size: 16px;
-        cursor: pointer;
-        justify-content: center;
-        display: flex;
-        width: 100%;
-      }
-      .menu-button:hover {
         background-color: white;
         color: red;
+        border: none;
+        border-radius: 10px;
+        padding: 0px 20px;
+        margin-bottom: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        justify-content: space-between; /* align items with space between them */
+        align-items: center;
+        display: flex;
+        width: 100%;
+        border: 1px solid black;
+      }
+      .menu-button:hover {
+        background-color: red;
+        color: white;
         text-decoration: none;
+      }
+
+      .menu-button img {
+        width: 90px;
+        height: 90px;
+        margin-right: 150px;
+      }
+
+      .menu-button span {
+        margin-right: 10px; /* add space between the text and the symbol */
+      }
+
+      .menu-button::after {
+        content: ">"; /* add the ">" symbol */
+        font-size: 20px;
+        margin-left: 10px; /* add space between the symbol and the button edge */
       }
 
       .profile-container {
@@ -370,11 +390,21 @@
     <img src="../images/Chick-fil-A-Logo.png" class="logo" />
     <h1>Menu</h1>
     <div>
-      <a href="/entrees" class="menu-button">Entrees</a>
-      <a href="/drinks" class="menu-button">Drinks</a>
-      <a href="/salads" class="menu-button">Salads</a>
-      <a href="/sides" class="menu-button">Sides</a>
-      <a href="/treats" class="menu-button">Treats</a>
+      <a href="/entrees" class="menu-button">
+        <img src="../images/chicken_sandwich.png" atl="Entrees" />Entrees</a
+      >
+      <a href="/drinks" class="menu-button">
+        <img src="../images/sunjoy.png" />Drinks</a
+      >
+      <a href="/salads" class="menu-button"
+        ><img src="../images/market_salads.png" />Salads</a
+      >
+      <a href="/sides" class="menu-button"
+        ><img src="../images/waffle_fries.png" />Sides</a
+      >
+      <a href="/treats" class="menu-button"
+        ><img src="../images/strawberry_milkshake.png" />Treats</a
+      >
     </div>
 
     <div class="profile-container">

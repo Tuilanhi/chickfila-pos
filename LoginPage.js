@@ -13,6 +13,8 @@ const port = 3000;
 const bodyParser = require("body-parser");
 require("dotenv").config();
 
+app.use(express.static("views"));
+
 var userProfile;
 var userRole = "";
 
@@ -27,60 +29,220 @@ const userRoles = [
 
 /* Menu Section */
 const entreeItems = [
-  { name: "Chicken Sandwich", price: 4.49 },
-  { name: "Deluxe Chicken Sandwich", price: 5.19 },
-  { name: "Spicy Chicken Sandwich", price: 4.89 },
-  { name: "Spicy Deluxe Chicken Sandwich", price: 5.59 },
-  { name: "Chicken Nuggets (8 pieces)", price: 4.55 },
-  { name: "Chicken Nuggets (12 pieces)", price: 6.29 },
-  { name: "Grilled Nuggets (8 pieces)", price: 5.35 },
-  { name: "Grilled Nuggets (12 pieces)", price: 7.69 },
-  { name: "Grilled Chicken Sandwich", price: 6.15 },
-  { name: "Grilled Chicken Club Sandwich", price: 7.79 },
-  { name: "Grilled Chicken Cool Wrap", price: 7.45 },
+  {
+    name: "Chicken Sandwich",
+    image_url: "./images/chicken_sandwich.png",
+    price: 4.49,
+  },
+  {
+    name: "Deluxe Chicken Sandwich",
+    image_url: "./images/deluxe_chicken_sandwich.png",
+    price: 5.19,
+  },
+  {
+    name: "Spicy Chicken Sandwich",
+    image_url: "./images/spicy_chicken_sandwich.png",
+    price: 4.89,
+  },
+  {
+    name: "Spicy Deluxe Chicken Sandwich",
+    image_url: "./images/spicy_deluxe_chicken_sandwich.png",
+    price: 5.59,
+  },
+  {
+    name: "Chicken Nuggets (8 pieces)",
+    image_url: "./images/Chicken_nuggets_8.png",
+    price: 4.55,
+  },
+  {
+    name: "Chicken Nuggets (12 pieces)",
+    image_url: "./images/Chicken_Nuggets_12.png",
+    price: 6.29,
+  },
+  {
+    name: "Grilled Nuggets (8 pieces)",
+    image_url: "./images/grilled_nuggets_8.png",
+    price: 5.35,
+  },
+  {
+    name: "Grilled Nuggets (12 pieces)",
+    image_url: "./images/grilled_nuggets_12.png",
+    price: 7.69,
+  },
+  {
+    name: "Grilled Chicken Sandwich",
+    image_url: "./images/grilled_chicken_sandwich.png",
+    price: 6.15,
+  },
+  {
+    name: "Grilled Chicken Club Sandwich",
+    image_url: "./images/grilled_chicken_club_sandwich.png",
+    price: 7.79,
+  },
+  {
+    name: "Grilled Chicken Cool Wrap",
+    image_url: "./images/grilled_cool_wrap.png",
+    price: 7.45,
+  },
 ];
 
 const drinkItems = [
-  { name: "Diet Lemonade (medium)", price: 2.39 },
-  { name: "Diet Lemonade (large)", price: 2.89 },
-  { name: "Regular Lemonade (medium)", price: 2.39 },
-  { name: "Regular Lemonade (large)", price: 2.89 },
-  { name: "Chick-fil-A Sunjoy (medium)", price: 2.39 },
-  { name: "Chick-fil-A Sunjoy (large)", price: 2.89 },
-  { name: "Soft Drink (medium)", price: 1.99 },
-  { name: "Soft Drink (large)", price: 2.45 },
-  { name: "Sweet Tea (medium)", price: 2.09 },
-  { name: "Sweet Tea (large)", price: 2.39 },
-  { name: "Unsweet Tea (medium)", price: 2.09 },
-  { name: "Unsweet Tea (large)", price: 2.39 },
-  { name: "Bottled Water", price: 1.95 },
-  { name: "Cold Brew Iced Coffee", price: 3.09 },
+  {
+    name: "Diet Lemonade (medium)",
+    image_url: "./images/diet_lemonade.png",
+    price: 2.39,
+  },
+  {
+    name: "Diet Lemonade (large)",
+    image_url: "./images/diet_lemonade.png",
+    price: 2.89,
+  },
+  {
+    name: "Regular Lemonade (medium)",
+    image_url: "./images/diet_lemonade.png",
+    price: 2.39,
+  },
+  {
+    name: "Regular Lemonade (large)",
+    image_url: "./images/diet_lemonade.png",
+    price: 2.89,
+  },
+  {
+    name: "Chick-fil-A Sunjoy (medium)",
+    image_url: "./images/sunjoy.png",
+    price: 2.39,
+  },
+  {
+    name: "Chick-fil-A Sunjoy (large)",
+    image_url: "./images/sunjoy.png",
+    price: 2.89,
+  },
+  {
+    name: "Soft Drink (medium)",
+    image_url: "./images/softdrink.png",
+    price: 1.99,
+  },
+  {
+    name: "Soft Drink (large)",
+    image_url: "./images/softdrink.png",
+    price: 2.45,
+  },
+  {
+    name: "Sweet Tea (medium)",
+    image_url: "./images/sweet_tea.png",
+    price: 2.09,
+  },
+  {
+    name: "Sweet Tea (large)",
+    image_url: "./images/sweet_tea.png",
+    price: 2.39,
+  },
+  {
+    name: "Unsweet Tea (medium)",
+    image_url: "./images/sweet_tea.png",
+    price: 2.09,
+  },
+  {
+    name: "Unsweet Tea (large)",
+    image_url: "./images/sweet_tea.png",
+    price: 2.39,
+  },
+  {
+    name: "Bottled Water",
+    image_url: "./images/water.png",
+    price: 1.95,
+  },
+  {
+    name: "Cold Brew Iced Coffee",
+    image_url: "./images/iced_coffee.png",
+    price: 3.09,
+  },
 ];
 
 const saladItems = [
-  { name: "Market Salad", price: 9.45 },
-  { name: "Spicy Southwest Salad", price: 9.45 },
-  { name: "Cobb Salad", price: 9.25 },
+  {
+    name: "Market Salad",
+    image_url: "./images/market_salads.png",
+    price: 9.45,
+  },
+  {
+    name: "Spicy Southwest Salad",
+    image_url: "./images/spicy_southwest_salad.png",
+    price: 9.45,
+  },
+  {
+    name: "Cobb Salad",
+    image_url: "./images/cobb_salad.png",
+    price: 9.25,
+  },
 ];
 
 const sideItems = [
-  { name: "Side Salad", price: 3.79 },
-  { name: "Fruit Cup", price: 3.79 },
-  { name: "Waffle Potato Fries (small)", price: 1.89 },
-  { name: "Waffle Potato Fries (medium)", price: 2.29 },
-  { name: "Waffle Potato Fries (large)", price: 2.69 },
+  { name: "Side Salad", image_url: "./images/side_salad.png", price: 3.79 },
+  { name: "Fruit Cup", image_url: "./images/fruitcup.png", price: 3.79 },
+  {
+    name: "Waffle Potato Fries (small)",
+    image_url: "./images/waffle_fries.png",
+    price: 1.89,
+  },
+  {
+    name: "Waffle Potato Fries (medium)",
+    image_url: "./images/waffle_fries.png",
+    price: 2.29,
+  },
+  {
+    name: "Waffle Potato Fries (large)",
+    image_url: "./images/waffle_fries.png",
+    price: 2.69,
+  },
 ];
 
 const treatItems = [
-  { name: "Cookies & Cream Milkshake", price: 4.19 },
-  { name: "Chocolate Milkshake", price: 4.19 },
-  { name: "Strawberry Milkshake", price: 4.19 },
-  { name: "Vanilla Milkshake", price: 4.19 },
-  { name: "Frosted Lemonade", price: 4.09 },
-  { name: "Frosted Coffee", price: 4.09 },
-  { name: "Icecream Cone", price: 1.65 },
-  { name: "Chocolate Chunk Cookie", price: 1.49 },
-  { name: "Chocolate Fudge Brownie", price: 2.09 },
+  {
+    name: "Cookies & Cream Milkshake",
+    image_url: "./images/cookie_cream_milkshake.png",
+    price: 4.19,
+  },
+  {
+    name: "Chocolate Milkshake",
+    image_url: "./images/chocolate_milkshake.png",
+    price: 4.19,
+  },
+  {
+    name: "Strawberry Milkshake",
+    image_url: "./images/strawberry_milkshake.png",
+    price: 4.19,
+  },
+  {
+    name: "Vanilla Milkshake",
+    image_url: "./images/vanilla_milkshake.png",
+    price: 4.19,
+  },
+  {
+    name: "Frosted Lemonade",
+    image_url: "./images/frosted_lemonade.png",
+    price: 4.09,
+  },
+  {
+    name: "Frosted Coffee",
+    image_url: "./images/frosted_coffee.png",
+    price: 4.09,
+  },
+  {
+    name: "Icecream Cone",
+    image_url: "./images/icecream_cone.png",
+    price: 1.65,
+  },
+  {
+    name: "Chocolate Chunk Cookie",
+    image_url: "./images/chocolate_cookie.png",
+    price: 1.49,
+  },
+  {
+    name: "Chocolate Fudge Brownie",
+    image_url: "./images/chocolate_brownie.png",
+    price: 2.09,
+  },
 ];
 
 /*  Google AUTH  */
@@ -113,8 +275,6 @@ passport.deserializeUser(function (obj, cb) {
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
-
-app.use(express.static("views"));
 
 app.use(
   session({
