@@ -253,7 +253,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://csce315-web-app.onrender.com/auth/google/callback",
+      callbackURL: "http://localhost:3000/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, done) {
       userProfile = profile;
@@ -357,11 +357,13 @@ app.get("/dashboard", isLoggedIn, (req, res) => {
       weather: null,
       error: null,
     });
+  } else {
+    res.render("pages/error");
   }
 });
 
 // If failed to login, redirect to error page
-app.get("/error", (req, res) => res.send("error logging in"));
+app.get("/error", (req, res) => res.render("pages/error"));
 
 // After user had logged out, redirect to login page
 app.get("/logout", function (req, res, next) {
