@@ -323,6 +323,13 @@
         });
       }
 
+      function resetTable() {
+        const rows = document.querySelectorAll("#sales-table tbody tr");
+        rows.forEach((row) => {
+          row.style.display = "";
+        });
+      }
+
       function enlargeText() {
         const elementsToEnlarge = document.querySelectorAll("body *");
 
@@ -421,6 +428,7 @@
         <label for="end-date">End Date:</label>
         <input type="date" id="end-date" />
         <button onclick="generateReport()">Generate Report</button>
+        <button onclick="resetTable()">Reset Table</button>
       </div>
       <table id="sales-table">
         <thead>
