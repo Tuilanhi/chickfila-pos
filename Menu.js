@@ -12,7 +12,86 @@ class Menu {
       //Inserting new Item into Bridge in database
       const sqlStatement = `SELECT * FROM menu;`;
       result = await this.db.query(sqlStatement);
-      console.log(result);
+    } catch (e) {
+      console.error(e);
+      process.exit(0);
+    }
+
+    await this.db.disconnect();
+    return result;
+  }
+
+  async displayEntrees() {
+    await this.db.connect();
+    let result = null;
+    try {
+      //Inserting new Item into Bridge in database
+      const sqlStatement = `SELECT * FROM menu where category='Entrees';`;
+      result = await this.db.query(sqlStatement);
+    } catch (e) {
+      console.error(e);
+      process.exit(0);
+    }
+
+    await this.db.disconnect();
+    return result;
+  }
+
+  async displayDrinks() {
+    await this.db.connect();
+    let result = null;
+    try {
+      //Inserting new Item into Bridge in database
+      const sqlStatement = `SELECT * FROM menu where category='Drinks';`;
+      result = await this.db.query(sqlStatement);
+    } catch (e) {
+      console.error(e);
+      process.exit(0);
+    }
+
+    await this.db.disconnect();
+    return result;
+  }
+
+  async displaySalads() {
+    await this.db.connect();
+    let result = null;
+    try {
+      //Inserting new Item into Bridge in database
+      const sqlStatement = `SELECT * FROM menu where category='Salads';`;
+      result = await this.db.query(sqlStatement);
+    } catch (e) {
+      console.error(e);
+      process.exit(0);
+    }
+
+    await this.db.disconnect();
+    return result;
+  }
+
+  async displaySides() {
+    await this.db.connect();
+    let result = null;
+    try {
+      //Inserting new Item into Bridge in database
+      const sqlStatement = `SELECT * FROM menu where category='Sides';`;
+      result = await this.db.query(sqlStatement);
+    } catch (e) {
+      console.error(e);
+      process.exit(0);
+    }
+
+    await this.db.disconnect();
+    return result;
+  }
+
+  async displayTreats() {
+    await this.db.connect();
+    let result = null;
+    try {
+      //Inserting new Item into Bridge in database
+      const sqlStatement = `SELECT * FROM menu where category='Treats';`;
+      result = await this.db.query(sqlStatement);
     } catch (e) {
       console.error(e);
       process.exit(0);

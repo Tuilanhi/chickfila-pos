@@ -28,224 +28,6 @@ const userRoles = [
   { role: "Customer" },
 ];
 
-/* Menu Section */
-const entreeItems = [
-  {
-    name: "Chicken Sandwich",
-    image_url: "./images/chicken_sandwich.png",
-    price: 4.49,
-  },
-  {
-    name: "Deluxe Chicken Sandwich",
-    image_url: "./images/deluxe_chicken_sandwich.png",
-    price: 5.19,
-  },
-  {
-    name: "Spicy Chicken Sandwich",
-    image_url: "./images/spicy_chicken_sandwich.png",
-    price: 4.89,
-  },
-  {
-    name: "Spicy Deluxe Chicken Sandwich",
-    image_url: "./images/spicy_deluxe_chicken_sandwich.png",
-    price: 5.59,
-  },
-  {
-    name: "Chicken Nuggets (8 pieces)",
-    image_url: "./images/Chicken_nuggets_8.png",
-    price: 4.55,
-  },
-  {
-    name: "Chicken Nuggets (12 pieces)",
-    image_url: "./images/Chicken_Nuggets_12.png",
-    price: 6.29,
-  },
-  {
-    name: "Grilled Nuggets (8 pieces)",
-    image_url: "./images/grilled_nuggets_8.png",
-    price: 5.35,
-  },
-  {
-    name: "Grilled Nuggets (12 pieces)",
-    image_url: "./images/grilled_nuggets_12.png",
-    price: 7.69,
-  },
-  {
-    name: "Grilled Chicken Sandwich",
-    image_url: "./images/grilled_chicken_sandwich.png",
-    price: 6.15,
-  },
-  {
-    name: "Grilled Chicken Club Sandwich",
-    image_url: "./images/grilled_chicken_club_sandwich.png",
-    price: 7.79,
-  },
-  {
-    name: "Grilled Chicken Cool Wrap",
-    image_url: "./images/grilled_cool_wrap.png",
-    price: 7.45,
-  },
-];
-
-const drinkItems = [
-  {
-    name: "Diet Lemonade (medium)",
-    image_url: "./images/diet_lemonade.png",
-    price: 2.39,
-  },
-  {
-    name: "Diet Lemonade (large)",
-    image_url: "./images/diet_lemonade.png",
-    price: 2.89,
-  },
-  {
-    name: "Regular Lemonade (medium)",
-    image_url: "./images/diet_lemonade.png",
-    price: 2.39,
-  },
-  {
-    name: "Regular Lemonade (large)",
-    image_url: "./images/diet_lemonade.png",
-    price: 2.89,
-  },
-  {
-    name: "Chick-fil-A Sunjoy (medium)",
-    image_url: "./images/sunjoy.png",
-    price: 2.39,
-  },
-  {
-    name: "Chick-fil-A Sunjoy (large)",
-    image_url: "./images/sunjoy.png",
-    price: 2.89,
-  },
-  {
-    name: "Soft Drink (medium)",
-    image_url: "./images/softdrink.png",
-    price: 1.99,
-  },
-  {
-    name: "Soft Drink (large)",
-    image_url: "./images/softdrink.png",
-    price: 2.45,
-  },
-  {
-    name: "Sweet Tea (medium)",
-    image_url: "./images/sweet_tea.png",
-    price: 2.09,
-  },
-  {
-    name: "Sweet Tea (large)",
-    image_url: "./images/sweet_tea.png",
-    price: 2.39,
-  },
-  {
-    name: "Unsweet Tea (medium)",
-    image_url: "./images/sweet_tea.png",
-    price: 2.09,
-  },
-  {
-    name: "Unsweet Tea (large)",
-    image_url: "./images/sweet_tea.png",
-    price: 2.39,
-  },
-  {
-    name: "Bottled Water",
-    image_url: "./images/water.png",
-    price: 1.95,
-  },
-  {
-    name: "Cold Brew Iced Coffee",
-    image_url: "./images/iced_coffee.png",
-    price: 3.09,
-  },
-];
-
-const saladItems = [
-  {
-    name: "Market Salad",
-    image_url: "./images/market_salads.png",
-    price: 9.45,
-  },
-  {
-    name: "Spicy Southwest Salad",
-    image_url: "./images/spicy_southwest_salad.png",
-    price: 9.45,
-  },
-  {
-    name: "Cobb Salad",
-    image_url: "./images/cobb_salad.png",
-    price: 9.25,
-  },
-];
-
-const sideItems = [
-  { name: "Side Salad", image_url: "./images/side_salad.png", price: 3.79 },
-  { name: "Fruit Cup", image_url: "./images/fruitcup.png", price: 3.79 },
-  {
-    name: "Waffle Potato Fries (small)",
-    image_url: "./images/waffle_fries.png",
-    price: 1.89,
-  },
-  {
-    name: "Waffle Potato Fries (medium)",
-    image_url: "./images/waffle_fries.png",
-    price: 2.29,
-  },
-  {
-    name: "Waffle Potato Fries (large)",
-    image_url: "./images/waffle_fries.png",
-    price: 2.69,
-  },
-];
-
-const treatItems = [
-  {
-    name: "Cookies & Cream Milkshake",
-    image_url: "./images/cookie_cream_milkshake.png",
-    price: 4.19,
-  },
-  {
-    name: "Chocolate Milkshake",
-    image_url: "./images/chocolate_milkshake.png",
-    price: 4.19,
-  },
-  {
-    name: "Strawberry Milkshake",
-    image_url: "./images/strawberry_milkshake.png",
-    price: 4.19,
-  },
-  {
-    name: "Vanilla Milkshake",
-    image_url: "./images/vanilla_milkshake.png",
-    price: 4.19,
-  },
-  {
-    name: "Frosted Lemonade",
-    image_url: "./images/frosted_lemonade.png",
-    price: 4.09,
-  },
-  {
-    name: "Frosted Coffee",
-    image_url: "./images/frosted_coffee.png",
-    price: 4.09,
-  },
-  {
-    name: "Icecream Cone",
-    image_url: "./images/icecream_cone.png",
-    price: 1.65,
-  },
-  {
-    name: "Chocolate Chunk Cookie",
-    image_url: "./images/chocolate_cookie.png",
-    price: 1.49,
-  },
-  {
-    name: "Chocolate Fudge Brownie",
-    image_url: "./images/chocolate_brownie.png",
-    price: 2.09,
-  },
-];
-
 /*  Google AUTH  */
 var GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 
@@ -598,7 +380,18 @@ function guestRenderWeather(req, res, page) {
 
   fetch(url)
     .then((res) => res.json())
-    .then((weather) => {
+    .then(async (weather) => {
+      const entree = new Menu();
+      const drink = new Menu();
+      const salad = new Menu();
+      const side = new Menu();
+      const treat = new Menu();
+
+      const entreeItems = await entree.displayEntrees();
+      const drinkItems = await drink.displayDrinks();
+      const saladItems = await salad.displaySalads();
+      const sideItems = await side.displaySides();
+      const treatItems = await treat.displayTreats();
       if (weather.main == undefined) {
         res.render(page, {
           userRole,
@@ -665,60 +458,104 @@ app.get("/customer", function (req, res) {
   userRole = userRoles[2].role;
   res.render("guest/customerdashboard", {
     userRole,
-    drinkItems,
     weather: null,
     error: null,
   });
 });
 
 // redirect to entrees menu page
-app.get("/entrees", (req, res) => {
-  res.render("guest/entrees", {
-    userRole,
-    entreeItems,
-    weather: null,
-    error: null,
-  });
+app.get("/entrees", async (req, res) => {
+  const entree = new Menu();
+
+  try {
+    const entreeItems = await entree.displayEntrees();
+
+    res.render("guest/entrees", {
+      userRole,
+      entreeItems,
+      weather: null,
+      error: null,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error fetching data");
+  }
 });
 
 // redirect to drinks menu page
-app.get("/drinks", (req, res) => {
-  res.render("guest/drinks", {
-    userRole,
-    drinkItems,
-    weather: null,
-    error: null,
-  });
+app.get("/drinks", async (req, res) => {
+  const drink = new Menu();
+
+  try {
+    const drinkItems = await drink.displayDrinks();
+
+    res.render("guest/drinks", {
+      userRole,
+      drinkItems,
+      weather: null,
+      error: null,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error fetching data");
+  }
 });
 
 // redirect to salads menu page
-app.get("/salads", (req, res) => {
-  res.render("guest/salads", {
-    userRole,
-    saladItems,
-    weather: null,
-    error: null,
-  });
+app.get("/salads", async (req, res) => {
+  const salad = new Menu();
+
+  try {
+    const saladItems = await salad.displaySalads();
+
+    res.render("guest/salads", {
+      userRole,
+      saladItems,
+      weather: null,
+      error: null,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error fetching data");
+  }
 });
 
 // redirect to sides menu page
-app.get("/sides", (req, res) => {
-  res.render("guest/sides", {
-    userRole,
-    sideItems,
-    weather: null,
-    error: null,
-  });
+app.get("/sides", async (req, res) => {
+  const side = new Menu();
+
+  try {
+    const sideItems = await side.displaySides();
+
+    res.render("guest/sides", {
+      userRole,
+      sideItems,
+      weather: null,
+      error: null,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error fetching data");
+  }
 });
 
 // redirect to treats menu page
-app.get("/treats", (req, res) => {
-  res.render("guest/treats", {
-    userRole,
-    treatItems,
-    weather: null,
-    error: null,
-  });
+app.get("/treats", async (req, res) => {
+  const treat = new Menu();
+
+  try {
+    const treatItems = await treat.displayTreats();
+
+    res.render("guest/treats", {
+      userRole,
+      treatItems,
+      weather: null,
+      error: null,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error fetching data");
+  }
 });
 
 // render customer's dashboard to display weather
@@ -782,7 +619,7 @@ app.post("/newMenuItem", async (req, res) => {
     res.send("Success");
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error updating menu");
+    res.status(500).send("Error updating table");
   }
 });
 
