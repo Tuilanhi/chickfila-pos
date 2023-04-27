@@ -28,7 +28,7 @@ async function main() {
   const Ingr =
     "Sesame Buns-pieces-food,Chicken Strip-pieces-food,Chicken Strip-pieces-food,Lettuce-pieces-food,Tomatoes-pieces-food,Cheese-pieces-food,Pickles-pieces-food,Pickles-pieces-food";
 
-  bridge.addNewItem(newItem, Ingr);
+  bridge.displayItem();
 }
 
 main();

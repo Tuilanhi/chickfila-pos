@@ -5,6 +5,7 @@ const require = createRequire(import.meta.url);
 import { RestockReport } from "./RestockReport.js";
 import { Menu } from "./Menu.js";
 import { Inventory } from "./Inventory.js";
+import { NewMenuItem } from "./NewMenuItem.js";
 
 import fetch from "node-fetch";
 const express = require("express");
@@ -360,8 +361,6 @@ app.get("/dashboard", isLoggedIn, async (req, res) => {
         inventoryItems,
         userProfile,
         userRole,
-        weather: null,
-        error: null,
       });
     } catch (error) {
       console.error(error);
@@ -754,11 +753,37 @@ app.post("/treats", function (req, res) {
 
 /*MANAGER SECTION*/
 
-app.get("/newMenuItem", (req, res) => {
-  res.render("manager/newMenuItem", {
-    userProfile,
-    userRole,
-  });
+app.get("/newMenuItem", async (req, res) => {
+  const Item = new NewMenuItem();
+
+  try {
+    const items = await Item.displayItem();
+
+    res.render("manager/newMenuItem", {
+      items, // pass the items array to the view
+      userProfile,
+      userRole,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error fetching data");
+  }
+});
+
+app.post("/newMenuItem", async (req, res) => {
+  const Item = new NewMenuItem();
+
+  try {
+    const itemName = req.body.itemName;
+    const ingredient = req.body.ingredient;
+
+    await Item.addNewItem(itemName, ingredient);
+
+    res.send("Success");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error updating menu");
+  }
 });
 
 app.get("/salesReport", (req, res) => {

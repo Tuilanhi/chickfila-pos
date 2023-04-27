@@ -10,6 +10,20 @@ class NewMenuItem {
     this.db = new Database();
   }
 
+  async displayItem() {
+    await this.db.connect();
+    let result = null;
+    try {
+      const sqlStatement = `SELECT * FROM bridge;`;
+      result = await this.db.query(sqlStatement);
+    } catch (e) {
+      console.error(e);
+      process.exit(0);
+    }
+    await this.db.disconnect();
+    return result; // return the rows from the result object
+  }
+
   async addNewItem(itemName, ingredients) {
     let seperatedIngredients = new Array(3);
     let newIngredientsArray_2 = ingredients.split(",");
@@ -66,11 +80,12 @@ class NewMenuItem {
           console.log("added");
         }
       }
+      sqlStatement = `SELECT * FROM bridge;`;
+      await this.db.query(sqlStatement);
+      await this.db.disconnect();
     } catch (e) {
       console.log(e);
     }
-
-    await this.db.disconnect();
   }
 }
 
