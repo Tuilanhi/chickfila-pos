@@ -217,7 +217,7 @@
 
       .format {
         font-style: italic;
-        color: #666;
+        color: #777;
       }
     </style>
 
@@ -240,7 +240,7 @@
       }
 
       function enlargeText() {
-        const elementsToEnlarge = document.querySelectorAll("body *");
+        const elementsToEnlarge = document.querySelectorAll("body*");
 
         elementsToEnlarge.forEach((element) => {
           const currentFontSize = parseFloat(
@@ -256,7 +256,7 @@
       enlargeButton.onclick = enlargeText;
 
       function resetText() {
-        const elementsToReset = document.querySelectorAll("body *");
+        const elementsToReset = document.querySelectorAll("body*");
 
         elementsToReset.forEach((element) => {
           element.style.fontSize = null;

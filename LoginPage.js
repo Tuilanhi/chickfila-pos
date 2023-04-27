@@ -782,7 +782,7 @@ app.post("/newMenuItem", async (req, res) => {
     res.send("Success");
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error updating menu");
+    res.status(500).send("Error updating table");
   }
 });
 
