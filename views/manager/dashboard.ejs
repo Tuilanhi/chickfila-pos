@@ -285,6 +285,11 @@
         font-size: 15px;
         margin-right: 10px;
       }
+
+      .error-message {
+        color: red;
+        font-weight: bold;
+      }
     </style>
 
     <script type="text/javascript">
@@ -413,6 +418,7 @@
       function showError(inputField, message) {
         const errorMessage = inputField.next(".error-message");
         errorMessage.text(message);
+        errorMessage.addClass("error-message");
       }
     </script>
   </head>
@@ -477,7 +483,6 @@
           class="input-field"
         />
         <div class="error-message"></div>
-        <!-- Add the error message element -->
         <input
           type="number"
           name="item-price"
@@ -525,11 +530,16 @@
           placeholder="Quantity"
           class="input-field"
         />
-        <input type="text" name="type" placeholder="Type" class="input-field" />
+        <select name="item-type" class="input-field">
+          <option value="sauce">Sauce</option>
+          <option value="utensil">Utensil</option>
+          <option value="food">Food</option>
+          <option value="drink">Drink</option>
+        </select>
         <input type="text" name="unit" placeholder="Unit" class="input-field" />
         <div id="inventory-buttons">
-          <button class="remove">Remove Item</button>
-          <button class="update">Update Item</button>
+          <button class="remove-ingredient">Remove Item</button>
+          <button class="update-ingredient">Update Item</button>
         </div>
       </div>
     </div>
