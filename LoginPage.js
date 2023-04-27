@@ -344,26 +344,29 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 /* GOOGLE USERS SECTION */
-app.get("/dashboard", isLoggedIn, (req, res) => {
+app.get("/dashboard", isLoggedIn, async (req, res) => {
   if (isManager()) {
     const menu = new Menu();
     const inventory = new Inventory();
 
-    Promise.all([menu.displayMenu(), inventory.displayInventory()])
-      .then(([menuItems, inventoryItems]) => {
-        res.render("manager/dashboard", {
-          menuItems,
-          inventoryItems,
-          userProfile,
-          userRole,
-          weather: null,
-          error: null,
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-        res.status(500).send("Error fetching data");
+    try {
+      const [menuItems, inventoryItems] = await Promise.all([
+        menu.displayMenu(),
+        inventory.displayInventory(),
+      ]);
+
+      res.render("manager/dashboard", {
+        menuItems,
+        inventoryItems,
+        userProfile,
+        userRole,
+        weather: null,
+        error: null,
       });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error fetching data");
+    }
   } else if (isServer()) {
     res.render("server/customerdashboard", {
       userProfile,
@@ -536,11 +539,24 @@ function renderWeather(req, res, page) {
 }
 
 // On a post request, the app shall data from OpenWeatherMap using the given arguments
-
-// render customer's dashboard to display weather
-app.post("/dashboard", function (req, res) {
+app.post("/dashboard", isLoggedIn, async (req, res) => {
   if (isManager()) {
-    renderWeather(req, res, "manager/dashboard");
+    const menu = new Menu();
+
+    try {
+      const itemName = req.body.itemName;
+      const itemCategory = req.body.itemCategory;
+      const itemPrice = req.body.itemPrice;
+
+      await menu.setItem(itemName, itemPrice, itemCategory);
+
+      await menu.removeItem(itemName);
+
+      res.send("Success");
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error updating menu");
+    }
   } else {
     renderWeather(req, res, "server/customerdashboard");
   }

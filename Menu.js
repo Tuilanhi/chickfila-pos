@@ -28,7 +28,7 @@ class Menu {
       // if item name doesn't exist add new Item
       // get names of existing items
       let sqlStatement = `SELECT COUNT(*) FROM menu WHERE item ='${Item}'`;
-      const result = await this.db.query(sqlStatement);
+      let result = await this.db.query(sqlStatement);
       console.log(sqlStatement);
       console.log(result);
       console.log(result[0]["count"]);
@@ -46,6 +46,9 @@ class Menu {
         result_1 = await this.db.insert(sqlStatement);
       }
 
+      sqlStatement = `SELECT * FROM menu;`;
+      result = await this.db.query(sqlStatement);
+      console.log(result);
       await this.db.disconnect();
     } catch (e) {
       console.error(e);

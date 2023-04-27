@@ -31,8 +31,6 @@ async function main() {
 
   const result_1 = new Menu();
   console.log(result_1.setItem("Chicken Feet", 13.99, "Entrees"));
-  const test = result_1.displayMenu();
-  console.log(test);
 }
 
 main();

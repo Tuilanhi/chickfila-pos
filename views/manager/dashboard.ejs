@@ -40,7 +40,7 @@
       }
 
       .logo {
-        position: absolute;
+        position: relative;
         top: 2%;
         height: 40px;
         left: 48%;
@@ -86,85 +86,6 @@
 
       body > .skiptranslate {
         display: none;
-      }
-
-      /*Weather API*/
-
-      fieldset {
-        display: block;
-        -webkit-margin-start: 0px;
-        -webkit-margin-end: 0px;
-        -webkit-padding-before: 0em;
-        -webkit-padding-start: 0em;
-        -webkit-padding-end: 0em;
-        -webkit-padding-after: 0em;
-        border: 0px;
-        border-image-source: initial;
-        border-image-slice: initial;
-        border-image-width: initial;
-        border-image-outset: initial;
-        border-image-repeat: initial;
-        min-width: -webkit-min-content;
-      }
-
-      form {
-        display: flex;
-        justify-content: center;
-        position: absolute;
-        top: 1.3%;
-        right: 15%;
-      }
-
-      .display-weather {
-        background-color: #fff;
-        padding: 5px 10px 10px 10px;
-      }
-
-      .ghost-input {
-        display: inline-block;
-        width: 100%;
-        margin-right: 10px;
-        border-radius: 3px;
-      }
-
-      .ghost-button {
-        display: inline-block;
-        width: 100%;
-      }
-
-      .ghost-input,
-      p {
-        display: block;
-        font-size: 15px;
-        border: 0px;
-        outline: none;
-        width: 100%;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        background: #fff;
-        margin: 10px 0px;
-        color: red;
-      }
-
-      .ghost-input:focus {
-        border-bottom: 1px solid #ddd;
-      }
-
-      .ghost-button {
-        background-color: transparent;
-        border: 1px solid #ddd;
-        font-size: 13px;
-        margin: 10px 0px;
-        border-radius: 3px;
-      }
-
-      .ghost-button:hover {
-        border: 1px solid #515151;
-      }
-
-      .grid {
-        width: 100%;
       }
 
       .dropdown {
@@ -396,9 +317,6 @@
         });
       }
 
-      const enlargeButton = document.getElementById("enlarge-button");
-      enlargeButton.onclick = enlargeText;
-
       function resetText() {
         const elementsToReset = document.querySelectorAll("body *");
 
@@ -407,52 +325,98 @@
         });
       }
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $("#update-menu").click(function () {
+          // Get the user input values
+          const itemName = $('input[name="item-name"]').val();
+          const itemCategory = $('input[name="item-category"]').val();
+          const itemPrice = $('input[name="item-price"]').val();
+
+          // Validate the input values
+          if (!itemName) {
+            showError(
+              $('input[name="item-name"]'),
+              "Please enter an item name"
+            );
+            return;
+          }
+          if (!itemCategory) {
+            showError(
+              $('input[name="item-category"]'),
+              "Please enter an item category"
+            );
+            return;
+          }
+          const validCategories = [
+            "Entrees",
+            "Drinks",
+            "Sides",
+            "Treats",
+            "Salads",
+          ];
+          if (!validCategories.includes(itemCategory)) {
+            showError(
+              $('input[name="item-category"]'),
+              "Invalid item category"
+            );
+            return;
+          }
+          if (itemPrice < 0) {
+            showError(
+              $('input[name="item-price"]'),
+              "Item price should not be less than 0"
+            );
+            return;
+          }
+
+          // Send an AJAX request to call the setItem function
+          $.ajax({
+            url: "/dashboard",
+            type: "POST",
+            data: {
+              itemName: itemName,
+              itemCategory: itemCategory,
+              itemPrice: itemPrice,
+            },
+            success: function (response) {
+              // Reload the page to update the menu table
+              location.reload();
+            },
+            error: function (xhr, status, error) {
+              console.error(error);
+            },
+          });
+        });
+
+        $("#remove-menu").click(function () {
+          const itemName = $('input[name="item-name"]').val();
+
+          $.ajax({
+            url: "/dashboard",
+            type: "POST",
+            data: { itemName: itemName },
+            success: function (response) {
+              location.reload();
+            },
+            error: function (xhr, status, error) {
+              console.error(error);
+            },
+          });
+        });
+      });
+
+      // Add a helper function to show the error message
+      function showError(inputField, message) {
+        const errorMessage = inputField.next(".error-message");
+        errorMessage.text(message);
+      }
+    </script>
   </head>
   <body>
-    <!--Weather API Section--->
-    <div class="container">
-      <fieldset>
-        <form action="/dashboard" method="post">
-          <input
-            name="city"
-            type="text"
-            class="ghost-input"
-            placeholder="Enter a City"
-            required
-          />
-          <input type="submit" class="ghost-button" value="Get Weather" />
-        </form>
-      </fieldset>
-      <%if( weather !==null){ %>
-      <div class="dropdown">
-        <button class="dropbtn">&#9662;</button>
-        <div class="dropdown-content">
-          <div class="display-weather">
-            <div class="grid">
-              <p><%= place %></p>
-              <p class="text-muted small"><%= timezone %></p>
-            </div>
-            <div class="card-deck">
-              <div class="card card-accent-dark mb-3">
-                <div class="card-body text-dark">
-                  <img src="<%= icon %>" alt="Weather-Icon" />
-                  <h5 class="card-title">Temperature</h5>
-                  <p class="card-text">
-                    In Degrees: <%= temp %>°C/ <%= fahrenheit %>°F
-                  </p>
-                  <h5 class="card-title">Main</h5>
-                  <p class="card-text"><%= main %></p>
-                </div>
-              </div>
-            </div>
-            <% } %> <% if(error !==null){ %>
-            <p><%= error %></p>
-            <% } %>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!---Google Translate Section --->
     <div id="google_translate_element"></div>
 
@@ -512,15 +476,19 @@
           placeholder="Item Category"
           class="input-field"
         />
+        <div class="error-message"></div>
+        <!-- Add the error message element -->
         <input
           type="number"
           name="item-price"
           placeholder="Item Price"
           class="input-field"
         />
+        <div class="error-message"></div>
+        <!-- Add the error message element -->
         <div id="menu-buttons">
-          <button class="remove">Remove Menu</button>
-          <button class="update">Update Menu</button>
+          <button id="remove-menu" class="remove">Remove Menu</button>
+          <button id="update-menu" class="update">Update Menu</button>
         </div>
       </div>
       <div>
