@@ -40,25 +40,10 @@
       }
 
       .logo {
-        position: absolute;
+        position: relative;
         top: 2%;
         height: 40px;
         left: 48%;
-      }
-
-      .profile-container {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        bottom: 5px;
-        left: 5px;
-        position: fixed;
-        margin-top: 15px;
-      }
-
-      .profile {
-        font-size: 15px;
-        margin-right: 10px;
       }
 
       .signout {
@@ -101,85 +86,6 @@
 
       body > .skiptranslate {
         display: none;
-      }
-
-      /*Weather API*/
-
-      fieldset {
-        display: block;
-        -webkit-margin-start: 0px;
-        -webkit-margin-end: 0px;
-        -webkit-padding-before: 0em;
-        -webkit-padding-start: 0em;
-        -webkit-padding-end: 0em;
-        -webkit-padding-after: 0em;
-        border: 0px;
-        border-image-source: initial;
-        border-image-slice: initial;
-        border-image-width: initial;
-        border-image-outset: initial;
-        border-image-repeat: initial;
-        min-width: -webkit-min-content;
-      }
-
-      form {
-        display: flex;
-        justify-content: center;
-        position: absolute;
-        top: 1.3%;
-        right: 15%;
-      }
-
-      .display-weather {
-        background-color: #fff;
-        padding: 5px 10px 10px 10px;
-      }
-
-      input[type="text"] {
-        display: inline-block;
-        width: 100%;
-        margin-right: 10px;
-        border-radius: 3px;
-      }
-
-      input[type="submit"] {
-        display: inline-block;
-        width: 100%;
-      }
-
-      .ghost-input,
-      p {
-        display: block;
-        font-size: 15px;
-        border: 0px;
-        outline: none;
-        width: 100%;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        background: #fff;
-        margin: 10px 0px;
-        color: red;
-      }
-
-      .ghost-input:focus {
-        border-bottom: 1px solid #ddd;
-      }
-
-      .ghost-button {
-        background-color: transparent;
-        border: 1px solid #ddd;
-        font-size: 13px;
-        margin: 10px 0px;
-        border-radius: 3px;
-      }
-
-      .ghost-button:hover {
-        border: 1px solid #515151;
-      }
-
-      .grid {
-        width: 100%;
       }
 
       .dropdown {
@@ -281,6 +187,104 @@
         color: red;
         text-decoration: none;
       }
+
+      /*TABLE SECTION*/
+      .table-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 100px;
+      }
+
+      .table-container > div:first-child {
+        margin-left: 120px; /* add right margin to first child div (Menu table) */
+      }
+
+      .table-container > div:last-child {
+        margin-right: 50px; /* add left margin to last child div (Inventory table) */
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        max-height: 300px;
+        overflow-y: scroll;
+        margin-bottom: 10px;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 8px;
+      }
+
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      .input-field {
+        margin-right: 10px;
+        margin-bottom: 10px;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 150px;
+      }
+
+      #menu-buttons,
+      #inventory-buttons {
+        margin-top: 10px;
+      }
+
+      .remove,
+      .update {
+        background-color: #4caf50;
+        color: white;
+        padding: 8px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+
+      .remove:hover,
+      .update:hover {
+        background-color: #3e8e41;
+      }
+
+      .update {
+        background-color: #008cba;
+      }
+
+      .update:hover {
+        background-color: #0072b1;
+      }
+
+      .remove {
+        background-color: #f44336;
+      }
+
+      .remove:hover {
+        background-color: #d32f2f;
+      }
+
+      .profile-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        position: absolute;
+        margin-top: 15px;
+        left: 0.5%;
+      }
+
+      .profile {
+        font-size: 15px;
+        margin-right: 10px;
+      }
     </style>
 
     <script type="text/javascript">
@@ -313,9 +317,6 @@
         });
       }
 
-      const enlargeButton = document.getElementById("enlarge-button");
-      enlargeButton.onclick = enlargeText;
-
       function resetText() {
         const elementsToReset = document.querySelectorAll("body *");
 
@@ -324,52 +325,98 @@
         });
       }
     </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $("#update-menu").click(function () {
+          // Get the user input values
+          const itemName = $('input[name="item-name"]').val();
+          const itemCategory = $('input[name="item-category"]').val();
+          const itemPrice = $('input[name="item-price"]').val();
+
+          // Validate the input values
+          if (!itemName) {
+            showError(
+              $('input[name="item-name"]'),
+              "Please enter an item name"
+            );
+            return;
+          }
+          if (!itemCategory) {
+            showError(
+              $('input[name="item-category"]'),
+              "Please enter an item category"
+            );
+            return;
+          }
+          const validCategories = [
+            "Entrees",
+            "Drinks",
+            "Sides",
+            "Treats",
+            "Salads",
+          ];
+          if (!validCategories.includes(itemCategory)) {
+            showError(
+              $('input[name="item-category"]'),
+              "Invalid item category"
+            );
+            return;
+          }
+          if (itemPrice < 0) {
+            showError(
+              $('input[name="item-price"]'),
+              "Item price should not be less than 0"
+            );
+            return;
+          }
+
+          // Send an AJAX request to call the setItem function
+          $.ajax({
+            url: "/dashboard",
+            type: "POST",
+            data: {
+              itemName: itemName,
+              itemCategory: itemCategory,
+              itemPrice: itemPrice,
+            },
+            success: function (response) {
+              // Reload the page to update the menu table
+              location.reload();
+            },
+            error: function (xhr, status, error) {
+              console.error(error);
+            },
+          });
+        });
+
+        $("#remove-menu").click(function () {
+          const itemName = $('input[name="item-name"]').val();
+
+          $.ajax({
+            url: "/dashboard",
+            type: "POST",
+            data: { itemName: itemName },
+            success: function (response) {
+              location.reload();
+            },
+            error: function (xhr, status, error) {
+              console.error(error);
+            },
+          });
+        });
+      });
+
+      // Add a helper function to show the error message
+      function showError(inputField, message) {
+        const errorMessage = inputField.next(".error-message");
+        errorMessage.text(message);
+      }
+    </script>
   </head>
   <body>
-    <!--Weather API Section--->
-    <div class="container">
-      <fieldset>
-        <form action="/dashboard" method="post">
-          <input
-            name="city"
-            type="text"
-            class="ghost-input"
-            placeholder="Enter a City"
-            required
-          />
-          <input type="submit" class="ghost-button" value="Get Weather" />
-        </form>
-      </fieldset>
-      <%if( weather !==null){ %>
-      <div class="dropdown">
-        <button class="dropbtn">&#9662;</button>
-        <div class="dropdown-content">
-          <div class="display-weather">
-            <div class="grid">
-              <p><%= place %></p>
-              <p class="text-muted small"><%= timezone %></p>
-            </div>
-            <div class="card-deck">
-              <div class="card card-accent-dark mb-3">
-                <div class="card-body text-dark">
-                  <img src="<%= icon %>" alt="Weather-Icon" />
-                  <h5 class="card-title">Temperature</h5>
-                  <p class="card-text">
-                    In Degrees: <%= temp %>°C/ <%= fahrenheit %>°F
-                  </p>
-                  <h5 class="card-title">Main</h5>
-                  <p class="card-text"><%= main %></p>
-                </div>
-              </div>
-            </div>
-            <% } %> <% if(error !==null){ %>
-            <p><%= error %></p>
-            <% } %>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!---Google Translate Section --->
     <div id="google_translate_element"></div>
 
@@ -394,6 +441,99 @@
     </div>
 
     <img src="../images/Chick-fil-A-Logo.png" class="logo" />
+
+    <!---TABLE SECTION--->
+    <div class="table-container">
+      <div>
+        <h2>Menu</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (let i = 0; i < menuItems.length; i++) { %>
+            <tr>
+              <td><%= menuItems[i].item %></td>
+              <td><%= menuItems[i].category %></td>
+              <td>$<%= menuItems[i].price.toFixed(2) %></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+        <input
+          type="text"
+          name="item-name"
+          placeholder="Item Name"
+          class="input-field"
+        />
+        <input
+          type="text"
+          name="item-category"
+          placeholder="Item Category"
+          class="input-field"
+        />
+        <div class="error-message"></div>
+        <!-- Add the error message element -->
+        <input
+          type="number"
+          name="item-price"
+          placeholder="Item Price"
+          class="input-field"
+        />
+        <div class="error-message"></div>
+        <!-- Add the error message element -->
+        <div id="menu-buttons">
+          <button id="remove-menu" class="remove">Remove Menu</button>
+          <button id="update-menu" class="update">Update Menu</button>
+        </div>
+      </div>
+      <div>
+        <h2>Inventory</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Ingredient</th>
+              <th>Quantity</th>
+              <th>Type</th>
+              <th>Unit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (let i = 0; i < inventoryItems.length; i++) { %>
+            <tr>
+              <td><%= inventoryItems[i].ingredient %></td>
+              <td><%= inventoryItems[i].quantity %></td>
+              <td><%= inventoryItems[i].type %></td>
+              <td><%= inventoryItems[i].unit %></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+        <input
+          type="text"
+          name="ingredient"
+          placeholder="Ingredient"
+          class="input-field"
+        />
+        <input
+          type="number"
+          name="quantity"
+          placeholder="Quantity"
+          class="input-field"
+        />
+        <input type="text" name="type" placeholder="Type" class="input-field" />
+        <input type="text" name="unit" placeholder="Unit" class="input-field" />
+        <div id="inventory-buttons">
+          <button class="remove">Remove Item</button>
+          <button class="update">Update Item</button>
+        </div>
+      </div>
+    </div>
+
     <div class="profile-container">
       <div class="profile">
         <strong>Name</strong>: <%= userProfile.displayName %> <br />

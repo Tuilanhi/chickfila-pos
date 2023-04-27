@@ -3,6 +3,8 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
 import { RestockReport } from "./RestockReport.js";
+import { Menu } from "./Menu.js";
+import { Inventory } from "./Inventory.js";
 
 import fetch from "node-fetch";
 const express = require("express");
@@ -12,8 +14,6 @@ const passport = require("passport");
 const port = 3000;
 const bodyParser = require("body-parser");
 require("dotenv").config();
-
-app.use(express.static("views"));
 
 var userProfile;
 var userRole = "";
@@ -274,6 +274,8 @@ passport.deserializeUser(function (obj, cb) {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(express.static("views"));
+
 app.set("view engine", "ejs");
 
 app.use(
@@ -342,14 +344,29 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 /* GOOGLE USERS SECTION */
-app.get("/dashboard", isLoggedIn, (req, res) => {
+app.get("/dashboard", isLoggedIn, async (req, res) => {
   if (isManager()) {
-    res.render("manager/dashboard", {
-      userProfile,
-      userRole,
-      weather: null,
-      error: null,
-    });
+    const menu = new Menu();
+    const inventory = new Inventory();
+
+    try {
+      const [menuItems, inventoryItems] = await Promise.all([
+        menu.displayMenu(),
+        inventory.displayInventory(),
+      ]);
+
+      res.render("manager/dashboard", {
+        menuItems,
+        inventoryItems,
+        userProfile,
+        userRole,
+        weather: null,
+        error: null,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error fetching data");
+    }
   } else if (isServer()) {
     res.render("server/customerdashboard", {
       userProfile,
@@ -522,11 +539,24 @@ function renderWeather(req, res, page) {
 }
 
 // On a post request, the app shall data from OpenWeatherMap using the given arguments
-
-// render customer's dashboard to display weather
-app.post("/dashboard", function (req, res) {
+app.post("/dashboard", isLoggedIn, async (req, res) => {
   if (isManager()) {
-    renderWeather(req, res, "manager/dashboard");
+    const menu = new Menu();
+
+    try {
+      const itemName = req.body.itemName;
+      const itemCategory = req.body.itemCategory;
+      const itemPrice = req.body.itemPrice;
+
+      await menu.setItem(itemName, itemPrice, itemCategory);
+
+      await menu.removeItem(itemName);
+
+      res.send("Success");
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error updating menu");
+    }
   } else {
     renderWeather(req, res, "server/customerdashboard");
   }
@@ -723,7 +753,7 @@ app.post("/treats", function (req, res) {
 });
 
 /*MANAGER PAGE SECTION*/
-function managerRenderWeather(req, res, page, results) {
+function managerRenderWeather(req, res, page, c, results2) {
   // Get city name passed in the form
   let city = req.body.city;
 
@@ -736,6 +766,8 @@ function managerRenderWeather(req, res, page, results) {
     .then((weather) => {
       if (weather.main == undefined) {
         res.render(page, {
+          results1,
+          results2,
           userProfile,
           userRole,
           weather: null,
@@ -765,7 +797,8 @@ function managerRenderWeather(req, res, page, results) {
         }
 
         res.render(page, {
-          results,
+          results1,
+          results2,
           userProfile,
           userRole,
           weather: weather,
@@ -781,6 +814,8 @@ function managerRenderWeather(req, res, page, results) {
     })
     .catch((err) => {
       res.render(page, {
+        results1,
+        results2,
         userProfile,
         userRole,
         weather: null,
@@ -789,15 +824,6 @@ function managerRenderWeather(req, res, page, results) {
       });
     });
 }
-
-app.get("/inventory", (req, res) => {
-  res.render("manager/inventory", {
-    userProfile,
-    userRole,
-    weather: null,
-    error: null,
-  });
-});
 
 app.get("/salesReport", (req, res) => {
   res.render("manager/salesReport", {
@@ -874,7 +900,7 @@ app.post("/restockReport", function (req, res) {
   restockReport
     .restock()
     .then((results) => {
-      managerRenderWeather(req, res, "manager/restockReport", results);
+      managerRenderWeather(req, res, "manager/restockReport", results, "");
     })
     .catch((error) => {
       console.error(error);
