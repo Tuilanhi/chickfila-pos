@@ -386,7 +386,6 @@
     <table>
       <thead>
         <tr>
-          <th></th>
           <th>Item</th>
           <th>Price</th>
           <th></th>
@@ -395,10 +394,7 @@
       <tbody>
         <% for (let i = 0; i < saladItems.length; i++) { %>
         <tr>
-          <td>
-            <img src="<%= saladItems[i].image_url %>" />
-          </td>
-          <td><%= saladItems[i].name %></td>
+          <td><%= saladItems[i].item %></td>
           <td>$<%= saladItems[i].price %></td>
           <td><button class="atc">Add to Cart</button></td>
         </tr>
