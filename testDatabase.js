@@ -2,6 +2,7 @@ import { Database } from "./Database.js";
 import { RestockReport } from "./RestockReport.js";
 import { Menu } from "./Menu.js";
 import { Inventory } from "./Inventory.js";
+import { NewMenuItem } from "./NewMenuItem.js";
 
 class testDatabase {
   constructor() {
@@ -21,16 +22,13 @@ class testDatabase {
 }
 
 async function main() {
-  // const menu = new testDatabase();
-  // const items = await menu.getFirstFiveItems("SELECT * FROM menu LIMIT 5;");
-  // console.log(items);
+  const bridge = new NewMenuItem();
 
-  // const result = new Inventory();
-  // const rows = result.displayInventory();
-  // console.log(rows);
+  const newItem = "Chicken Spicy Strip Sandwich";
+  const Ingr =
+    "Sesame Buns-pieces-food,Chicken Strip-pieces-food,Chicken Strip-pieces-food,Lettuce-pieces-food,Tomatoes-pieces-food,Cheese-pieces-food,Pickles-pieces-food,Pickles-pieces-food";
 
-  const result_1 = new Menu();
-  console.log(result_1.setItem("Chicken Feet", 13.99, "Entrees"));
+  bridge.addNewItem(newItem, Ingr);
 }
 
 main();

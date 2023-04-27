@@ -379,6 +379,11 @@ app.get("/dashboard", isLoggedIn, async (req, res) => {
   }
 });
 
+// Redirect to Menu Board page
+app.get("/menuboard", function (req, res) {
+  res.render("pages/menuboard");
+});
+
 // If failed to login, redirect to error page
 app.get("/error", (req, res) => res.render("pages/error"));
 
@@ -390,11 +395,6 @@ app.get("/logout", function (req, res, next) {
     }
     res.redirect("/");
   });
-});
-
-// Redirect to Menu Board page
-app.get("/menuboard", function (req, res) {
-  res.render("pages/menuboard");
 });
 
 // redirect to entrees menu page
@@ -752,85 +752,19 @@ app.post("/treats", function (req, res) {
   guestRenderWeather(req, res, "guest/treats");
 });
 
-/*MANAGER PAGE SECTION*/
-function managerRenderWeather(req, res, page, c, results2) {
-  // Get city name passed in the form
-  let city = req.body.city;
+/*MANAGER SECTION*/
 
-  // Use that city name to fetch data
-  // Use the API_KEY in the '.env' file
-  let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
-
-  fetch(url)
-    .then((res) => res.json())
-    .then((weather) => {
-      if (weather.main == undefined) {
-        res.render(page, {
-          results1,
-          results2,
-          userProfile,
-          userRole,
-          weather: null,
-          error: "Error, please try again",
-          results,
-        });
-      } else {
-        let place = `${weather.name}, ${weather.sys.country}`,
-          weatherTimezone = `${new Date(
-            weather.dt * 1000 - weather.timezone * 1000
-          )}`;
-        let weatherTemp = `${weather.main.temp}`,
-          weatherIcon = `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`,
-          main = `${weather.weather[0].main}`,
-          weatherFahrenheit;
-        weatherFahrenheit = (weatherTemp * 9) / 5 + 32;
-
-        function roundToTwo(num) {
-          return +(Math.round(num + "e+2") + "e-2");
-        }
-        weatherFahrenheit = roundToTwo(weatherFahrenheit);
-
-        if (isManager()) {
-          userRole = userRoles[0].role;
-        } else if (isServer()) {
-          userRole = userRoles[1].role;
-        }
-
-        res.render(page, {
-          results1,
-          results2,
-          userProfile,
-          userRole,
-          weather: weather,
-          place: place,
-          temp: weatherTemp,
-          icon: weatherIcon,
-          timezone: weatherTimezone,
-          fahrenheit: weatherFahrenheit,
-          main: main,
-          error: null,
-        });
-      }
-    })
-    .catch((err) => {
-      res.render(page, {
-        results1,
-        results2,
-        userProfile,
-        userRole,
-        weather: null,
-        error: "Error, please try again",
-        results,
-      });
-    });
-}
+app.get("/newMenuItem", (req, res) => {
+  res.render("manager/newMenuItem", {
+    userProfile,
+    userRole,
+  });
+});
 
 app.get("/salesReport", (req, res) => {
   res.render("manager/salesReport", {
     userProfile,
     userRole,
-    weather: null,
-    error: null,
   });
 });
 
@@ -838,8 +772,6 @@ app.get("/XReport", (req, res) => {
   res.render("manager/XReport", {
     userProfile,
     userRole,
-    weather: null,
-    error: null,
   });
 });
 
@@ -847,8 +779,6 @@ app.get("/ZReport", (req, res) => {
   res.render("manager/ZReport", {
     userProfile,
     userRole,
-    weather: null,
-    error: null,
   });
 });
 
@@ -862,8 +792,6 @@ app.get("/restockReport", (req, res) => {
         results,
         userProfile,
         userRole,
-        weather: null,
-        error: null,
       });
     })
     .catch((error) => {
@@ -876,38 +804,5 @@ app.get("/excessReport", (req, res) => {
   res.render("manager/excessReport", {
     userProfile,
     userRole,
-    weather: null,
-    error: null,
   });
-});
-
-// render sales's dashboard to display weather
-app.post("/salesReport", function (req, res) {
-  renderWeather(req, res, "manager/salesReport");
-});
-
-app.post("/ZReport", function (req, res) {
-  renderWeather(req, res, "manager/ZReport");
-});
-
-app.post("/XReport", function (req, res) {
-  renderWeather(req, res, "manager/XReport");
-});
-
-app.post("/restockReport", function (req, res) {
-  const restockReport = new RestockReport();
-
-  restockReport
-    .restock()
-    .then((results) => {
-      managerRenderWeather(req, res, "manager/restockReport", results, "");
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send("Error fetching restock report");
-    });
-});
-
-app.post("/excessReport", function (req, res) {
-  renderWeather(req, res, "manager/excessReport");
 });
