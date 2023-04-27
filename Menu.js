@@ -29,26 +29,22 @@ class Menu {
       // get names of existing items
       let sqlStatement = `SELECT COUNT(*) FROM menu WHERE item ='${Item}'`;
       let result = await this.db.query(sqlStatement);
-      console.log(sqlStatement);
-      console.log(result);
-      console.log(result[0]["count"]);
       const count = result[0]["count"];
       // add item if it doesn't exists
       if (count === "0") {
         sqlStatement = `INSERT INTO menu (item, price, category) VALUES ('${Item}', ${price}, '${category}')`;
-        let result_1 = await this.db.insert(sqlStatement);
+        await this.db.insert(sqlStatement);
       } else {
         // update item price if it exists
         console.log("WENT INTO ELSE STATEMENT");
         sqlStatement = `DELETE FROM menu WHERE item IN('${Item}')`;
-        let result_1 = await this.db.delete(sqlStatement);
+        await this.db.delete(sqlStatement);
         sqlStatement = `INSERT INTO menu (item, price, category) VALUES ('${Item}', ${price}, '${category}')`;
-        result_1 = await this.db.insert(sqlStatement);
+        await this.db.insert(sqlStatement);
       }
 
       sqlStatement = `SELECT * FROM menu;`;
-      result = await this.db.query(sqlStatement);
-      console.log(result);
+      await this.db.query(sqlStatement);
       await this.db.disconnect();
     } catch (e) {
       console.error(e);
@@ -56,21 +52,17 @@ class Menu {
   }
 
   async removeItem(Item) {
-    let result = null;
     try {
       this.db.connect();
       let sqlStatement = `DELETE FROM menu WHERE item IN('${Item}')`;
-      let result = await this.db.delete(sqlStatement);
-      console.log("deleted item from menu");
+      await this.db.delete(sqlStatement);
 
       sqlStatement = `DELETE FROM bridge WHERE item IN('${Item}')`;
-      result = await this.db.delete(sqlStatement);
-      console.log("deleted item from bridge");
+      await this.db.delete(sqlStatement);
     } catch (e) {
       console.error(e);
     }
     await this.db.disconnect();
-    return result;
   }
 }
 

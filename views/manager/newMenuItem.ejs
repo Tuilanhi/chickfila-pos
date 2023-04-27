@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Excess Report</title>
+    <title>New Menu Item</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -148,41 +148,76 @@
         text-decoration: none;
       }
 
-      /*Table Section*/
+      /*TABLE SECTION*/
       .table-container {
         display: flex;
-        flex-direction: column;
+        justify-content: center;
         align-items: center;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
         margin-top: 100px;
       }
 
-      .table-container > h1 {
-        margin-bottom: 20px;
+      .table-container > div:first-child {
+        position: relative;
+        width: 70%;
+      }
+
+      .table-heading {
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        transform: translateX(-50%);
       }
 
       table {
         border-collapse: collapse;
-        width: 800px;
-        margin: 0 auto;
+        width: 100%;
+        max-height: 300px;
+        overflow-y: scroll;
+        margin-bottom: 10px;
+        margin-top: 30px;
       }
 
       th,
       td {
         text-align: left;
         padding: 8px;
-        border-bottom: 1px solid #ddd;
       }
 
-      tr:hover {
-        background-color: #f5f5f5;
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
       }
 
-      .date-range {
-        display: inline-block;
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      .input-field {
+        margin-right: 10px;
         margin-bottom: 10px;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 300px;
+      }
+
+      .add {
+        background-color: #4caf50;
+        color: white;
+        padding: 8px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+
+      .add:hover {
+        background-color: #3e8e41;
+      }
+
+      .format {
+        font-style: italic;
+        color: #666;
       }
     </style>
 
@@ -195,26 +230,6 @@
           },
           "google_translate_element"
         );
-      }
-
-      function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
-      }
-
-      function generateReport() {
-        const startDate = document.getElementById("start-date").value;
-        const endDate = document.getElementById("end-date").value;
-        // Perform calculations and update table based on date range
-        const rows = document.querySelectorAll("#sales-table tbody tr");
-
-        rows.forEach((row) => {
-          const dateStr = row.cells[0].textContent;
-          if (dateStr >= startDate && dateStr <= endDate) {
-            row.style.display = "";
-          } else {
-            row.style.display = "none";
-          }
-        });
       }
 
       function resetTable() {
@@ -253,6 +268,34 @@
       type="text/javascript"
       src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
     ></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#add-item").click(function () {
+          // Get the user input values
+          const itemName = $('input[name="item-name"]').val();
+          const ingredient = $('input[name="ingredients"]').val();
+
+          // Send an AJAX request to call the setItem function
+          $.ajax({
+            url: "/newMenuItem",
+            type: "POST",
+            data: {
+              itemName: itemName,
+              ingredient: ingredient,
+            },
+            success: function (response) {
+              // Reload the page to update the menu table
+              location.reload();
+            },
+            error: function (xhr, status, error) {
+              console.error(error);
+            },
+          });
+        });
+      });
+    </script>
   </head>
   <body>
     <img src="../images/Chick-fil-A-Logo.png" class="logo" />
@@ -270,49 +313,48 @@
       <a id="enlarge-button" onClick="enlargeText()">Enlarge Text</a>
     </div>
 
-    <!---Table Section--->
+    <!---TABLE SECTION---->
     <div class="table-container">
-      <h1>Excess Report</h1>
-      <div class="date-range">
-        <label for="start-date">Start Date:</label>
-        <input type="date" id="start-date" />
-        <label for="end-date">End Date:</label>
-        <input type="date" id="end-date" />
-        <button onclick="generateReport()">Generate Report</button>
-        <button onclick="resetTable()">Reset Table</button>
+      <div>
+        <h2 class="table-heading">New Menu Item</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Ingredients</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (let i = 0; i < items.length; i++) { %>
+            <tr>
+              <td><%= items[i].item %></td>
+              <td><%= items[i].ingredients %></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+        <p class="format">
+          Ingredients Format:
+          "ingredient-unit-type,ingredient-unit-type,...,etc."
+        </p>
+        <input
+          type="text"
+          name="item-name"
+          placeholder="Item Name"
+          class="input-field"
+        />
+        <input
+          type="text"
+          name="ingredients"
+          placeholder="Ingredients"
+          class="input-field"
+        />
+        <div id="menu-buttons">
+          <button id="add-item" class="add">Add Item</button>
+        </div>
       </div>
-      <table id="sales-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Items</th>
-            <th>Percentage</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>2023-04-12</td>
-            <td>Chicken Sandwich</td>
-            <td>9</td>
-          </tr>
-          <tr>
-            <td>2023-04-15</td>
-            <td>Spicy Chicken Sandwich</td>
-            <td>4</td>
-          </tr>
-          <tr>
-            <td>2023-04-20</td>
-            <td>Ketchup</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>2023-04-23</td>
-            <td>Chicken Feet</td>
-            <td>1</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
+
     <div class="profile-container">
       <div class="profile">
         <strong>Name</strong>: <%= userProfile.displayName %> <br />
