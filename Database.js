@@ -13,12 +13,16 @@ class Database {
       password: process.env.PASSWORD,
       port: process.env.PORT,
     });
+    this.connected = false;
   }
 
   async connect() {
     try {
-      await this.client.connect();
-      console.log("Connected to database successfully");
+      if (!this.connected) {
+        await this.client.connect();
+        this.connected = true;
+        console.log("Connected to database successfully");
+      }
     } catch (err) {
       console.error("Connection error", err.stack);
     }
@@ -51,8 +55,11 @@ class Database {
 
   async disconnect() {
     try {
-      await this.client.end();
-      console.log("Disconnected from database");
+      if (this.connected) {
+        await this.client.end();
+        this.connected = false;
+        console.log("Disconnected from database");
+      }
     } catch (err) {
       console.error("Error disconnecting from database", err.stack);
     }
