@@ -1,54 +1,52 @@
 import { Database } from "./Database.js";
 
 class Ingredients {
-  constructor(ingredient, quantity, unit, type) {
-    this.ingredient = ingredient;
-    this.quantity = quantity;
-    this.unit = unit;
-    this.type = type;
-
-    this.client.connect();
+  constructor() {
+    this.db = new Database();
   }
 
-  async setItem() {
+  async setItem(ingredient, quantity, unit, type) {
     try {
-      const res = await this.client.query(
-        'SELECT COUNT(*) FROM ingredients WHERE ingredient=$1',
-        [this.ingredient]
-      );
-      const count = res.rows[0].count;
-
-      if (count === 0) {
-        await this.client.query(
-          'INSERT INTO ingredients (ingredient, quantity, unit, type) VALUES ($1, $2, $3, $4)',
-          [this.ingredient, this.quantity, this.unit, this.type]
-        );
+      await this.db.connect();
+      let sqlStatement = ('SELECT COUNT(*) FROM ingredients WHERE ingredient=$1', [ingredient]);
+      let result = await this.db.query(sqlStatement);
+      console.log(sqlStatement);
+      console.log(result);
+      console.log(result[0]["count"]);
+      const count = result[0]["count"];
+      // add item if it doesn't exist
+      if (count === "0") {
+        sqlStatement = ('INSERT INTO ingredients (ingredient, quantity, unit, type) VALUES ($1, $2, $3, $4)', [ingredient, quantity, unit, type]);
+        let result_1 = await this.db.insert(sqlStatement);
         console.log('added');
       } else {
-        await this.client.query(
-          'UPDATE ingredients SET quantity=$1, unit=$2, type=$3 WHERE ingredient=$4',
-          [this.quantity, this.unit, this.type, this.ingredient]
-        );
+        sqlStatement = ('DELETE FROM ingredients WHERE igredient IN($1)', [ingredient]);
+        let result_1 = await this.db.delete(sqlStatement);
+        sqlStatement = ('INSERT INTO ingredients (ingredient, quantity, unit, type) VALUES ($1, $2, $3, $4)', [ingredient, quantity, unit, type]);
+        result_1 = await this.db.insert(sqlStatement);
         console.log('updated');
       }
     } catch (err) {
       console.error(err);
     }
+    await this.db.disconnect();
   }
 
-  async removeItem() {
+  async removeItem(ingredient) {
     try {
-      await this.client.query(
-        'DELETE FROM ingredients WHERE ingredient=$1',
-        [this.ingredient]
-      );
+      await this.db.connect();
+      let sqlStatement = ('DELETE FROM ingredients WHERE igredient IN($1)', [ingredient]);
+      let result = await this.db.delete(sqlStatement);
       console.log('deleted');
     } catch (err) {
       console.error(err);
     }
+    await this.db.disconnect();
   }
 }
 
-const ingredient = new Ingredients('carrot', 10, 'lbs', 'vegetable');
-ingredient.setItem();
-ingredient.removeItem();
+// const ingredient = new Ingredients('carrot', 10, 'lbs', 'vegetable');
+// ingredient.setItem();
+// ingredient.removeItem();
+
+export { Ingredients };
