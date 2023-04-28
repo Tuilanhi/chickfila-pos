@@ -30,7 +30,7 @@
       }
 
       .logo {
-        position: absolute;
+        position: relative;
         top: 2%;
         left: 50%;
         transform: translate(-50%);
@@ -57,7 +57,7 @@
         border-bottom: 1px solid #000;
       }
       th {
-        background-color: #f44242;
+        background-color: red;
         color: #fff;
         font-size: 18px;
       }
@@ -68,7 +68,7 @@
         background-color: #fff4f4;
       }
       .atc {
-        background-color: #f44242;
+        background-color: red;
         border: none;
         color: #fff;
         padding: 10px 20px;
@@ -149,113 +149,6 @@
         display: none;
       }
 
-      /*Weather API*/
-
-      fieldset {
-        display: block;
-        -webkit-margin-start: 0px;
-        -webkit-margin-end: 0px;
-        -webkit-padding-before: 0em;
-        -webkit-padding-start: 0em;
-        -webkit-padding-end: 0em;
-        -webkit-padding-after: 0em;
-        border: 0px;
-        border-image-source: initial;
-        border-image-slice: initial;
-        border-image-width: initial;
-        border-image-outset: initial;
-        border-image-repeat: initial;
-        min-width: -webkit-min-content;
-      }
-
-      form {
-        display: flex;
-        justify-content: center;
-        position: absolute;
-        top: 1.3%;
-        right: 15%;
-      }
-
-      .display-weather {
-        background-color: #fff;
-        padding: 5px 10px 10px 10px;
-      }
-
-      input[type="text"] {
-        display: inline-block;
-        width: 100%;
-        margin-right: 10px;
-        border-radius: 3px;
-      }
-
-      input[type="submit"] {
-        display: inline-block;
-        width: 100%;
-      }
-
-      .ghost-input,
-      p {
-        display: block;
-        font-size: 15px;
-        border: 0px;
-        outline: none;
-        width: 100%;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        background: #fff;
-        margin: 10px 0px;
-        color: red;
-      }
-
-      .ghost-input:focus {
-        border-bottom: 1px solid #ddd;
-      }
-
-      .ghost-button {
-        background-color: transparent;
-        border: 1px solid #ddd;
-        font-size: 13px;
-        margin: 10px 0px;
-        border-radius: 3px;
-      }
-
-      .ghost-button:hover {
-        border: 1px solid #515151;
-      }
-
-      .grid {
-        width: 100%;
-      }
-
-      .dropdown {
-        position: absolute;
-        top: 2.5%;
-        right: 13%;
-      }
-
-      .dropbtn {
-        background-color: red;
-        color: white;
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
-        margin-right: 5px;
-        border-radius: 3px;
-      }
-
-      .dropdown-content {
-        display: none;
-        position: absolute;
-        z-index: 1;
-        right: 10%;
-        margin-top: 10px;
-      }
-
-      .dropdown:hover .dropdown-content {
-        display: block;
-      }
-
       /*Text Enlarge Button*/
       #font-changing {
         position: absolute;
@@ -324,53 +217,10 @@
     </script>
   </head>
   <body>
+    <img src="../images/Chick-fil-A-Logo.png" class="logo" />
     <div class="backbtn">
       <a href="/dashboard" class="signout">Back</a>
     </div>
-    <!--Weather API Section--->
-    <div class="container">
-      <fieldset>
-        <form action="/serverSides" method="post">
-          <input
-            name="city"
-            type="text"
-            class="ghost-input"
-            placeholder="Enter a City"
-            required
-          />
-          <input type="submit" class="ghost-button" value="Get Weather" />
-        </form>
-      </fieldset>
-      <%if( weather !==null){ %>
-      <div class="dropdown">
-        <button class="dropbtn">&#9662;</button>
-        <div class="dropdown-content">
-          <div class="display-weather">
-            <div class="grid">
-              <p><%= place %></p>
-              <p class="text-muted small"><%= timezone %></p>
-            </div>
-            <div class="card-deck">
-              <div class="card card-accent-dark mb-3">
-                <div class="card-body text-dark">
-                  <img src="<%= icon %>" alt="Weather-Icon" />
-                  <h5 class="card-title">Temperature</h5>
-                  <p class="card-text">
-                    In Degrees: <%= temp %>°C/ <%= fahrenheit %>°F
-                  </p>
-                  <h5 class="card-title">Main</h5>
-                  <p class="card-text"><%= main %></p>
-                </div>
-              </div>
-            </div>
-            <% } %> <% if(error !==null){ %>
-            <p><%= error %></p>
-            <% } %>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!---Google Translate Section --->
     <div id="google_translate_element"></div>
 
@@ -381,12 +231,10 @@
     </div>
 
     <!---Sides Section--->
-    <img src="../images/Chick-fil-A-Logo.png" class="logo" />
     <h1>Sides</h1>
     <table>
       <thead>
         <tr>
-          <th></th>
           <th>Item</th>
           <th>Price</th>
           <th></th>
@@ -395,10 +243,7 @@
       <tbody>
         <% for (let i = 0; i < sideItems.length; i++) { %>
         <tr>
-          <td>
-            <img src="<%= sideItems[i].image_url %>" />
-          </td>
-          <td><%= sideItems[i].name %></td>
+          <td><%= sideItems[i].item %></td>
           <td>$<%= sideItems[i].price %></td>
           <td><button class="atc">Add to Cart</button></td>
         </tr>
