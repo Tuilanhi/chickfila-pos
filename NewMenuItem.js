@@ -1,6 +1,4 @@
-import { createRequire } from "module";
 import { Database } from "./Database.js";
-const require = createRequire(import.meta.url);
 
 /**
  * It takes in an array of strings and calls the addNewItem method
@@ -42,7 +40,6 @@ class NewMenuItem {
     }
 
     for (let c of newIngredientsArray) {
-      const item = c[0];
       Ingredients += c[0] + ", ";
     }
     // String of all Items
@@ -58,9 +55,7 @@ class NewMenuItem {
         "', '{" +
         Ingredients +
         "}')";
-      const res = await this.db.query(sqlStatement);
-      console.log("Added New Item to Bridge");
-      console.log(Ingredients);
+      await this.db.query(sqlStatement);
 
       // Check if all items are in ingredients table in database
       for (const c of newIngredientsArray) {
@@ -77,11 +72,9 @@ class NewMenuItem {
         if (count == 0) {
           sqlStatement = `INSERT INTO ingredients (Ingredient, Quantity, Unit, Type) VALUES ('${Ingredient}', 500, '${Unit}', '${Type}')`;
           await this.db.query(sqlStatement);
-          console.log("added");
         }
       }
-      sqlStatement = `SELECT * FROM bridge;`;
-      await this.db.query(sqlStatement);
+
       await this.db.disconnect();
     } catch (e) {
       console.log(e);

@@ -122,8 +122,6 @@ class Menu {
         await this.db.insert(sqlStatement);
       }
 
-      sqlStatement = `SELECT * FROM menu;`;
-      await this.db.query(sqlStatement);
       await this.db.disconnect();
     } catch (e) {
       console.error(e);
