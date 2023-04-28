@@ -115,7 +115,6 @@ class Menu {
         await this.db.insert(sqlStatement);
       } else {
         // update item price if it exists
-        console.log("WENT INTO ELSE STATEMENT");
         sqlStatement = `DELETE FROM menu WHERE item IN('${Item}')`;
         await this.db.delete(sqlStatement);
         sqlStatement = `INSERT INTO menu (item, price, category) VALUES ('${Item}', ${price}, '${category}')`;
@@ -131,15 +130,16 @@ class Menu {
   async removeItem(Item) {
     try {
       this.db.connect();
-      let sqlStatement = `DELETE FROM menu WHERE item IN('${Item}')`;
+      let sqlStatement = `DELETE FROM menu WHERE item IN('${Item}');`;
       await this.db.delete(sqlStatement);
 
-      sqlStatement = `DELETE FROM bridge WHERE item IN('${Item}')`;
+      sqlStatement = `DELETE FROM bridge WHERE item IN('${Item}');`;
       await this.db.delete(sqlStatement);
+
+      await this.db.disconnect();
     } catch (e) {
       console.error(e);
     }
-    await this.db.disconnect();
   }
 }
 

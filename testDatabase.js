@@ -22,8 +22,11 @@ class testDatabase {
 }
 
 async function main() {
-  const ingredient = new Ingredients();
-  ingredient.removeIngredient("Beef Slice");
+  // const ingredient = new Ingredients();
+  // ingredient.removeIngredient("Beef Slice");
+
+  const menu = new Menu();
+  menu.removeItem("Beef Sandwich");
 }
 
 main();

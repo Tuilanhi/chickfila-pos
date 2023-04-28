@@ -49,13 +49,28 @@ class NewMenuItem {
       // Inserting new Item into Bridge in database
       this.db.connect();
       console.log("Opened database successfully");
-      let sqlStatement =
-        "INSERT INTO Bridge (item, ingredients) VALUES ('" +
-        itemName +
-        "', '{" +
-        Ingredients +
-        "}')";
-      await this.db.query(sqlStatement);
+      let sqlStatement = `SELECT COUNT(*) FROM bridge WHERE item='${itemName}';`;
+      const res = await this.db.query(sqlStatement);
+      const num = res[0].count;
+      if (num == 0) {
+        sqlStatement =
+          "INSERT INTO Bridge (item, ingredients) VALUES ('" +
+          itemName +
+          "', '{" +
+          Ingredients +
+          "}')";
+        await this.db.query(sqlStatement);
+      } else {
+        sqlStatement = `DELETE FROM Bridge WHERE item IN('${itemName}')`;
+        await this.db.query(sqlStatement);
+        sqlStatement =
+          "INSERT INTO Bridge (item, ingredients) VALUES ('" +
+          itemName +
+          "', '{" +
+          Ingredients +
+          "}')";
+        await this.db.query(sqlStatement);
+      }
 
       // Check if all items are in ingredients table in database
       for (const c of newIngredientsArray) {
