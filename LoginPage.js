@@ -4,7 +4,7 @@ const require = createRequire(import.meta.url);
 
 import { RestockReport } from "./RestockReport.js";
 import { Menu } from "./Menu.js";
-import { Inventory } from "./Inventory.js";
+import { Ingredients } from "./Ingredients.js";
 import { NewMenuItem } from "./NewMenuItem.js";
 
 import fetch from "node-fetch";
@@ -127,16 +127,34 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Redirect to Menu Board page
+app.get("/menuboard", function (req, res) {
+  res.render("pages/menuboard");
+});
+
+// If failed to login, redirect to error page
+app.get("/error", (req, res) => res.render("pages/error"));
+
+// After user had logged out, redirect to login page
+app.get("/logout", function (req, res, next) {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+});
+
 /* GOOGLE USERS SECTION */
 app.get("/dashboard", isLoggedIn, async (req, res) => {
   if (isManager()) {
     const menu = new Menu();
-    const inventory = new Inventory();
+    const inventory = new Ingredients();
 
     try {
       const [menuItems, inventoryItems] = await Promise.all([
         menu.displayMenu(),
-        inventory.displayInventory(),
+        inventory.displayIngredients(),
       ]);
 
       res.render("manager/dashboard", {
@@ -159,23 +177,39 @@ app.get("/dashboard", isLoggedIn, async (req, res) => {
   }
 });
 
-// Redirect to Menu Board page
-app.get("/menuboard", function (req, res) {
-  res.render("pages/menuboard");
-});
+// On a post request, the app shall data from OpenWeatherMap using the given arguments
+app.post("/dashboard", isLoggedIn, async (req, res) => {
+  if (isManager()) {
+    const menu = new Menu();
+    const ingredients = new Ingredients();
 
-// If failed to login, redirect to error page
-app.get("/error", (req, res) => res.render("pages/error"));
+    try {
+      const itemName = req.body.itemName;
+      const itemCategory = req.body.itemCategory;
+      const itemPrice = req.body.itemPrice;
 
-// After user had logged out, redirect to login page
-app.get("/logout", function (req, res, next) {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
+      await menu.setItem(itemName, itemPrice, itemCategory);
+
+      await menu.removeItem(itemName);
+
+      const ingredient = req.body.ingredient;
+      const quantity = req.body.quantity;
+      const type = req.body.type;
+      const unit = req.body.unit;
+
+      await ingredients.setIngredient(ingredient, quantity, type, unit);
+
+      await ingredients.removeIngredient(ingredient);
+
+      await res.send("Success");
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error updating item");
     }
-    res.redirect("/");
-  });
+  }
 });
+
+/*SERVER SECTION*/
 
 // redirect to entrees menu page
 app.get("/serverEntrees", async (req, res) => {
@@ -267,29 +301,8 @@ app.get("/serverTreats", async (req, res) => {
   }
 });
 
-// On a post request, the app shall data from OpenWeatherMap using the given arguments
-app.post("/dashboard", isLoggedIn, async (req, res) => {
-  if (isManager()) {
-    const menu = new Menu();
-
-    try {
-      const itemName = req.body.itemName;
-      const itemCategory = req.body.itemCategory;
-      const itemPrice = req.body.itemPrice;
-
-      await menu.setItem(itemName, itemPrice, itemCategory);
-
-      await menu.removeItem(itemName);
-
-      res.send("Success");
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Error updating menu");
-    }
-  }
-});
-
 /* GUEST CHECKOUT SECTION */
+
 const apiKey = `${process.env.WEATHER_API_KEY}`;
 // Render the weather api for guest checkout
 function guestRenderWeather(req, res, page) {

@@ -1,7 +1,7 @@
 import { Database } from "./Database.js";
 import { RestockReport } from "./RestockReport.js";
 import { Menu } from "./Menu.js";
-import { Inventory } from "./Inventory.js";
+import { Ingredients } from "./Ingredients.js";
 import { NewMenuItem } from "./NewMenuItem.js";
 
 class testDatabase {
@@ -22,13 +22,8 @@ class testDatabase {
 }
 
 async function main() {
-  const bridge = new NewMenuItem();
-
-  const newItem = "Chicken Spicy Strip Sandwich";
-  const Ingr =
-    "Sesame Buns-pieces-food,Chicken Strip-pieces-food,Chicken Strip-pieces-food,Lettuce-pieces-food,Tomatoes-pieces-food,Cheese-pieces-food,Pickles-pieces-food,Pickles-pieces-food";
-
-  bridge.displayItem();
+  const ingredient = new Ingredients();
+  ingredient.removeIngredient("Beef Slice");
 }
 
 main();
