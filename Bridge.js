@@ -27,15 +27,7 @@ class Bridge {
             console.log(order[i]);
           const sqlStatement = `SELECT ingredients FROM bridge WHERE item = '${order[i]}'`;
           result = await this.db.query(sqlStatement);
-          //const NewResult = result.toString();
 
-          //NewResult = NewResult.replace(/[\[\]']+/g,'');
-
-          //console.log(NewResult);
-          //result.next();
-         // const a = result.getArray("ingredients");
-          //const ing = a.getArray();
-          //console.log(ing[0]);
           const ingredient = Array.from(result[0].ingredients);
           console.log(ingredient);
           for (let j = 0; j < ingredient.length; j++) {
