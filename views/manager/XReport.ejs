@@ -203,17 +203,28 @@
 
       function generateReport() {
         const startDate = document.getElementById("start-date").value;
-        // Perform calculations and update table based on date range
-        const rows = document.querySelectorAll("#sales-table tbody tr");
+        const table = document.getElementById("sales-table");
 
-        rows.forEach((row) => {
-          const dateStr = row.cells[0].textContent;
-          if (dateStr == startDate) {
-            row.style.display = "";
+        // Initialize total sales variable
+        let totalSales = 0;
+
+        // Loop through rows and update visibility based on date
+        for (let i = 0; i < table.rows.length; i++) {
+          const rowDate = table.rows[i].cells[0].textContent;
+
+          if (rowDate === startDate) {
+            table.rows[i].style.display = "";
+            // Add total sales from visible rows
+            totalSales += parseFloat(table.rows[i].cells[4].textContent);
           } else {
-            row.style.display = "none";
+            table.rows[i].style.display = "none";
           }
-        });
+        }
+
+        // Update End of Day Sales label with total sales
+        const eodSalesLabel = document.getElementById("total-sales-label");
+        eodSalesLabel.textContent =
+          "End of Day Sales: $" + totalSales.toFixed(2);
       }
 
       function resetTable() {
@@ -221,6 +232,11 @@
         rows.forEach((row) => {
           row.style.display = "";
         });
+
+        let eodSales = 0;
+        // Update End of Day Sales label with 0
+        const eodSalesLabel = document.getElementById("total-sales-label");
+        eodSalesLabel.textContent = "End of Day Sales: $" + eodSales;
       }
 
       function enlargeText() {
@@ -278,6 +294,11 @@
         <button onclick="generateReport()">Generate Report</button>
         <button onclick="resetTable()">Reset Table</button>
       </div>
+      <div class="eod-sales">
+        <label for="totalsale" id="total-sales-label"
+          >End of Day Sales: $0</label
+        >
+      </div>
       <table id="sales-table">
         <thead>
           <tr>
@@ -291,7 +312,7 @@
         <tbody>
           <% for (let i = 0; i < results.length; i++) { %>
           <tr>
-            <td><%= results[i].Date %></td>
+            <td><%= results[i].days %></td>
             <td><%= results[i].gamedays %></td>
             <td><%= results[i].orderid %></td>
             <td><%= results[i].item %></td>

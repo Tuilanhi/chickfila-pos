@@ -18,7 +18,7 @@ class RestockReport {
     let result = null;
     try {
       //Inserting new Item into Bridge in database
-      this.db.connect();
+      await this.db.connect();
       const minimum = 150;
       const sqlStatement = `SELECT * FROM ingredients WHERE quantity <= ${minimum};`;
       result = await this.db.query(sqlStatement);

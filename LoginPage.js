@@ -569,8 +569,7 @@ app.get("/salesReport", (req, res) => {
 app.get("/XReport", async (req, res) => {
   const xReport = new XReport();
 
-  const date = req.query.date;
-  const results = await xReport.loadData(date);
+  const results = await xReport.displayReport();
 
   res.render("manager/XReport", {
     userProfile,
