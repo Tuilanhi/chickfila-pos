@@ -123,8 +123,8 @@ class ExcessReport {
 }
 
 
-const date1 = "2022-10-03";
-const date2 = "2022-10-07";
+//const date1 = "2022-10-03";
+//const date2 = "2022-10-07";
 
-const run = new ExcessReport(date1, date2);
+//const run = new ExcessReport(date1, date2);
 export {ExcessReport};

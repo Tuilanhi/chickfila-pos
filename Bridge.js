@@ -48,7 +48,7 @@ class Bridge {
 
   }
 
-  const order = ["Chicken Sandwich","Fruit Cup"];
-  const run = new Bridge(order);
+  //const order = ["Chicken Sandwich","Fruit Cup"];
+  //const run = new Bridge(order);
   export {Bridge};
 
