@@ -100,6 +100,7 @@ class ExcessReport {
     //console.log(ingredientOrdered);
 
     //checking which items have sold less than 10%
+    //list of undersold items
     let undersoldItems = [];
     for (let i = 0; i < ingredientOrdered.length; i++) {
       const sold = ingredientOrdered[i][1];
@@ -113,7 +114,7 @@ class ExcessReport {
         undersoldItems.push(ingredientOrdered[i][0]);
       }
     }
-   
+
     console.log(undersoldItems);
 
     // Close the connection and the statement
