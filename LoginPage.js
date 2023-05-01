@@ -6,6 +6,7 @@ import { RestockReport } from "./RestockReport.js";
 import { Menu } from "./Menu.js";
 import { Ingredients } from "./Ingredients.js";
 import { NewMenuItem } from "./NewMenuItem.js";
+import { XReport } from "./XReport.js";
 
 import fetch from "node-fetch";
 const express = require("express");
@@ -197,9 +198,9 @@ app.post("/dashboard", isLoggedIn, async (req, res) => {
       const type = req.body.type;
       const unit = req.body.unit;
 
-      await ingredients.setIngredient(ingredient, quantity, type, unit);
+      await ingredients.setItem(ingredient, quantity, type, unit);
 
-      await ingredients.removeIngredient(ingredient);
+      await ingredients.removeItem(ingredient);
 
       await res.send("Success");
     } catch (error) {
@@ -565,10 +566,16 @@ app.get("/salesReport", (req, res) => {
   });
 });
 
-app.get("/XReport", (req, res) => {
+app.get("/XReport", async (req, res) => {
+  const xReport = new XReport();
+
+  const date = req.query.date;
+  const results = await xReport.loadData(date);
+
   res.render("manager/XReport", {
     userProfile,
     userRole,
+    results,
   });
 });
 

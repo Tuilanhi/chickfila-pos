@@ -289,34 +289,15 @@
           </tr>
         </thead>
         <tbody>
+          <% for (let i = 0; i < results.length; i++) { %>
           <tr>
-            <td>2023-04-12</td>
-            <td>False</td>
-            <td>D12-23</td>
-            <td>[Chicken Sandwich, Iced Tea]</td>
-            <td>23.90</td>
+            <td><%= results[i].Date %></td>
+            <td><%= results[i].gamedays %></td>
+            <td><%= results[i].orderid %></td>
+            <td><%= results[i].item %></td>
+            <td><%= results[i].totalsales %></td>
           </tr>
-          <tr>
-            <td>2023-04-15</td>
-            <td>True</td>
-            <td>D15-12</td>
-            <td>[Spicy Chicken Sandwich, Soft Drink (Medium)]</td>
-            <td>12.90</td>
-          </tr>
-          <tr>
-            <td>2023-04-18</td>
-            <td>False</td>
-            <td>D18-23</td>
-            <td>[Chicken Nuggets (8 pieces), Bottled Water]</td>
-            <td>14.50</td>
-          </tr>
-          <tr>
-            <td>2023-04-22</td>
-            <td>False</td>
-            <td>D22-23</td>
-            <td>[Market Salad, Iced Tea]</td>
-            <td>15.99</td>
-          </tr>
+          <% } %>
         </tbody>
       </table>
     </div>
