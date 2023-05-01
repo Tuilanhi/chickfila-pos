@@ -63,8 +63,8 @@ class orderHistory{
     }
 }
 
-const date1 = "2022-10-03";
-const date2 = "2022-10-5";
+//const date1 = "2022-10-03";
+//const date2 = "2022-10-5";
 
-const run = new orderHistory(date1, date2);
+//const run = new orderHistory(date1, date2);
 export {orderHistory};
