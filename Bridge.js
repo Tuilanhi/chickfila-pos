@@ -15,39 +15,28 @@ class Bridge {
   
      async parseCart(order) {
         let result = null;
-      try {
+      //try {
         // if item name doesn't exist add new Item
         //const stmt = this.db.connect().createStatement();
-        this.db.connect();
-        console.log('Opened database successfully');
+        //this.db.connect();
+        //console.log('Opened database successfully');
         // get names of existing items
         let i = 0;
         while (i < order.length) {
-            console.log(order.length);
-            console.log(order[i]);
+            //console.log(order.length);
+            //console.log(order[i]);
           const sqlStatement = `SELECT ingredients FROM bridge WHERE item = '${order[i]}'`;
           result = await this.db.query(sqlStatement);
 
           const ingredient = Array.from(result[0].ingredients);
-          console.log(ingredient);
+          //console.log(ingredient);
           for (let j = 0; j < ingredient.length; j++) {
             this.decrementInventory(ingredient[j], this.db);
           }
           i++;
         }
-      } catch (e) {
-        console.error(e);
-        process.exit(0);
-      }
-     // close connection
-      // closing the connection
-      try {
-        this.db.disconnect();
-        console.log("Connection Closed.");
-      } catch (e) {
-        console.log("Connection NOT Closed.");
-      }
-      
+      //} 
+      //this.db.disconnect();
     }
   
     decrementInventory(ingredient, stmt) {
@@ -59,7 +48,7 @@ class Bridge {
 
   }
 
-  //const order = ["Chicken Sandwich","Fruit Cup"];
-  //const run = new Bridge(order);
+  const order = ["Chicken Sandwich","Fruit Cup"];
+  const run = new Bridge(order);
   export {Bridge};
 

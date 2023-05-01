@@ -1,93 +1,130 @@
-const { Client } = require('pg');
+import {createRequire } from "module";
+import {Database} from "./Database.js";
+import {Bridge} from "./Bridge.js";
+const require = createRequire(import.meta.url);
 
-/**
- * It takes in an ArrayList of Strings and calls the parseCart method
- */
+
 class ExcessReport {
-  constructor(date1, date2) {
-    this.date1 = date1;
-    this.date2 = date2;
-  }
-
-  /*
-   * It connects to the database and returns a connection object
-   *
-   * @return A connection to the database.
-   */
-  static async connection() {
-    // Building the connection with your credentials
-    const client = new Client({
-      user: 'csce315331_team_1_master',
-      host: 'csce-315-db.engr.tamu.edu',
-      database: 'csce315331_team_1',
-      password: 'TEAM_1',
-      port: 5432,
-    });
-
-    // Connecting to the database
-    try {
-      await client.connect();
-      console.log('Connected to the database successfully');
-    } catch (err) {
-      console.error('Error connecting to the database:', err);
-      process.exit(1);
+    constructor(date1, date2) {
+      this.db = new Database;
+      this.date1 = date1;
+      this.date2 = date2;
+      this.excessReport(date1, date2);
     }
 
-    return client;
+
+    async excessReport(date1, date2) {
+      this.db.connect();
+      console.log('Opened database successfully');
+    
+
+    const itemList = [
+      ['Chicken Sandwich', 0], ['Deluxe Chicken Sandwich', 0], ['Spicy Chicken Sandwich', 0],
+       ['Spicy Deluxe Chicken Sandwich', 0], ['Chicken Nuggets (8 pieces)', 0], ['Chicken Nuggets (12 pieces)', 0],
+      ['Grilled Nuggets (8 pieces)',0], ['Grilled Nuggets (12 pieces)',0], ['Grilled Chicken Sandwich', 0],
+       ['Grilled Chicken Club Sandwich',0], ['Grilled Chicken Cool Wrap', 0], ['Market Salad', 0],
+       ['Spicy Southwest Salad',0], ['Cobb Salad', 0], ['Side Salad', 0], ['Fruit Cup',0],
+       ['Waffle Potato Fries (small)', 0], ['Waffle Potato Fries (medium)',0],
+       ['Waffle Potato Fries (large)', 0], ['Cookies & Cream Milkshake', 0],
+       ['Chocolate Milkshake', 0], ['Strawberry Milkshake', 0], ['Vanilla Milkshake', 0], 
+       ['Frosted Lemonade', 0], ['Frosted Coffee', 0], ['Icecream Cone', 0], ['Chocolate Chunk Cookie', 0],
+       ['Chocolate Fudge Brownie', 0], ['Diet Lemonade (medium)', 0], ['Diet Lemonade (large)', 0],
+       ['Regular Lemonade (medium)', 0], ['Regular Lemonade (large)', 0], ['Chick-fil-A Sunjoy (medium)', 0], 
+       ['Chick-fil-A Sunjoy (large)', 0], ['Soft Drink (medium)', 0], ['Soft Drink (large)', 0],
+       ['Sweet Tea (medium)', 0], ['Sweet Tea (large)', 0], ['Unsweet Tea (medium)', 0], ['Unsweet Tea (large)', 0],
+       ['Bottled Water', 0], ['Cold Brew Iced Coffee', 0]]
+
+
+  //Creating query for time range 
+  const sqlStatement = `SELECT * FROM chickfila_sales WHERE days BETWEEN '${date1}' AND '${date2}'`;
+  let result = await this.db.query(sqlStatement);
+
+  const ingredientQuantity = []
+  const ingredientOrdered = []
+
+  const sqlStatement2 = `SELECT * FROM ingredients`;
+    const result2 = await this.db.query(sqlStatement2);
+
+  //filling in double array with quantity
+  for (let i = 0; i < result2.length; i++) {
+    const name = result2[i].ingredient;
+    //console.log(name);
+    const quantity = result2[i].quantity;
+    const add = [name, quantity];
+    ingredientOrdered.push([name,0]);
+    ingredientQuantity.push(add);
   }
+  //console.log(ingredientQuantity);
 
-  async excess() {
-    try {
-      const client = await ExcessReport.connection();
 
-      const sqlStatement = `SELECT * FROM chickfila_sales WHERE days BETWEEN '${this.date1}' AND '${this.date2}'`;
-      const result = await client.query(sqlStatement);
-
-      //Getting the count of items on menu
-      const result_1 = await client.query('SELECT COUNT(*) FROM menu');
-      const count = result_1.rows[0].count;
-
-      //Array of all menu Items
-      const Items = new Array(count);
-
-      //putting all items in string
-      const result_2 = await client.query('SELECT item FROM menu');
-      for (let i = 0; i < count; i++) {
-        Items[i] = result_2.rows[i].item;
+  //going through all orders within the date range
+  for (let i = 0; i < result.length; i++) {
+      //getting an array of all items in an order
+      const itemsOrdered = Array.from(result[i].item);
+      
+      //const inv = new Bridge(result[i]);
+      for (let j = 0; j < itemsOrdered.length; j++) {
+          const itemName = itemsOrdered[j];
+          const item = itemName.replace(/'/g, "");
+          //console.log(item);
+          for (let k = 0; k < itemList.length; k++) {
+              if (itemList[k][0] == item) {
+                  //adding it to the count in double array
+                  itemList[k][1] = itemList[k][1] + 1;
+                  //console.log(itemList[k][1]);
+              }
+          }
+          //console.log(itemName)
       }
+    }
 
-      //Getting the count of
-      const result_3 = await client.query(`SELECT COUNT(*) FROM chickfila_sales WHERE days BETWEEN '${this.date1}' AND '${this.date2}'`);
-      const countSales = result_3.rows[0].count;
+    //console.log(itemList);
 
-      //2D array: [["chickfila sandwich", "2"]]
-      const item_count = new Array(count);
-      for (let i = 0; i < count; i++) {
-        item_count[i] = [Items[i], '0'];
-      }
-
-      //putting all items ordered in the timestamp in string
-      const result_4 = await client.query(`SELECT item FROM chickfila_sales WHERE days BETWEEN '${this.date1}' AND '${this.date2}'`);
-      for (let i = 0; i < countSales; i++) {
-        const { item } = result_4.rows[i];
-        // takes the array per transaction as a string
-        let Transaction = item.substring(1, item.length - 1);
-        // use split to make it into an array
-        const transactionArray = Transaction.split(',');
-
-        for (let j = 0; j < transactionArray.length; j++) {
-          const c = transactionArray[j].substring(2, transactionArray[j].length - 2);
-
-          for (let m = 0; m < count; m++) {
-            if (c === item_count[m][0]) {
-              let num = parseInt(item_count[m][1], 10);
-              num++;
-              const number = num.toString();
-              item_count[m][1] = number;
-            }
+    for(let i = 0; i < itemList.length; i++) {
+      //console.log(itemList[i]);
+      const sqlStatement3 = `SELECT ingredients FROM bridge WHERE item = '${itemList[i][0]}'`;
+      const result3 = await this.db.query(sqlStatement3);
+      const ingrList = result3[0].ingredients;
+      //console.log(ingrList);
+      for (let j = 0; j < ingrList.length; j++) {
+        for (let k = 0; k < ingredientOrdered.length; k++) {
+          if (ingrList[j] == ingredientOrdered[k][0]) {
+            ingredientOrdered[k][1]=1*itemList[i][1];
           }
         }
       }
     }
+
+    //console.log(result3)
+
+    //console.log(ingredientOrdered);
+
+    //checking which items have sold less than 10%
+    let undersoldItems = [];
+    for (let i = 0; i < ingredientOrdered.length; i++) {
+      const sold = ingredientOrdered[i][1];
+      const inv = ingredientQuantity[i][1];
+
+      const div = parseFloat(sold/inv);
+      const percent = parseFloat(div*100);
+      //console.log(percent);
+
+      if (percent < 10) {
+        undersoldItems.push(ingredientOrdered[i][0]);
+      }
+    }
+   
+    console.log(undersoldItems);
+
+    // Close the connection and the statement
+    this.db.disconnect();
   }
+
 }
+
+
+const date1 = "2022-10-03";
+const date2 = "2022-10-07";
+
+const run = new ExcessReport(date1, date2);
+export {ExcessReport};
