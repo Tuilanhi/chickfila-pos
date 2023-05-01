@@ -7,6 +7,7 @@ import { Menu } from "./Menu.js";
 import { Ingredients } from "./Ingredients.js";
 import { NewMenuItem } from "./NewMenuItem.js";
 import { XReport } from "./XReport.js";
+import { ZReport } from "./ZReport.js";
 
 import fetch from "node-fetch";
 const express = require("express");
@@ -578,10 +579,15 @@ app.get("/XReport", async (req, res) => {
   });
 });
 
-app.get("/ZReport", (req, res) => {
+app.get("/ZReport", async (req, res) => {
+  const zReport = new ZReport();
+
+  const results = await zReport.displayReport();
+
   res.render("manager/ZReport", {
     userProfile,
     userRole,
+    results,
   });
 });
 
