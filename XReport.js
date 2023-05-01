@@ -22,12 +22,13 @@ class XReport{
 
             //console.log(result[0].totalsales);
             for (let i = 0; i < result.length; i++ ) {
-                 const orderTotal = parseInt(result[i].totalsales);
+                 const orderTotal = parseFloat(result[i].totalsales);
                  //console.log(orderTotal);
-                 totalDaySales = parseInt(totalDaySales) + orderTotal;
+                 totalDaySales = parseFloat(totalDaySales) + orderTotal;
                
             }
-            console.log("Total Sales for " + date + ": " + totalDaySales);
+            totalDaySales = totalDaySales.toFixed(2)
+            console.log("Total Sales for " + date + ": $" + totalDaySales);
             
 
 
