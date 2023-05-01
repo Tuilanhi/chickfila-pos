@@ -2,31 +2,16 @@
 <html>
   <head>
     <title>New Menu Item</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    />
     <!-- load bulma css -->
     <link
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     />
     <!-- Bootstrap CSS -->
     <link
       rel="shortcut icon"
       href="https://www.freepnglogos.com/uploads/chick-fil-a-png-logo/chiefs-dominate-against-war-eagles-png-logo-7.png"
       type="image/x-icon"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Open+Sans:300"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
     />
 
     <style>
@@ -219,6 +204,11 @@
         font-style: italic;
         color: #777;
       }
+
+      .error-message {
+        color: red;
+        font-weight: bold;
+      }
     </style>
 
     <script type="text/javascript">
@@ -277,6 +267,22 @@
           const itemName = $('input[name="item-name"]').val();
           const ingredient = $('input[name="ingredients"]').val();
 
+          // Validate the input values
+          if (!itemName) {
+            showError(
+              $('input[name="item-name"]'),
+              "Please enter an item name"
+            );
+            return;
+          }
+          if (!ingredient) {
+            showError(
+              $('input[name="ingredients"]'),
+              "Please enter the ingredient(s)"
+            );
+            return;
+          }
+
           // Send an AJAX request to call the setItem function
           $.ajax({
             url: "/newMenuItem",
@@ -295,6 +301,13 @@
           });
         });
       });
+
+      // Add a helper function to show the error message
+      function showError(inputField, message) {
+        const errorMessage = inputField.next(".error-message");
+        errorMessage.text(message);
+        errorMessage.addClass("error-message");
+      }
     </script>
   </head>
   <body>
@@ -343,12 +356,14 @@
           placeholder="Item Name"
           class="input-field"
         />
+        <div class="error-message"></div>
         <input
           type="text"
           name="ingredients"
           placeholder="Ingredients"
           class="input-field"
         />
+        <div class="error-message"></div>
         <div id="menu-buttons">
           <button id="add-item" class="add">Add Item</button>
         </div>

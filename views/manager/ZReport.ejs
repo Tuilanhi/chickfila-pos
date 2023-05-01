@@ -289,22 +289,12 @@
           </tr>
         </thead>
         <tbody>
+          <% for (let i = 0; i < results.length; i++) { %>
           <tr>
-            <td>2023-04-12</td>
-            <td>3900</td>
+            <td><%= results[i].days %></td>
+            <td><%= results[i].totalsales %></td>
           </tr>
-          <tr>
-            <td>2023-04-15</td>
-            <td>2900</td>
-          </tr>
-          <tr>
-            <td>2023-04-18</td>
-            <td>2800</td>
-          </tr>
-          <tr>
-            <td>2023-04-23</td>
-            <td>3200</td>
-          </tr>
+          <% } %>
         </tbody>
       </table>
     </div>

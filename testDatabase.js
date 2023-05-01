@@ -3,7 +3,7 @@ import { RestockReport } from "./RestockReport.js";
 import { Menu } from "./Menu.js";
 import { Ingredients } from "./Ingredients.js";
 import { NewMenuItem } from "./NewMenuItem.js";
-
+import { XReport } from "./XReport.js";
 class testDatabase {
   constructor() {
     this.db = new Database();
@@ -22,8 +22,14 @@ class testDatabase {
 }
 
 async function main() {
-  const ingredient = new Ingredients();
-  ingredient.removeIngredient("Beef Slice");
+  // const ingredient = new Ingredients();
+  // ingredient.removeIngredient("Beef Slice");
+
+  // const menu = new Menu();
+  // menu.removeItem("Beef Sandwich");
+
+  const report = new XReport();
+  const x = report.sumOfSales();
 }
 
 main();
