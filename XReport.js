@@ -30,36 +30,6 @@ class XReport{
             totalDaySales = totalDaySales.toFixed(2)
             console.log("Total Sales for " + date + ": $" + totalDaySales);
             
-
-
-
-
-
-            // Filter the data by date if a date is selected
-            /*if ( != null) {
-            const selectedDate = selectedDateProperty.getValue();
-            query += " WHERE days = '" + selectedDate + "'";
-            }
-            
-            // Execute the SQL query and get the result set
-            const stmt = conn.prepareStatement(query);
-            const rs = stmt.executeQuery();
-            
-            // Add the data to the ObservableList
-            let eodsales = 0;
-            while (rs.next()) {
-            const days = rs.getString("days");
-            const gamedays = rs.getString("gamedays");
-            const orderid = rs.getString("orderid");
-            const item = rs.getString("item");
-            const totalSales = rs.getFloat("totalsales");
-            eodsales += totalSales;
-            const sale = new ChickfilaSale(days, gamedays, orderid, item, totalSales);
-            data.add(sale);
-            }
-            
-            const labelText = "EoD Sales: " + eodsales;
-            eodSales.setText(labelText);*/
             
             // Close the connection and the statement
             this.db.disconnect();
