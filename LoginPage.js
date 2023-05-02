@@ -70,6 +70,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     secret: "SECRET",
+    
   })
 );
 
@@ -668,7 +669,23 @@ app.post("/excessReport", async (req, res) => {
 
 //Cart
 
-const currentCart = [
+app.use(function(req,res,next){
+  res.locals.session = req.session;
+  next();
+});
+
+app.post("/excessReport", function (req, res) {
+  renderWeather(req, res, "manager/excessReport");
+});
+
+//Cart
+
+app.use(function(req,res,next){
+  res.locals.session = req.session;
+  next();
+});
+
+var currentCart = [
   {
     name: "Chicken Sandwich",
     price: 5.99
@@ -683,12 +700,15 @@ const currentCart = [
   }
 ];
 
+
+
+
 //render the cart
 app.get("/cart", (req, res) => {
   res.render("pages/cart", {
     user: userProfile,
-    currentCart,
     weather: null,
     error: null,
+    items: null
   });
 });

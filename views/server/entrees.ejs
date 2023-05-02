@@ -228,6 +228,7 @@
     <div id="font-changing">
       <a id="reset-button" onClick="resetText()">Reset Text</a>
       <a id="enlarge-button" onClick="enlargeText()">Enlarge Text</a>
+      <a href="/cart" class="signout">Cart</a>
     </div>
 
     <!---Entrees Section--->
@@ -245,11 +246,33 @@
         <tr>
           <td><%= entreeItems[i].item %></td>
           <td>$<%= entreeItems[i].price %></td>
-          <td><button class="atc">Add to Cart</button></td>
+          <td><button class="atc" data-index="<%= i %>">Add to Cart</button></td>
         </tr>
         <% } %>
       </tbody>
     </table>
+    <script>
+      items = JSON.parse('<%-JSON.stringify(entreeItems)%>');
+      // Get all atc item buttons
+      var buttons = document.querySelectorAll('.atc');
+      console.log("selected all the atc buttons")
+      // Add click event listener to each remove button
+      buttons.forEach(function(button) {
+          button.addEventListener('click', function() {
+            // Get the index of the item to remove
+            var id = button.getAttribute('data-index');
+            let products = [];
+            if (localStorage.getItem('products')) {
+                products = JSON.parse(localStorage.getItem('products'));
+            }
+
+            products.push({ 'name': items[id].name , 'price': items[id].price });
+
+            localStorage.setItem('products', JSON.stringify(products));
+            console.log("added item to cart")
+          });
+      });
+    </script> 
     <div class="profile-container">
       <div class="profile">
         <strong>Name</strong>: <%= userProfile.displayName %> <br />

@@ -62,74 +62,116 @@
     .checkout-button:hover {
       background-color: #3e8e41;
     }
+    .remove-all {
+      margin-top: 5%;
+      background-color: #d11;
+      color: white;
+    }
+    .remove-all:hover {
+      background-color: #f33;
+    }
+    /*BACK BUTTON*/
+    .backbtn {
+        
+        top: 2%;
+        left: 0.5%;
+      }
+      .signout {
+        color: white;
+        background-color: red;
+        border-radius: 10px;
+        padding: 5px 10px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .signout:hover {
+        background-color: white;
+        color: red;
+        text-decoration: none;
+      }
+
   </style>
     
 </head>
 
 <body>
-    <script type="text/javascript">
-        // Calculate the total price of all items in the cart
-        function getTotalPrice(items) {
-        var totalPrice = 0;
-        for (var i = 0;  i < items.length; i++) {
-            totalPrice += items[i].price;
-            }
-            return totalPrice;
-        }
-     </script>
+  <div class="backbtn">
+    <a href="/customer" class="signout">Back</a>
+  </div>
   <div class="cart-container">
-    <table>
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Price</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% for (var i = 0; i < currentCart.length; i++) { %>
-        <tr>
-          <td><%= currentCart[i].name %></td>
-          <td>$<%= currentCart[i].price.toFixed(2) %></td>
-          <td><button class="remove-item" data-index="<%= i %>">Remove</button></td>
-        </tr>
-        <% } %>
-      </tbody>
+    <table id = cartTable>
+      <tr><td>Item</td> 
+      <td>Price</td></tr>
+      <script>
+        var hst = document.getElementById("cartTable")
+        var cart = JSON.parse(localStorage.getItem("products"));
+        if(cart == null){
+          hst.innerHTML = "<p>Empty Cart</p>"
+        }
+        else{
+          for (var i = 0; i < cart.length; i++) {
+          hst.innerHTML += "<tr><td>" + cart[i].name + "</td><td>" + cart[i].price + "</td><td><button class='remove-item' data-index = '"+cart[i].name+"' >Remove</button></td></tr>";
+        }
+        }
+        
+      </script>
     </table>
     <div class="checkout-container">
-      <h2 class="checkout-header">Order Summary</h2>
-      <p>Total items: <%= currentCart.length %></p>
-      <!-- <p>Total price: $<%= getTotalPrice(items).toFixed(2) %></p> -->
+      <h2 id ="checkout-header">Order Summary</h2>
+      <script>
+        var hst = document.getElementById("checkout-header")
+        var cart = JSON.parse(localStorage.getItem("products"));
+        var total = 0.00;
+        for (var i = 0; i < cart.length; i++) {
+          total += cart[i].price;
+        }
+        hst.innerHTML = "<p> Total Price:" + total.toFixed(2) + "</p>";
+        hst.innerHTML += "<p> Quantity:" + cart.length+ "</p>";
+      </script>
       <button class="checkout-button">Checkout</button>
+      <button class="checkout-button remove-all">Remove All</button>
     </div>
   </div>
 
   <script type="text/javascript">
-    // Define the items array
-    var items = currentCart;
-
-    // Function to remove an item from the cart
-    function remove(index) {
-    // Remove the item from the array
-    items.splice(index, 1);
-
-    // Output the updated items array to the console
-    console.log(items);
-    }
-
+    var items = JSON.parse(localStorage.getItem('products'));
     // Get all remove item buttons
     var removeButtons = document.querySelectorAll('.remove-item');
-
+    console.log("selected all the remove buttons")
     // Add click event listener to each remove button
     removeButtons.forEach(function(button) {
         button.addEventListener('click', function() {
-            // Get the index of the item to remove
-            var index = button.getAttribute('data-index');
+          // Get the index of the item to remove
+          var indexName = button.getAttribute('data-index');
 
-            // Call the remove function with the index as argument
-            remove(index);
+          for (var i = 0; i < items.length; i++) {
+            var x = items[i].name;
+            if(x == indexName){
+              var index = i;
+              break;
+            }
+          }
+          // Remove the item from the array
+          items.splice(index, 1);
+          
+          localStorage.setItem('products', JSON.stringify(items));
+          // Reload the page to reflect changes
+          location.reload();
         });
     });
+
+    var removeAllButton = document.querySelectorAll('.remove-all');
+    removeAllButton.forEach(function(button) {
+        button.addEventListener('click', function() {
+
+            localStorage.removeItem('products')
+
+          // Reload the page to reflect changes
+          location.reload();
+        });
+    });
+
     </script>
 </body>
 </html>
