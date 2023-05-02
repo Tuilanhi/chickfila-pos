@@ -246,7 +246,7 @@
         <tr>
           <td><%= treatItems[i].item %></td>
           <td>$<%= treatItems[i].price %></td>
-          <td><button class="atc" data-index="<%= i %>">Add to Cart</button></td>
+          <td><button class="atc" data-index="<%= i %>" data-name = "<%= treatItems[i].item %>" data-price = "<%= treatItems[i].price %>">Add to Cart</button></td>
         </tr>
         <% } %>
       </tbody>
@@ -266,7 +266,7 @@
                 products = JSON.parse(localStorage.getItem('products'));
             }
 
-            products.push({ 'name': items[id].name , 'price': items[id].price });
+            products.push({ 'name': button.getAttribute('data-name') , 'price': button.getAttribute('data-price')});
 
             localStorage.setItem('products', JSON.stringify(products));
             console.log("added item to cart")

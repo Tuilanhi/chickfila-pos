@@ -412,7 +412,7 @@ app.get("/entrees", async (req, res) => {
 
     res.render("guest/entrees", {
       userRole,
-      entreeItems,
+      entreeItems: entreeItems,
       weather: null,
       error: null,
     });
@@ -431,7 +431,7 @@ app.get("/drinks", async (req, res) => {
 
     res.render("guest/drinks", {
       userRole,
-      drinkItems,
+      drinkItems: drinkItems,
       weather: null,
       error: null,
     });
@@ -450,7 +450,7 @@ app.get("/salads", async (req, res) => {
 
     res.render("guest/salads", {
       userRole,
-      saladItems,
+      saladItems: saladItems,
       weather: null,
       error: null,
     });
@@ -469,7 +469,7 @@ app.get("/sides", async (req, res) => {
 
     res.render("guest/sides", {
       userRole,
-      sideItems,
+      sideItems: sideItems,
       weather: null,
       error: null,
     });
@@ -488,7 +488,7 @@ app.get("/treats", async (req, res) => {
 
     res.render("guest/treats", {
       userRole,
-      treatItems,
+      treatItems: treatItems,
       weather: null,
       error: null,
     });
