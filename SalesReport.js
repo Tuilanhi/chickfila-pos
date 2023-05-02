@@ -8,7 +8,6 @@ class SalesReport {
   async itemSales(date1, date2) {
     try {
       await this.db.connect();
-      console.log("Opened database successfully");
 
       const itemList = [
         ["Chicken Sandwich", 0],

@@ -2,11 +2,11 @@
 <html>
   <head>
     <title>Excess Report</title>
-    <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     />
+    <!-- Bootstrap CSS -->
     <link
       rel="shortcut icon"
       href="https://www.freepnglogos.com/uploads/chick-fil-a-png-logo/chiefs-dominate-against-war-eagles-png-logo-7.png"
@@ -23,7 +23,7 @@
       }
 
       .logo {
-        position: relative;
+        position: absolute;
         top: 2%;
         height: 40px;
         left: 48%;
@@ -91,7 +91,8 @@
         max-width: 800px;
         margin: 0 auto;
         padding: 20px;
-        margin-top: 100px;
+        left: 50%;
+        padding-top: 100px;
       }
 
       .table-container > h1 {
@@ -122,28 +123,44 @@
     </style>
 
     <script type="text/javascript">
-      function generateReport() {
-        const startDate = document.getElementById("start-date").value;
-        const endDate = document.getElementById("end-date").value;
-        // Perform calculations and update table based on date range
-        const rows = document.querySelectorAll("#sales-table tbody tr");
-
-        rows.forEach((row) => {
-          const dateStr = row.cells[0].textContent;
-          if (dateStr >= startDate && dateStr <= endDate) {
-            row.style.display = "";
-          } else {
-            row.style.display = "none";
-          }
-        });
-      }
-
       function resetTable() {
+        // Get the table rows and show them
         const rows = document.querySelectorAll("#sales-table tbody tr");
         rows.forEach((row) => {
           row.style.display = "";
         });
+
+        // Call displayData() with the date range 2022-01-01 to 2022-12-30
+        document.getElementById("start-date").value = "2022-01-01";
+        document.getElementById("end-date").value = "2022-12-30";
+        document.getElementById("generateReport").click();
       }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        $("#generateReport").click(function () {
+          // Get the user input values
+          const startDate = $('input[name="start-date"]').val();
+          const endDate = $('input[name="end-date"]').val();
+
+          // Send an AJAX request to call the salesReport function with new start and end dates
+          $.ajax({
+            url: "/excessReport",
+            type: "POST",
+            data: { startDate: startDate, endDate: endDate },
+            success: function (data) {
+              const tableContainer = $(".table-container");
+              tableContainer.html(data);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+              console.log("Error: ", errorThrown);
+            },
+          });
+        });
+      });
     </script>
   </head>
   <body>
@@ -158,41 +175,28 @@
       <h1>Excess Report</h1>
       <div class="date-range">
         <label for="start-date">Start Date:</label>
-        <input type="date" id="start-date" />
+        <input type="date" id="start-date" name="start-date" />
         <label for="end-date">End Date:</label>
-        <input type="date" id="end-date" />
-        <button onclick="generateReport()">Generate Report</button>
+        <input type="date" id="end-date" name="end-date" />
+        <button id="generateReport">Generate Report</button>
         <button onclick="resetTable()">Reset Table</button>
       </div>
       <table id="sales-table">
         <thead>
           <tr>
             <th>Date</th>
-            <th>Items</th>
+            <th>Item</th>
             <th>Percentage</th>
           </tr>
         </thead>
         <tbody>
+          <% itemList.forEach(function(item) { %>
           <tr>
-            <td>2023-04-12</td>
-            <td>Chicken Sandwich</td>
-            <td>9</td>
+            <td><%= startDate %> - <%= endDate %></td>
+            <td><%= item[0] %></td>
+            <td><%= item[1].toFixed(2) %></td>
           </tr>
-          <tr>
-            <td>2023-04-15</td>
-            <td>Spicy Chicken Sandwich</td>
-            <td>4</td>
-          </tr>
-          <tr>
-            <td>2023-04-20</td>
-            <td>Ketchup</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>2023-04-23</td>
-            <td>Chicken Feet</td>
-            <td>1</td>
-          </tr>
+          <% }); %>
         </tbody>
       </table>
     </div>

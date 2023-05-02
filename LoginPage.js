@@ -9,6 +9,7 @@ import { NewMenuItem } from "./NewMenuItem.js";
 import { XReport } from "./XReport.js";
 import { ZReport } from "./ZReport.js";
 import { SalesReport } from "./SalesReport.js";
+import { ExcessReport } from "./ExcessReport.js";
 
 import fetch from "node-fetch";
 const express = require("express");
@@ -634,9 +635,33 @@ app.get("/restockReport", (req, res) => {
     });
 });
 
-app.get("/excessReport", (req, res) => {
+app.get("/excessReport", async (req, res) => {
+  const excessReport = new ExcessReport();
+  const startDate = "2022-01-01";
+  const endDate = "2022-12-30";
+
+  //call the itemSales method and pass the start and end dates as arguments
+  const itemList = await excessReport.excessReport(startDate, endDate);
+
   res.render("manager/excessReport", {
     userProfile,
     userRole,
+    itemList, //pass the itemList to the template
+    startDate,
+    endDate,
+  });
+});
+
+app.post("/excessReport", async (req, res) => {
+  const excessReport = new ExcessReport();
+  const { startDate, endDate } = req.body;
+  const itemList = await excessReport.excessReport(startDate, endDate);
+
+  res.render("manager/excessReport", {
+    userProfile,
+    userRole,
+    itemList, //pass the itemList to the template
+    startDate,
+    endDate,
   });
 });
