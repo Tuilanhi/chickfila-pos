@@ -4,6 +4,7 @@ import { Menu } from "./Menu.js";
 import { Ingredients } from "./Ingredients.js";
 import { NewMenuItem } from "./NewMenuItem.js";
 import { XReport } from "./XReport.js";
+import { SalesReport } from "./SalesReport.js";
 class testDatabase {
   constructor() {
     this.db = new Database();
@@ -28,8 +29,8 @@ async function main() {
   // const menu = new Menu();
   // menu.removeItem("Beef Sandwich");
 
-  const report = new XReport();
-  const x = report.sumOfSales();
+  const report = new SalesReport();
+  const x = report.itemSales("2022-01-01", "2022-02-01");
 }
 
 main();

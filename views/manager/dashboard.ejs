@@ -47,59 +47,13 @@
         text-decoration: none;
       }
 
-      /*Google Translate API*/
-
-      #google_translate_element {
-        position: absolute;
-        top: 2%;
-        right: 3%;
-        color: transparent;
-      }
-
-      #google_translate_element a {
-        display: none;
-      }
-
-      .goog-te-gadget {
-        color: transparent !important;
-      }
-
-      .goog-te-gadget img {
-        display: none !important;
-      }
-
-      body > .skiptranslate {
-        display: none;
-      }
-
       .dropdown {
         position: absolute;
         top: 2.5%;
         right: 13%;
       }
 
-      .dropbtn {
-        background-color: red;
-        color: white;
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
-        margin-right: 5px;
-        border-radius: 3px;
-      }
-
-      .dropdown-content {
-        display: none;
-        position: absolute;
-        z-index: 1;
-        right: 10%;
-        margin-top: 10px;
-      }
-
-      .dropdown:hover .dropdown-content {
-        display: block;
-      }
-
+      /*NavBar SECTION*/
       .navbar {
         position: absolute;
         top: 1.5%;
@@ -148,30 +102,6 @@
         border-radius: 10px;
       }
 
-      /*Text Enlarge Button*/
-      #font-changing {
-        position: absolute;
-        top: 3%;
-        left: 6%;
-      }
-      #enlarge-button,
-      #reset-button {
-        color: white;
-        background-color: red;
-        border-radius: 10px;
-        padding: 5px 10px;
-        cursor: pointer;
-        text-decoration: none;
-        font-size: 13px;
-      }
-
-      #enlarge-button:hover,
-      #reset-button:hover {
-        background-color: white;
-        color: red;
-        text-decoration: none;
-      }
-
       /*TABLE SECTION*/
       .table-container {
         display: flex;
@@ -180,11 +110,11 @@
       }
 
       .table-container > div:first-child {
-        margin-left: 120px; /* add right margin to first child div (Menu table) */
+        margin-left: 130px; /* add right margin to first child div (Menu table) */
       }
 
       .table-container > div:last-child {
-        margin-right: 50px; /* add left margin to last child div (Inventory table) */
+        margin-right: 130px; /* add left margin to last child div (Inventory table) */
       }
 
       table {
@@ -216,7 +146,7 @@
         padding: 5px;
         border-radius: 5px;
         border: 1px solid #ccc;
-        width: 300px;
+        width: 250px;
       }
 
       .remove,
@@ -269,45 +199,6 @@
         color: #777;
       }
     </style>
-
-    <script type="text/javascript">
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement(
-          {
-            pageLanguage: "en",
-            includedLanguages: "en,zh-CN,cs,da,fr,es,vi",
-          },
-          "google_translate_element"
-        );
-      }
-    </script>
-    <script
-      type="text/javascript"
-      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-    ></script>
-
-    <script type="text/javascript">
-      function enlargeText() {
-        const elementsToEnlarge = document.querySelectorAll("body *");
-
-        elementsToEnlarge.forEach((element) => {
-          const currentFontSize = parseFloat(
-            window.getComputedStyle(element).fontSize
-          );
-          const newFontSize = currentFontSize + 1;
-
-          element.style.fontSize = `${newFontSize}px`;
-        });
-      }
-
-      function resetText() {
-        const elementsToReset = document.querySelectorAll("body *");
-
-        elementsToReset.forEach((element) => {
-          element.style.fontSize = null;
-        });
-      }
-    </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -491,14 +382,6 @@
   </head>
   <body>
     <img src="../images/Chick-fil-A-Logo.png" class="logo" />
-    <!---Google Translate Section --->
-    <div id="google_translate_element"></div>
-
-    <!---Enlarge Text Button--->
-    <div id="font-changing">
-      <a id="reset-button" onClick="resetText()">Reset Text</a>
-      <a id="enlarge-button" onClick="enlargeText()">Enlarge Text</a>
-    </div>
 
     <!---DROP DOWN MENU--->
     <div class="navbar">

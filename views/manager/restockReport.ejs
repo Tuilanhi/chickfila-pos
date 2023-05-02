@@ -77,32 +77,6 @@
         text-decoration: none;
       }
 
-      /*Google Translate API*/
-
-      #google_translate_element {
-        position: absolute;
-        top: 2%;
-        right: 3%;
-        z-index: 9999;
-        color: transparent;
-      }
-
-      #google_translate_element a {
-        display: none;
-      }
-
-      .goog-te-gadget {
-        color: transparent !important;
-      }
-
-      .goog-te-gadget img {
-        display: none !important;
-      }
-
-      body > .skiptranslate {
-        display: none;
-      }
-
       /*BACK BUTTON*/
       .backbtn {
         position: absolute;
@@ -120,29 +94,6 @@
       }
 
       .signout:hover {
-        background-color: white;
-        color: red;
-        text-decoration: none;
-      }
-
-      /*Text Enlarge Button*/
-      #font-changing {
-        position: absolute;
-        top: 2%;
-        left: 5%;
-      }
-      #enlarge-button,
-      #reset-button {
-        color: white;
-        background-color: red;
-        border-radius: 10px;
-        padding: 5px 12px;
-        cursor: pointer;
-        text-decoration: none;
-      }
-
-      #enlarge-button:hover,
-      #reset-button:hover {
         background-color: white;
         color: red;
         text-decoration: none;
@@ -185,66 +136,12 @@
         margin-bottom: 10px;
       }
     </style>
-
-    <script type="text/javascript">
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement(
-          {
-            pageLanguage: "en",
-            includedLanguages: "en,zh-CN,cs,da,fr,es,vi",
-          },
-          "google_translate_element"
-        );
-      }
-
-      function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
-      }
-
-      function enlargeText() {
-        const elementsToEnlarge = document.querySelectorAll("body *");
-
-        elementsToEnlarge.forEach((element) => {
-          const currentFontSize = parseFloat(
-            window.getComputedStyle(element).fontSize
-          );
-          const newFontSize = currentFontSize + 1;
-
-          element.style.fontSize = `${newFontSize}px`;
-        });
-      }
-
-      const enlargeButton = document.getElementById("enlarge-button");
-      enlargeButton.onclick = enlargeText;
-
-      function resetText() {
-        const elementsToReset = document.querySelectorAll("body *");
-
-        elementsToReset.forEach((element) => {
-          element.style.fontSize = null;
-        });
-      }
-    </script>
-
-    <script
-      type="text/javascript"
-      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-    ></script>
   </head>
   <body>
     <img src="../images/Chick-fil-A-Logo.png" class="logo" />
     <!---Back Button--->
     <div class="backbtn">
       <a href="/dashboard" class="signout">Back</a>
-    </div>
-
-    <!---Google Translate Section --->
-    <div id="google_translate_element"></div>
-
-    <!---Enlarge Text Button--->
-    <div id="font-changing">
-      <a id="reset-button" onClick="resetText()">Reset Text</a>
-      <a id="enlarge-button" onClick="enlargeText()">Enlarge Text</a>
     </div>
 
     <!---Table Section--->

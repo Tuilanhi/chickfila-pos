@@ -8,6 +8,7 @@ import { Ingredients } from "./Ingredients.js";
 import { NewMenuItem } from "./NewMenuItem.js";
 import { XReport } from "./XReport.js";
 import { ZReport } from "./ZReport.js";
+import { SalesReport } from "./SalesReport.js";
 
 import fetch from "node-fetch";
 const express = require("express");
@@ -560,10 +561,34 @@ app.post("/newMenuItem", async (req, res) => {
   }
 });
 
-app.get("/salesReport", (req, res) => {
+app.get("/salesReport", async (req, res) => {
+  const salesReport = new SalesReport();
+  const startDate = "2022-01-01";
+  const endDate = "2022-12-30";
+
+  //call the itemSales method and pass the start and end dates as arguments
+  const itemList = await salesReport.itemSales(startDate, endDate);
+
   res.render("manager/salesReport", {
     userProfile,
     userRole,
+    itemList, //pass the itemList to the template
+    startDate,
+    endDate,
+  });
+});
+
+app.post("/salesReport", async (req, res) => {
+  const salesReport = new SalesReport();
+  const { startDate, endDate } = req.body;
+  const itemList = await salesReport.itemSales(startDate, endDate);
+
+  res.render("manager/salesReport", {
+    userProfile,
+    userRole,
+    itemList, //pass the itemList to the template
+    startDate,
+    endDate,
   });
 });
 
