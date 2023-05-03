@@ -124,10 +124,10 @@
         var cart = JSON.parse(localStorage.getItem("products"));
         var total = 0.00;
         for (var i = 0; i < cart.length; i++) {
-          total += cart[i].price;
+          total += parseFloat(cart[i].price);
         }
-        hst.innerHTML = "<p> Total Price:" + total.toFixed(2) + "</p>";
-        hst.innerHTML += "<p> Quantity:" + cart.length+ "</p>";
+        hst.innerHTML = "<p> Total Price:" + total + "</p>";
+        hst.innerHTML += "<p> Quantity:" + cart.length + "</p>";
       </script>
       <button class="checkout-button">Checkout</button>
       <button class="checkout-button remove-all">Remove All</button>

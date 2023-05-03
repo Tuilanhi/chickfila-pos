@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon LoginPage.js",
-    "start": "node LoginPage.js"
+    "start": "node LoginPage.js",
+    "generatedocs": "node ./node_modules/yuidocjs/lib/cli .",
+    "testdocs": "node ./got-or-not.js .",
+    "autodocs": "node ./node_modules/autodocs"
   },
   "author": "",
   "license": "ISC",
