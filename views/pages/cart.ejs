@@ -58,6 +58,7 @@
       border-radius: 5px;
       padding: 10px 20px;
       cursor: pointer;
+      text-decoration: none;
     }
     .checkout-button:hover {
       background-color: #3e8e41;
@@ -129,7 +130,7 @@
         hst.innerHTML = "<p> Total Price:" + total.toFixed(2) + "</p>";
         hst.innerHTML += "<p> Quantity:" + cart.length + "</p>";
       </script>
-      <button class="checkout-button">Checkout</button>
+      <a class="checkout-button completeOrder" href="/checkout">Checkout</a>
       <button class="checkout-button remove-all">Remove All</button>
     </div>
   </div>
@@ -167,6 +168,19 @@
 
             localStorage.removeItem('products')
 
+          // Reload the page to reflect changes
+          location.reload();
+        });
+    });
+
+    </script>
+
+    <script type="text/javascript" >
+    var items = JSON.parse(localStorage.getItem('products'));
+    var completeOrderButton = document.querySelectorAll('.completeOrder');
+    completeOrderButton.forEach(function(button) {
+        button.addEventListener('click', function() {
+          
           // Reload the page to reflect changes
           location.reload();
         });
