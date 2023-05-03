@@ -19,7 +19,7 @@ listening on port 3000 and is using environment variables from a `.env` file. */
 import fetch from "node-fetch";
 const express = require("express");
 const app = express();
-const session = require("express-session");
+const session = require("cookie-session");
 const passport = require("passport");
 const port = 10000;
 const bodyParser = require("body-parser");
