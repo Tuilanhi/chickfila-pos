@@ -11,6 +11,7 @@ import { XReport } from "./XReport.js";
 import { ZReport } from "./ZReport.js";
 import { SalesReport } from "./SalesReport.js";
 import { ExcessReport } from "./ExcessReport.js";
+import { Checkout } from "./Checkout.js";
 
 /* The above code is setting up a Node.js server using the Express framework. It is importing necessary
 modules such as `node-fetch`, `express`, `express-session`, `passport`, and `body-parser`. It is
@@ -685,27 +686,23 @@ app.use(function (req, res, next) {
   next();
 });
 
-var currentCart = [
-  {
-    name: "Chicken Sandwich",
-    price: 5.99,
-  },
-  {
-    name: "Waffle Fries",
-    price: 2.49,
-  },
-  {
-    name: "Lemonade",
-    price: 1.99,
-  },
-];
-
 //render the cart
 app.get("/cart", (req, res) => {
   res.render("pages/cart", {
     user: userProfile,
-    weather: null,
-    error: null,
     items: null,
+  });
+});
+
+app.get("/checkout", async (req, res) => {
+  const itemList = JSON.parse(req.query.cart);
+
+  const cart = new Checkout();
+
+  const results = await cart.toSales(itemList);
+
+  res.render("pages/checkout", {
+    user: userProfile,
+    results,
   });
 });

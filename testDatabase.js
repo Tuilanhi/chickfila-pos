@@ -6,6 +6,7 @@ import { NewMenuItem } from "./NewMenuItem.js";
 import { XReport } from "./XReport.js";
 import { SalesReport } from "./SalesReport.js";
 import { ExcessReport } from "./ExcessReport.js";
+import { Checkout } from "./Checkout.js";
 class testDatabase {
   constructor() {
     this.db = new Database();
@@ -26,12 +27,16 @@ class testDatabase {
 async function main() {
   // const ingredient = new Ingredients();
   // ingredient.removeIngredient("Beef Slice");
-
   // const menu = new Menu();
   // menu.removeItem("Beef Sandwich");
+  // const report = new ExcessReport();
+  // const x = report.excessReport("2022-01-01", "2022-01-04");
 
-  const report = new ExcessReport();
-  const x = report.excessReport("2022-01-01", "2022-01-04");
+  const order = new Checkout();
+  order.toSales([
+    { name: "Spicy Chicken Sandwich", price: "4.99" },
+    { name: "Chicken Sandwich", price: "4.99" },
+  ]);
 }
 
 main();
