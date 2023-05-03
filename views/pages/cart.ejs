@@ -93,10 +93,6 @@
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script> 
-            var cart = JSON.parse(localStorage.getItem("products"));
-
-    </script>
 
   <body>
     <div class="backbtn">
@@ -128,6 +124,7 @@
           // redirect to checkout page with cart as query parameter
           function checkout() {
             window.location.href = "/checkout?cart=" + encodeURIComponent(JSON.stringify(cart));
+            localStorage.removeItem("products");
           }
         </script>
       </table>
