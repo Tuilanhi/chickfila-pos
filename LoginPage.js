@@ -1,4 +1,9 @@
 /* MODULES */
+/* The above code is importing various modules such as RestockReport, Menu, Ingredients, NewMenuItem,
+XReport, ZReport, SalesReport, and ExcessReport. These modules are likely part of a larger program
+or system for managing a restaurant or food service business. The code is using the ES6 import
+syntax to import these modules and createRequire function to create a require function for importing
+modules in Node.js. */
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
@@ -11,6 +16,10 @@ import { ZReport } from "./ZReport.js";
 import { SalesReport } from "./SalesReport.js";
 import { ExcessReport } from "./ExcessReport.js";
 
+/* The above code is setting up a Node.js server using the Express framework. It is importing necessary
+modules such as `node-fetch`, `express`, `express-session`, `passport`, and `body-parser`. It is
+also configuring the server to use a session and passport for authentication. The server is
+listening on port 3000 and is using environment variables from a `.env` file. */
 import fetch from "node-fetch";
 const express = require("express");
 const app = express();

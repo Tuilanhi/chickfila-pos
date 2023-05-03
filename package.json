@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon LoginPage.js",
-    "start": "node LoginPage.js"
+    "start": "node LoginPage.js",
+    "generatedocs": "node ./node_modules/yuidocjs/lib/cli .",
+    "testdocs": "node ./got-or-not.js .",
+    "autodocs": "node ./node_modules/autodocs"
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +21,7 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "find-config": "^1.0.0",
+    "jsdoc": "^4.0.2",
     "node-fetch": "^3.3.1",
     "nodemon": "^2.0.22",
     "passport": "^0.6.0",
