@@ -1,78 +1,78 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Cart</title>
-  <style>
-    /* Style for cart page */
-    body {
-      font-family: sans-serif;
-    }
-    .cart-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin: 20px;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-bottom: 20px;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-    td, th {
-      border: 1px solid #ddd;
-      text-align: left;
-      padding: 8px;
-    }
-    td:first-child {
-      font-weight: bold;
-    }
-    .remove-item {
-      background-color: #d11;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 5px 10px;
-      cursor: pointer;
-    }
-    .remove-item:hover {
-      background-color: #f33;
-    }
-    .checkout-container {
-      margin-left: 50px;
-      padding: 20px;
-      background-color: #f7f7f7;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      text-align: center;
-    }
-    .checkout-header {
-      margin-top: 0;
-    }
-    .checkout-button {
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 10px 20px;
-      cursor: pointer;
-    }
-    .checkout-button:hover {
-      background-color: #3e8e41;
-    }
-    .remove-all {
-      margin-top: 5%;
-      background-color: #d11;
-      color: white;
-    }
-    .remove-all:hover {
-      background-color: #f33;
-    }
-    /*BACK BUTTON*/
-    .backbtn {
-        
+  <head>
+    <title>Cart</title>
+    <style>
+      /* Style for cart page */
+      body {
+        font-family: sans-serif;
+      }
+      .cart-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin: 20px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      td,
+      th {
+        border: 1px solid #ddd;
+        text-align: left;
+        padding: 8px;
+      }
+      td:first-child {
+        font-weight: bold;
+      }
+      .remove-item {
+        background-color: #d11;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+      .remove-item:hover {
+        background-color: #f33;
+      }
+      .checkout-container {
+        margin-left: 50px;
+        padding: 20px;
+        background-color: #f7f7f7;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        text-align: center;
+      }
+      .checkout-header {
+        margin-top: 0;
+      }
+      .checkout-button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+      .checkout-button:hover {
+        background-color: #3e8e41;
+      }
+      .remove-all {
+        margin-top: 5%;
+        background-color: #d11;
+        color: white;
+      }
+      .remove-all:hover {
+        background-color: #f33;
+      }
+      /*BACK BUTTON*/
+      .backbtn {
         top: 2%;
         left: 0.5%;
       }
@@ -90,88 +90,100 @@
         color: red;
         text-decoration: none;
       }
+    </style>
 
-  </style>
-    
-</head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script> 
+            var cart = JSON.parse(localStorage.getItem("products"));
 
-<body>
-  <div class="backbtn">
-    <a href="/customer" class="signout">Back</a>
-  </div>
-  <div class="cart-container">
-    <table id = cartTable>
-      <tr><td>Item</td> 
-      <td>Price</td></tr>
-      <script>
-        var hst = document.getElementById("cartTable")
-        var cart = JSON.parse(localStorage.getItem("products"));
-        if(cart == null){
-          hst.innerHTML = "<p>Empty Cart</p>"
-        }
-        else{
-          for (var i = 0; i < cart.length; i++) {
-          hst.innerHTML += "<tr><td>" + cart[i].name + "</td><td>" + cart[i].price + "</td><td><button class='remove-item' data-index = '"+cart[i].name+"' >Remove</button></td></tr>";
-        }
-        }
-        
-      </script>
-    </table>
-    <div class="checkout-container">
-      <h2 id ="checkout-header">Order Summary</h2>
-      <script>
-        var hst = document.getElementById("checkout-header")
-        var cart = JSON.parse(localStorage.getItem("products"));
-        var total = 0.00;
-        for (var i = 0; i < cart.length; i++) {
-          total += cart[i].price;
-        }
-        hst.innerHTML = "<p> Total Price:" + total.toFixed(2) + "</p>";
-        hst.innerHTML += "<p> Quantity:" + cart.length+ "</p>";
-      </script>
-      <button class="checkout-button">Checkout</button>
-      <button class="checkout-button remove-all">Remove All</button>
+    </script>
+
+  <body>
+    <div class="backbtn">
+      <a href="/customer" class="signout">Back</a>
     </div>
-  </div>
+    <div class="cart-container">
+      <table id="cartTable">
+        <tr>
+          <td>Item</td>
+          <td>Price</td>
+        </tr>
+        <script>
+          var hst = document.getElementById("cartTable");
+          var cart = JSON.parse(localStorage.getItem("products"));
+          if (cart == null) {
+            hst.innerHTML = "<p>Empty Cart</p>";
+          } else {
+            for (var i = 0; i < cart.length; i++) {
+              hst.innerHTML +=
+                "<tr><td>" +
+                cart[i].name +
+                "</td><td>" +
+                cart[i].price +
+                "</td><td><button class='remove-item' data-index = '" +
+                cart[i].name +
+                "' >Remove</button></td></tr>";
+            }
+          }
+          // redirect to checkout page with cart as query parameter
+          function checkout() {
+            window.location.href = "/checkout?cart=" + encodeURIComponent(JSON.stringify(cart));
+          }
+        </script>
+      </table>
+      <div class="checkout-container">
+        <h2 id="checkout-header">Order Summary</h2>
+        <script>
+          var hst = document.getElementById("checkout-header");
+          var cart = JSON.parse(localStorage.getItem("products"));
+          var total = 0.0;
+          for (var i = 0; i < cart.length; i++) {
+            total += cart[i].price;
+          }
+          hst.innerHTML = "<p> Total Price:" + total.toFixed(2) + "</p>";
+          hst.innerHTML += "<p> Quantity:" + cart.length + "</p>";
+        </script>
+        <button class="checkout-button" onClick="checkout()">Checkout</button>
+        <button class="checkout-button remove-all">Remove All</button>
+      </div>
+    </div>
 
-  <script type="text/javascript">
-    var items = JSON.parse(localStorage.getItem('products'));
-    // Get all remove item buttons
-    var removeButtons = document.querySelectorAll('.remove-item');
-    console.log("selected all the remove buttons")
-    // Add click event listener to each remove button
-    removeButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
+    <script type="text/javascript">
+      var items = JSON.parse(localStorage.getItem("products"));
+      // Get all remove item buttons
+      var removeButtons = document.querySelectorAll(".remove-item");
+      console.log("selected all the remove buttons");
+      // Add click event listener to each remove button
+      removeButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
           // Get the index of the item to remove
-          var indexName = button.getAttribute('data-index');
+          var indexName = button.getAttribute("data-index");
 
           for (var i = 0; i < items.length; i++) {
             var x = items[i].name;
-            if(x == indexName){
+            if (x == indexName) {
               var index = i;
               break;
             }
           }
           // Remove the item from the array
           items.splice(index, 1);
-          
-          localStorage.setItem('products', JSON.stringify(items));
+
+          localStorage.setItem("products", JSON.stringify(items));
           // Reload the page to reflect changes
           location.reload();
         });
-    });
+      });
 
-    var removeAllButton = document.querySelectorAll('.remove-all');
-    removeAllButton.forEach(function(button) {
-        button.addEventListener('click', function() {
-
-            localStorage.removeItem('products')
+      var removeAllButton = document.querySelectorAll(".remove-all");
+      removeAllButton.forEach(function (button) {
+        button.addEventListener("click", function () {
+          localStorage.removeItem("products");
 
           // Reload the page to reflect changes
           location.reload();
         });
-    });
-
+      });
     </script>
-</body>
+  </body>
 </html>
