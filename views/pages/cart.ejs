@@ -126,7 +126,7 @@
         for (var i = 0; i < cart.length; i++) {
           total += parseFloat(cart[i].price);
         }
-        hst.innerHTML = "<p> Total Price:" + total + "</p>";
+        hst.innerHTML = "<p> Total Price:" + total.toFixed(2) + "</p>";
         hst.innerHTML += "<p> Quantity:" + cart.length + "</p>";
       </script>
       <button class="checkout-button">Checkout</button>
