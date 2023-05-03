@@ -16,7 +16,7 @@ const express = require("express");
 const app = express();
 const session = require("express-session");
 const passport = require("passport");
-const port = 3000;
+const port = 10000;
 const bodyParser = require("body-parser");
 require("dotenv").config();
 
