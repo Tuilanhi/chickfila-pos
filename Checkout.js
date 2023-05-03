@@ -14,32 +14,34 @@ class Checkout{
             let order = [];
             
             
-            for(item in cart){
+            cart.forEach(function (i) {
                 let item = i.name;
                 let price = i.price;
-
+        
                 // add item's price to total sales
-                this.toSales += price;
+                totalsales += parseFloat(price);
                 // push item into order
                 order.push(item);
-            }
+              });
 
             // get todays date
             let days = moment().format('YYYY-MM-DD');
 
             // get order ID
-            const dayStatement = 'select orderid from chickfila_sales ORDER BY orderid DESC LIMIT 1';
+            const dayStatement = 'select orderid from chickfila_sales ORDER BY days DESC limit 1';
             const result = await this.db.query(dayStatement);
-            let orderID = result[0]["orderid"];
-            const orderArr = orderID.split('-');
-            const orderNum = parseInt(orderArr[1]) + 1;
-            orderID = orderArr[0] + '-' + orderNum.toString();
+            const orderNum = parseInt(result[0]['orderid']) + 1;
+            let orderID = orderNum.toString();
 
 
             // check for gameday
             if (days === "2023-04-13"){ gameDay = "True"; }
 
-            const sqlStatement = `INSERT INTO chickfila_sales (days, gamedays, orderid, item, totalsales) VALUES ('${days}', '${gameDay}', '${orderID}', '${order}', '${totalsales}')`;
+            console.log(order);
+            console.log(totalsales);
+            console.log(orderID);
+            const sqlStatement = `INSERT INTO chickfila_sales (days, gamedays, orderid, item, totalsales) VALUES ('${days}', '${gameDay}', '${orderID}', '{''${order}''}', '${totalsales}')`;
+            console.log(sqlStatement);
             const result3 = await this.db.insert(sqlStatement);
 
       
@@ -51,7 +53,7 @@ class Checkout{
     }
 }
 
-const order = new Checkout([{"name":"Chicken Sandwich","price":"4.99"},{"name":"Chicken Sandwich","price":"4.99"}]);
-order.toSales();
+const order = new Checkout();
+order.toSales([{"name":"Chicken Sandwich","price":"4.99"},{"name":"Chicken Sandwich","price":"4.99"}]);
 
 export { Checkout };
