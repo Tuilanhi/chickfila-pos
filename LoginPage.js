@@ -1,9 +1,5 @@
 /* MODULES */
-/* The above code is importing various modules such as RestockReport, Menu, Ingredients, NewMenuItem,
-XReport, ZReport, SalesReport, and ExcessReport. These modules are likely part of a larger program
-or system for managing a restaurant or food service business. The code is using the ES6 import
-syntax to import these modules and createRequire function to create a require function for importing
-modules in Node.js. */
+
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
