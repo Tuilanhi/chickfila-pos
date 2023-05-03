@@ -40,7 +40,8 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://csce315-web-app.onrender.com/auth/google/callback",
+      callbackURL:
+        "https://csce315-project3-test.onrender.com/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, done) {
       userProfile = profile;
@@ -70,7 +71,6 @@ app.use(
     resave: false,
     saveUninitialized: true,
     secret: "SECRET",
-    
   })
 );
 
@@ -669,7 +669,7 @@ app.post("/excessReport", async (req, res) => {
 
 //Cart
 
-app.use(function(req,res,next){
+app.use(function (req, res, next) {
   res.locals.session = req.session;
   next();
 });
@@ -680,7 +680,7 @@ app.post("/excessReport", function (req, res) {
 
 //Cart
 
-app.use(function(req,res,next){
+app.use(function (req, res, next) {
   res.locals.session = req.session;
   next();
 });
@@ -688,20 +688,17 @@ app.use(function(req,res,next){
 var currentCart = [
   {
     name: "Chicken Sandwich",
-    price: 5.99
+    price: 5.99,
   },
   {
     name: "Waffle Fries",
-    price: 2.49
+    price: 2.49,
   },
   {
     name: "Lemonade",
-    price: 1.99
-  }
+    price: 1.99,
+  },
 ];
-
-
-
 
 //render the cart
 app.get("/cart", (req, res) => {
@@ -709,6 +706,6 @@ app.get("/cart", (req, res) => {
     user: userProfile,
     weather: null,
     error: null,
-    items: null
+    items: null,
   });
 });
