@@ -14,7 +14,7 @@ import { ExcessReport } from "./ExcessReport.js";
 import fetch from "node-fetch";
 const express = require("express");
 const app = express();
-const session = require("cookie-session");
+const session = require("express-session");
 const passport = require("passport");
 const port = 10000;
 const bodyParser = require("body-parser");
@@ -66,13 +66,27 @@ app.use(express.static("views"));
 
 app.set("view engine", "ejs");
 
+app.set("trust proxy", 1);
+
 app.use(
   session({
-    resave: false,
+    cookie: {
+      secure: true,
+      maxAge: 60000,
+    },
+    store: new RedisStore(),
+    secret: "secret",
     saveUninitialized: true,
-    secret: "SECRET",
+    resave: false,
   })
 );
+
+app.use(function (req, res, next) {
+  if (!req.session) {
+    return next(new Error("Oh no")); //handle error
+  }
+  next(); //otherwise continue
+});
 
 app.listen(port, () => console.log("App listening on port " + port));
 
