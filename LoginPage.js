@@ -561,7 +561,7 @@ app.post("/newMenuItem", async (req, res) => {
 app.get("/salesReport", async (req, res) => {
   const salesReport = new SalesReport();
   const startDate = "2022-01-01";
-  const endDate = "2022-12-30";
+  const endDate = "2023-12-30";
 
   //call the itemSales method and pass the start and end dates as arguments
   const itemList = await salesReport.itemSales(startDate, endDate);
@@ -634,7 +634,7 @@ app.get("/restockReport", (req, res) => {
 app.get("/excessReport", async (req, res) => {
   const excessReport = new ExcessReport();
   const startDate = "2022-01-01";
-  const endDate = "2022-12-30";
+  const endDate = "2023-12-30";
 
   //call the itemSales method and pass the start and end dates as arguments
   const itemList = await excessReport.excessReport(startDate, endDate);
