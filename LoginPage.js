@@ -16,7 +16,7 @@ const express = require("express");
 const app = express();
 const session = require("cookie-session");
 const passport = require("passport");
-const port = 10000;
+const port = 3000;
 const bodyParser = require("body-parser");
 require("dotenv").config();
 
@@ -141,13 +141,9 @@ app.get("/menuboard", function (req, res) {
 app.get("/error", (req, res) => res.render("pages/error"));
 
 // After user had logged out, redirect to login page
-app.get("/logout", function (req, res, next) {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/");
-  });
+app.get("/logout", function (req, res) {
+  res.clearCookie("connect.sid");
+  res.redirect("/");
 });
 
 /* GOOGLE USERS SECTION */
