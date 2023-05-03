@@ -7,11 +7,11 @@ require("dotenv").config();
 class Database {
   constructor() {
     this.client = new Client({
-      user: "csce315331_team_1_master",
-      host: "csce-315-db.engr.tamu.edu",
-      database: "csce315331_team_1",
-      password: "TEAM_1",
-      port: 5432,
+      user: process.env.USER_CLIENT,
+      host: process.env.HOST,
+      database: process.env.DATABASE,
+      password: process.env.PASSWORD,
+      port: process.env.PORT,
     });
     this.connected = false;
   }
