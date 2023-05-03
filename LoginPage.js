@@ -40,8 +40,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL:
-        "https://csce315-project3-test.onrender.com/auth/google/callback",
+      callbackURL: "https://csce315-web-app.onrender.com/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, done) {
       userProfile = profile;

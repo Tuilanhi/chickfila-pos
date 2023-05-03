@@ -20,7 +20,4 @@ class XReport {
   }
 }
 
-// const date = "2022-10-03";
-// const run = new XReport(date);
-
 export { XReport };
